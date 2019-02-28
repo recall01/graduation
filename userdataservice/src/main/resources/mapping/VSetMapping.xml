@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.better517na.userdataservice.mapping.VSetMapping">
+    <resultMap id="vSetResult" type="com.better517na.userdataservice.model.VSet">
+        <result property="claID" column="ClaID"/>
+        <result property="claName" column="ClaName"/>
+        <result property="setName" column="SetName"/>
+        <result property="longitude" column="Longitude"/>
+        <result property="latitude" column="Latitude"/>
+        <result property="scope" column="Scope"/>
+        <result property="startSigTime" column="StartSigTime"/>
+        <result property="endSigTime" column="EndSigTime"/>
+        <result property="createrName" column="CreaterName"/>
+    </resultMap>
+    <select id="selectVSet" resultMap="vSetResult">
+        select * from v_set
+        where ClaID = #{claID}
+    </select>
+
+
+</mapper>

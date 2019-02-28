@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.better517na.userdataservice.mapping.SignRecordMapping">
+    <resultMap id="signRecordResult" type="com.better517na.userdataservice.model.SignRecord">
+        <result property="stuId" column="StuID"/>
+        <result property="stuNumber" column="StuNumber"/>
+        <result property="stuName" column="StuName"/>
+        <result property="setId" column="SetID"/>
+        <result property="setName" column="SetName"/>
+        <result property="sigTime" column="SigTime"/>
+    </resultMap>
+    <select id="selectSignRecord" resultMap="signRecordResult">
+        select * from v_signrecord
+        where StuID = #{id} and SigTime like "%"#{time}"%"
+    </select>
+
+</mapper>

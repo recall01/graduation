@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.better517na.userdataservice.mapping.SignMapping">
+    <resultMap id="signResult" type="com.better517na.userdataservice.model.Sign">
+        <result property="stuId" column="StuId"/>
+        <result property="stuName" column="StuName"/>
+        <result property="stuSex" column="StuSex"/>
+        <result property="stuNumber" column="StuNumber"/>
+        <result property="stuPassword" column="StuPassword"/>
+        <result property="stuPhone" column="StuPhone"/>
+        <result property="stuMail" column="StuMail"/>
+        <result property="claID" column="claID"/>
+        <result property="registerTime" column="RegisterTime"/>
+        <result property="permissions" column="Permissions"/>
+    </resultMap>
+    <insert id="insertSign" >
+        insert into Sign
+        (SigID,StuID,SigTime,Longitude,Latitude,SetID,IsDelete)
+        values (#{sigId},#{stuId},#{sigTime},#{longitude},#{latitude},#{setId},0)
+    </insert>
+</mapper>
