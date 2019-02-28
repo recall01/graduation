@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.better517na.userdataservice.dao.ISignDao;
 import com.better517na.userdataservice.dao.IStudentDao;
 import com.better517na.userdataservice.model.Response;
+import com.better517na.userdataservice.model.Sign;
 import com.better517na.userdataservice.model.SignRecord;
 import com.better517na.userdataservice.model.Student;
 import com.better517na.userdataservice.model.VSet;
@@ -20,6 +21,7 @@ import com.better517na.userdataservice.service.ISignService;
 import com.better517na.userdataservice.service.IStudentService;
 import static com.better517na.userdataservice.utils.Constant.RESPONSE_FALSE;
 import static com.better517na.userdataservice.utils.Constant.RESPONSE_SUCCESS;
+import com.better517na.userdataservice.utils.TimeUtil;
 
 /**
  * @author zhuojiu
@@ -73,6 +75,31 @@ public class SignServiceImpl implements ISignService {
             e.printStackTrace();
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("查询可签到失败 "+e.getMessage());
+        }finally {
+            return response;
+        }
+    }
+
+    @Override
+    public Response insertSign(Sign sign) {
+        Response response = new Response();
+        if(null==sign){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("签到失败，入参错误!");
+            return response;
+        }
+        try {
+            if(signDao.insertSign(sign)){
+                response.setStatus(RESPONSE_SUCCESS);
+                response.setMsg("签到成功!");
+            }else {
+                response.setStatus(RESPONSE_FALSE);
+                response.setMsg("签到失败!");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("签到异常! "+e.getMessage());
         }finally {
             return response;
         }

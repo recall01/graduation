@@ -2,6 +2,8 @@ package com.better517na.userdataservice.dao;
 
 import java.util.List;
 import java.util.Map;
+
+import com.better517na.userdataservice.model.Sign;
 import com.better517na.userdataservice.model.SignRecord;
 import com.better517na.userdataservice.model.VSet;
 
@@ -13,4 +15,6 @@ public interface ISignDao {
     List<SignRecord> signRecord(Map m) throws Exception;
 
     List<VSet> selectVSet(String claID) throws Exception;
+
+    boolean insertSign(Sign sign) throws Exception;
 }

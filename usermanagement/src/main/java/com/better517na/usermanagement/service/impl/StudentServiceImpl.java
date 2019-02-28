@@ -30,7 +30,7 @@ public class StudentServiceImpl implements IStudentService {
 //    @HystrixCommand(fallbackMethod = "requestFallBack")
     @Override
     public Response registStudent(Student student) {
-        student.setStuId(IDUtil.getID());
+        student.setStuId(IDUtil.getStudentID());
         if(student.getStuMail()==null){
             student.setStuMail("");
         }
@@ -73,43 +73,6 @@ public class StudentServiceImpl implements IStudentService {
             return response;
         }
         return studentBusiness.changeInfo(student);
-    }
-
-//    @HystrixCommand(fallbackMethod = "requestFallBack")
-    @Override
-    public Response selectVSet(String claID) {
-        Response response = new Response();
-/*        if(claID == null || "".equals(claID)){
-            response.setStatus(1);
-            response.setMsg("查询签到设置失败，参数错误!");
-            return response;
-        }
-        List<VSet> vSets = vSetMapping.selectVSet(claID);
-        response.setStatus(RESPONSE_SUCCESS);
-        response.setData(vSets);
-        response.setMsg("查询条数:"+vSets.size());*/
-        return response;
-    }
-//    @HystrixCommand(fallbackMethod = "requestFallBack")
-    @Override
-    public Response sign(Sign sign) {
-        Response response = new Response();
-/*        sign.setSigId("201901031833");
-        sign.setSigTime(TimeUtil.getTime());
-        try {
-            if(signMapping.insertSign(sign)){
-                response.setStatus(RESPONSE_SUCCESS);
-                response.setMsg("签到成功!");
-            }else {
-                response.setStatus(RESPONSE_FALSE);
-                response.setMsg("签到失败!");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            response.setStatus(RESPONSE_FALSE);
-            response.setMsg("异常!"+e.getMessage());
-        }*/
-        return response;
     }
 
     public Response requestFallBack(Student student) {

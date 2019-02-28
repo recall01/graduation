@@ -8,6 +8,7 @@ import com.better517na.usermanagement.business.IStudentBusiness;
 import com.better517na.usermanagement.feignClient.UserDataFeignClient;
 import com.better517na.usermanagement.model.LogProducer;
 import com.better517na.usermanagement.model.Response;
+import com.better517na.usermanagement.model.Sign;
 import com.better517na.usermanagement.model.Student;
 import com.better517na.usermanagement.service.ISignService;
 import static com.better517na.usermanagement.utils.Constant.RESPONSE_FALSE;
@@ -51,6 +52,21 @@ public class SignBusinessImpl implements ISignBusiness {
             Response response = new Response();
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("查询可签到失败! " + e.getMessage());
+//            logProducer.sendLog("my-topic",new Gson().toJson(student));
+            return response;
+        }
+    }
+
+    @Override
+    public Response insertSign(Sign sign) {
+        try {
+            return userDataFeignClient.insertSign(sign);
+        }catch (Exception e){
+            e.printStackTrace();
+            //记录日志
+            Response response = new Response();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("签到异常! " + e.getMessage());
 //            logProducer.sendLog("my-topic",new Gson().toJson(student));
             return response;
         }

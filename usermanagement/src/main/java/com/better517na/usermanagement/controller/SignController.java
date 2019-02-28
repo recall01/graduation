@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.better517na.usermanagement.model.Response;
+import com.better517na.usermanagement.model.Sign;
 import com.better517na.usermanagement.model.Student;
 import com.better517na.usermanagement.service.ISignService;
 import com.better517na.usermanagement.service.IStudentService;
@@ -44,5 +45,11 @@ public class SignController {
     @RequestMapping(value = "queryVSet",method = RequestMethod.GET)
     public Response queryVSet(@RequestParam @ApiParam(name = "claID",value = "班级编号",required = true) String claID){
         return signService.selectVSet(claID);
+    }
+
+    @ApiOperation(value = "学生签到的接口",notes = "传递正确参数进行签到")
+    @RequestMapping(value = "sign",method = RequestMethod.POST)
+    public Response sign(@RequestBody  @ApiParam(name = "sign",value = "签到数据",required = true) Sign sign){
+        return signService.insertSign(sign);
     }
 }

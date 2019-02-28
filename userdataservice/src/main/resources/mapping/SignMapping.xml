@@ -14,7 +14,7 @@
         <result property="permissions" column="Permissions"/>
     </resultMap>
     <insert id="insertSign" >
-        insert into Sign
+        insert into sign
         (SigID,StuID,SigTime,Longitude,Latitude,SetID,IsDelete)
         values (#{sigId},#{stuId},#{sigTime},#{longitude},#{latitude},#{setId},0)
     </insert>

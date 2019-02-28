@@ -5,8 +5,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 import com.better517na.userdataservice.dao.ISignDao;
+import com.better517na.userdataservice.mapping.SignMapping;
 import com.better517na.userdataservice.mapping.SignRecordMapping;
 import com.better517na.userdataservice.mapping.VSetMapping;
+import com.better517na.userdataservice.model.Sign;
 import com.better517na.userdataservice.model.SignRecord;
 import com.better517na.userdataservice.model.VSet;
 
@@ -21,6 +23,8 @@ public class SignDaoImpl implements ISignDao {
     private SignRecordMapping signRecordMapping;
     @Resource
     private VSetMapping vSetMapping;
+    @Resource
+    private SignMapping signMapping;
 
     @Override
     public List<SignRecord> signRecord(Map m) throws Exception{
@@ -30,5 +34,10 @@ public class SignDaoImpl implements ISignDao {
     @Override
     public List<VSet> selectVSet(String claID) throws Exception {
         return vSetMapping.selectVSet(claID);
+    }
+
+    @Override
+    public boolean insertSign(Sign sign) throws Exception{
+        return signMapping.insertSign(sign);
     }
 }

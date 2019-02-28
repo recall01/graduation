@@ -45,4 +45,19 @@ public class SignServiceImpl implements ISignService {
         }
         return signBusiness.selectVSet(claID);
     }
+
+    @Override
+    public Response insertSign(Sign sign) {
+        if(sign == null){
+            Response response = new Response();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("签到失败，入参错误! "+new Gson().toJson(sign));
+            return response;
+        }
+        if(sign.getSigId()==null){
+            sign.setSigId(IDUtil.getSignID());
+        }
+        sign.setSigTime(TimeUtil.getTime());
+        return signBusiness.insertSign(sign);
+    }
 }

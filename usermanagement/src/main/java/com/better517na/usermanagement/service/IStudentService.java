@@ -8,6 +8,4 @@ public interface IStudentService {
     Response registStudent(Student student);
     Response loginStudent(String account, String password);
     Response changeInfo(Student student);
-    Response selectVSet(String claID);
-    Response sign(Sign sign);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.better517na.userdataservice.model.Response;
+import com.better517na.userdataservice.model.Sign;
 import com.better517na.userdataservice.model.Student;
 import com.better517na.userdataservice.service.ISignService;
 import com.better517na.userdataservice.service.IStudentService;
@@ -32,6 +33,10 @@ public class SignController {
     @PostMapping(value = "/selectVSet")
     public Response selectVSet(@RequestParam String claID) throws Exception{
         return signService.selectVSet(claID);
+    }
+    @PostMapping(value = "/insertSign")
+    public Response insertSign(@RequestBody Sign sign) throws Exception{
+        return signService.insertSign(sign);
     }
 
 }

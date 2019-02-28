@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.better517na.usermanagement.model.Response;
+import com.better517na.usermanagement.model.Sign;
 import com.better517na.usermanagement.model.Student;
 
 /**
@@ -26,4 +27,7 @@ public interface UserDataFeignClient {
     Response signRecord(@RequestParam(value = "id") String id, @RequestParam(value = "time") String time) throws Exception;
     @PostMapping("/sign/selectVSet")
     Response selectVSet(@RequestParam(value = "claID") String claID) throws Exception;
+    @PostMapping("/sign/insertSign")
+    Response insertSign(@RequestBody Sign sign) throws Exception;
+
 }

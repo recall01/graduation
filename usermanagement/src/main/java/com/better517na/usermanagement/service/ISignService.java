@@ -8,4 +8,6 @@ public interface ISignService {
     Response signRecord(String id, String time);
 
     Response selectVSet(String claID);
+
+    Response insertSign(Sign sign);
 }
