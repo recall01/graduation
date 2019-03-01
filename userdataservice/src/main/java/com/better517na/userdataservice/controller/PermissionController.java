@@ -21,9 +21,6 @@ import com.better517na.userdataservice.service.ISignService;
 @RequestMapping(value = "/permission")
 public class PermissionController {
 
-    @Resource
-    ISignService signService;
-
     @PostMapping(value = "/queryAllPermissions")
     public Response queryAllPermissions() throws Exception{
         return null;
