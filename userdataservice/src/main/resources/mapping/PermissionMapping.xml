@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.better517na.userdataservice.mapping.PermissionMapping">
+    <resultMap id="permissionResult" type="com.better517na.userdataservice.model.Permission">
+        <result property="permissionId" column="PermissionID"/>
+        <result property="permissionName" column="PermissionName"/>
+    </resultMap>
+    <select id="queryAllPermissions">
+        select * from permissions
+    </select>
+
+</mapper>

@@ -2,6 +2,7 @@ package com.better517na.userdataservice.controller;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.better517na.userdataservice.model.Response;
 import com.better517na.userdataservice.model.Sign;
+import com.better517na.userdataservice.service.IPermissionService;
 import com.better517na.userdataservice.service.ISignService;
 
 /**
@@ -20,10 +22,12 @@ import com.better517na.userdataservice.service.ISignService;
 @RestController
 @RequestMapping(value = "/permission")
 public class PermissionController {
+    @Autowired
+    private IPermissionService iPermissionService;
 
     @PostMapping(value = "/queryAllPermissions")
     public Response queryAllPermissions() throws Exception{
-        return null;
+        return iPermissionService.queryAllPermissions();
     }
 
 }
