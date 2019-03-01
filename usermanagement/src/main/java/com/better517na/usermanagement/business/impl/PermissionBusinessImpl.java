@@ -27,8 +27,7 @@ public class PermissionBusinessImpl implements IPermissionBusiness {
     @Override
     public Response queryAllPermissions() {
         try {
-            return null;
-            //return userDataFeignClient.insertSign(sign);
+            return userDataFeignClient.queryAllPermissions();
         }catch (Exception e){
             e.printStackTrace();
             //记录日志

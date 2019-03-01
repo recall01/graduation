@@ -30,4 +30,7 @@ public interface UserDataFeignClient {
     @PostMapping("/sign/insertSign")
     Response insertSign(@RequestBody Sign sign) throws Exception;
 
+    @PostMapping("/permission/queryAllPermissions")
+    Response queryAllPermissions() throws Exception;
+
 }
