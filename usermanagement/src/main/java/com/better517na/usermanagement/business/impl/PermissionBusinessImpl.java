@@ -33,7 +33,7 @@ public class PermissionBusinessImpl implements IPermissionBusiness {
             //记录日志
             Response response = new Response();
             response.setStatus(RESPONSE_FALSE);
-            response.setMsg("签到异常! " + e.getMessage());
+            response.setMsg("查询权限异常! " + e.getMessage());
 //            logProducer.sendLog("my-topic",new Gson().toJson(student));
             return response;
         }
