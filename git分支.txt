@@ -1,2 +1,5 @@
 创建分支:git branch 分支名
 查看当前所有分支:git branch
+切换分支:git checkout 分支名
+合并分支到master上:1.切换到master节点 2.git merge 分支名
+删除分支:git branch -d 分支名
