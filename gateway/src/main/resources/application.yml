@@ -3,10 +3,10 @@ zuul:
     connect-timeout-millis: 20000
     socket-timeout-millis: 20000
   routes:
-    userdataservice:
-      path: /dataapi/**
-      serviceId: userdataservice
-      sensitiveHeaders:
+#    userdataservice:
+#      path: /dataapi/**
+#      serviceId: userdataservice
+#      sensitiveHeaders:
     usermanagement:
       path: /userapi/**
       serviceId: usermanagement
@@ -16,6 +16,17 @@ server:
 spring:
   application:
     name: gatewayservice
+  sleuth:
+    sampler:
+      percentage: 1.0
+  rabbitmq:
+    host: 47.101.210.56
+    port: 5672
+    username: admin
+    password: admin
+  zipkin:
+    rabbitmq:
+      queue: zipkin
 eureka:
   client:
     service-url:
