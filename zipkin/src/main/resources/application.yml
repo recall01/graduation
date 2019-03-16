@@ -13,11 +13,10 @@ spring:
 #  sleuth:
 #   sampler:
 #      percentage: 1.0
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: admin
-    password: admin
-  zipkin:
+zipkin:
+  collector:
     rabbitmq:
+      addresses: 47.101.210.56:5672
+      username: admin
+      password: admin
       queue: zipkin
