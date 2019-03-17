@@ -37,4 +37,9 @@ public class StudentController {
         return studentService.changeInfo(student);
     }
 
+    @PostMapping(value = "/test")
+    public void test() throws Exception{
+        System.out.println("---test执行啦---");
+    }
+
 }

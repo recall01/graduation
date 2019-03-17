@@ -1,5 +1,6 @@
 package com.better517na.usermanagement.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +17,15 @@ public class testController {
     @Autowired
     TestFeignClient feignClient;
 
+    @HystrixCommand(fallbackMethod = "testFallback")
     @GetMapping("/test")
     public void test(){
         System.out.println("---test执行啦---");
         feignClient.test();
     }
+
+    public void testFallback(){
+        System.out.println("---testFallback执行啦---");
+    }
+
 }

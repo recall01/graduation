@@ -34,3 +34,6 @@ ribbon:
   eager-load:
     enabled: true
     clients: client1,client2
+feign:
+  hystrix:
+    enabled: true

@@ -1,0 +1,23 @@
+server:
+  port: 28031
+spring:
+  application:
+    name: turbinservice
+  rabbitmq:
+    host: 47.101.210.56
+    port: 5672
+    username: admin
+    password: admin
+eureka:
+  client:
+    service-url:
+      defaultZone: http://47.101.210.56:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:28031
+    non-secure-port: 28031
+management:
+  port: 20011
+#turbine:
+#  app-config: userdataservice,usermanagement
+#  cluster-name-expression: "'default'"
