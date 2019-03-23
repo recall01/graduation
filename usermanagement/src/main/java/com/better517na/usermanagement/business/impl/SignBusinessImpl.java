@@ -1,5 +1,6 @@
 package com.better517na.usermanagement.business.impl;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -82,6 +83,21 @@ public class SignBusinessImpl implements ISignBusiness {
             Response response = new Response();
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("查询可签到失败! " + e.getMessage());
+//            logProducer.sendLog("my-topic",new Gson().toJson(student));
+            return response;
+        }
+    }
+
+    @Override
+    public Response queryVSetBySetId(String setID) {
+        try {
+            return userDataFeignClient.queryVSetBySetId(setID);
+        }catch (Exception e){
+            e.printStackTrace();
+            //记录日志
+            Response response = new Response();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("查询设置信息失败! " + e.getMessage());
 //            logProducer.sendLog("my-topic",new Gson().toJson(student));
             return response;
         }

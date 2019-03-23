@@ -42,5 +42,10 @@ public class SignController {
     public Response selectAllVSet(@RequestParam String claID,@RequestParam String stuId) throws Exception{
         return signService.selectVSet(claID,stuId);
     }
-
+    @PostMapping(value = "/queryVSetBySetId")
+    public Response queryVSetBySetId(@RequestParam String setID) throws Exception{
+        System.out.println("---queryVSetBySetId----"+setID);
+        Response response = signService.queryVSetBySetId(setID);
+        return response;
+    }
 }

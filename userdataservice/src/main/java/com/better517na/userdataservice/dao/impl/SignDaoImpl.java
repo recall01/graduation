@@ -45,4 +45,9 @@ public class SignDaoImpl implements ISignDao {
     public List<VSet> selectVSet(Map m) {
         return vSetMapping.selectVSet(m);
     }
+
+    @Override
+    public VSet queryVSetBySetId(String setID) {
+        return vSetMapping.queryVSetBySetId(setID);
+    }
 }

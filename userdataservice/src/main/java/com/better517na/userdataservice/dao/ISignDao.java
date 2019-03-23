@@ -19,4 +19,6 @@ public interface ISignDao {
     boolean insertSign(Sign sign) throws Exception;
 
     List<VSet> selectVSet(Map m);
+
+    VSet queryVSetBySetId(String setID);
 }

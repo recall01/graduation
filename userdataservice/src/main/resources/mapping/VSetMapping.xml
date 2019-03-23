@@ -21,5 +21,8 @@
         SELECT * FROM v_set WHERE SetID NOT IN (
         SELECT DISTINCT SetID FROM sign WHERE StuID = #{stuId}) and ClaID = #{claID};
     </select>
-
+    <select id="queryVSetBySetId" resultMap="vSetResult">
+        select * from v_set
+        where SetID = #{setID}
+    </select>
 </mapper>

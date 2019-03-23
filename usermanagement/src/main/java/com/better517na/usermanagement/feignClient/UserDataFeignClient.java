@@ -38,6 +38,8 @@ public interface UserDataFeignClient {
     Response queryAllPermissions() throws Exception;
     @PostMapping("/sign/selectVSet")
     Response selectVSet(@RequestParam(value = "claID")String claID, @RequestParam(value = "stuId")String stuId) throws Exception;
+    @PostMapping("/sign/queryVSetBySetId")
+    Response queryVSetBySetId(@RequestParam(value = "setID")String setID);
 }
 @Component
 class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeignClient>{
@@ -84,6 +86,11 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
 
             @Override
             public Response selectVSet(String claID, String stuId) throws Exception {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response queryVSetBySetId(String setID) {
                 return getFallback(throwable);
             }
         };

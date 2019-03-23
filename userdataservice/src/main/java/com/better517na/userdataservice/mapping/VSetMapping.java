@@ -11,4 +11,6 @@ public interface VSetMapping {
     List<VSet> selectAllVSet(String claID);
 
     List<VSet> selectVSet(Map m);
+
+    VSet queryVSetBySetId(String setID);
 }

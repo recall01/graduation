@@ -1,14 +1,11 @@
 package com.better517na.usermanagement.service.impl;
 
+import com.better517na.usermanagement.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.better517na.usermanagement.business.ISignBusiness;
 import com.better517na.usermanagement.business.IStudentBusiness;
-import com.better517na.usermanagement.model.LogProducer;
-import com.better517na.usermanagement.model.Response;
-import com.better517na.usermanagement.model.Sign;
-import com.better517na.usermanagement.model.Student;
 import com.better517na.usermanagement.service.ISignService;
 import com.better517na.usermanagement.service.IStudentService;
 import static com.better517na.usermanagement.utils.Constant.RESPONSE_FALSE;
@@ -48,8 +45,8 @@ public class SignServiceImpl implements ISignService {
 
     @Override
     public Response insertSign(Sign sign) {
+        Response response = new Response();
         if(sign == null){
-            Response response = new Response();
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("签到失败，入参错误! "+new Gson().toJson(sign));
             return response;
@@ -58,7 +55,30 @@ public class SignServiceImpl implements ISignService {
             sign.setSigId(IDUtil.getSignID());
         }
         sign.setSigTime(TimeUtil.getTime());
-        return signBusiness.insertSign(sign);
+        //1.根据setId查询该次签到的x,y坐标，范围
+        Response reset = this.queryVSetBySetId(sign.getSetId());
+        System.out.println("---"+new Gson().toJson(reset.getData()));
+        if(reset == null||reset.getData()==null){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("查询编号信息失败! "+new Gson().toJson(sign));
+            return response;
+        }
+        String s = new Gson().toJson(reset.getData());
+        VSet set = new Gson().fromJson(s,VSet.class);
+        //2.判断签到地址是否在范围内
+        double scope = Double.valueOf(set.getScope());
+        double setLatitude = Double.valueOf(set.getLatitude())*1000000;
+        double signLatitude = Double.valueOf(sign.getLatitude())*1000000;
+        double setLongitude = Double.valueOf(set.getLongitude())*1000000;
+        double signLongitude = Double.valueOf(sign.getLongitude())*1000000;
+        System.out.println("---Latitude:"+(setLatitude-signLatitude));
+        if(Math.abs(setLatitude-signLatitude)<=scope&&Math.abs(setLongitude-signLongitude)<=scope){
+            return signBusiness.insertSign(sign);
+        }
+        //3.判断是否在签到时间内
+        response.setStatus(RESPONSE_FALSE);
+        response.setMsg("该地址暂时无法签到!");
+        return response;
     }
 
     @Override
@@ -75,5 +95,16 @@ public class SignServiceImpl implements ISignService {
             return response;
         }
         return signBusiness.selectVSet(claID,stuId);
+    }
+
+    @Override
+    public Response queryVSetBySetId(String setID) {
+        if(setID==null||"".equals(setID)){
+            Response response = new Response();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("设置编号不能为空! ");
+            return response;
+        }
+        return signBusiness.queryVSetBySetId(setID);
     }
 }

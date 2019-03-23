@@ -52,7 +52,7 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
         if (message.what == 200){
             common.myToast(MainActivity.this,"签到成功!");
         }else {
-            common.myDailog("errorCode:"+message.what+"---errorMessage:"+message.obj,MainActivity.this);
+            common.myDailog(""+message.obj,MainActivity.this);
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_title,frag_a.newInstance(student)).commitAllowingStateLoss();
     }//onActivityResult

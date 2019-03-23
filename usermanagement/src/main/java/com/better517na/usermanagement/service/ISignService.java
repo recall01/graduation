@@ -12,4 +12,6 @@ public interface ISignService {
     Response insertSign(Sign sign);
 
     Response selectVSet(String claID, String stuId);
+
+    Response queryVSetBySetId(String setID);
 }

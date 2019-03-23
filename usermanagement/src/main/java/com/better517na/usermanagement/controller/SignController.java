@@ -55,6 +55,14 @@ public class SignController {
         return signService.selectVSet(claID,stuID);
     }
 
+    @SysLogger("queryVSetBySetId")
+//    @HystrixCommand(fallbackMethod = "queryAllFallback")
+    @ApiOperation(value = "根据设置编号查询设置信息接口",notes = "根据设置编号查询设置信息接口")
+    @RequestMapping(value = "queryVSetBySetId",method = RequestMethod.GET)
+    public Response queryVSetBySetId(@RequestParam @ApiParam(name = "setID",value = "设置编号",required = true) String setID){
+        return signService.queryVSetBySetId(setID);
+    }
+
     @SysLogger("queryAllVSet")
     @HystrixCommand(fallbackMethod = "queryAllFallback")
     @ApiOperation(value = "查询该班级所有可签到的设置接口",notes = "根据班级编号查询所有可签到的设置")
@@ -64,7 +72,7 @@ public class SignController {
     }
 
     @SysLogger("sign")
-    @HystrixCommand(fallbackMethod = "sigFallback")
+//    @HystrixCommand(fallbackMethod = "sigFallback")
     @ApiOperation(value = "学生签到的接口",notes = "传递正确参数进行签到")
     @RequestMapping(value = "sign",method = RequestMethod.POST)
     public Response sign(@RequestBody  @ApiParam(name = "sign",value = "签到数据",required = true) Sign sign){

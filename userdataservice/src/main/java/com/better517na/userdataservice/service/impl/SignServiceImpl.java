@@ -134,4 +134,25 @@ public class SignServiceImpl implements ISignService {
             return response;
         }
     }
+
+    @Override
+    public Response queryVSetBySetId(String setID) {
+        Response response = new Response();
+        if(setID==null||"".equals(setID)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("设置编号不能为空! ");
+            return response;
+        }
+        try {
+            VSet set = signDao.queryVSetBySetId(setID);
+            response.setStatus(RESPONSE_SUCCESS);
+            response.setData(set);
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("查询设置信息失败 "+e.getMessage());
+        }finally {
+            return response;
+        }
+    }
 }
