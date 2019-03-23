@@ -1,5 +1,6 @@
 package com.better517na.usermanagement.controller;
 
+import com.better517na.usermanagement.Annotation.SysLogger;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,12 +30,16 @@ import static com.better517na.usermanagement.utils.Constant.RESPONSE_FALSE;
 public class StudentController {
     @Autowired
     IStudentService studentService;
+
+    @SysLogger("registStudent")
     @HystrixCommand(fallbackMethod = "registFallback")
     @ApiOperation(value = "注册学生账号接口",notes = "填写必要的注册参数才能成功注册")
     @RequestMapping(value = "/regist",method = RequestMethod.POST)
     public Response registStudent(@RequestBody @ApiParam(name = "student",value = "用户注册数据",required = true) Student student){
         return studentService.registStudent(student);
     }
+
+    @SysLogger("loginStudent")
     @HystrixCommand(fallbackMethod = "loginFallback")
     @ApiOperation(value = "学生登录接口",notes = "填写正确的账号和密码才能成功登录")
     @ApiImplicitParams({
@@ -45,6 +50,8 @@ public class StudentController {
     public Response loginStudent(@RequestParam String account, @RequestParam String password){
         return studentService.loginStudent(account,password);
     }
+
+    @SysLogger("changeInfo")
     @HystrixCommand(fallbackMethod = "changeFallback")
     @ApiOperation(value = "修改学生信息接口",notes = "填写要修改的信息进行修改")
     @RequestMapping(value = "change",method = RequestMethod.POST)

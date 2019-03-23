@@ -14,7 +14,9 @@ import com.better517na.userdataservice.model.VSet;
 public interface ISignDao {
     List<SignRecord> signRecord(Map m) throws Exception;
 
-    List<VSet> selectVSet(String claID) throws Exception;
+    List<VSet> selectAllVSet(String claID) throws Exception;
 
     boolean insertSign(Sign sign) throws Exception;
+
+    List<VSet> selectVSet(Map m);
 }

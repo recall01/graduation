@@ -36,14 +36,14 @@ public class SignServiceImpl implements ISignService {
     }
 
     @Override
-    public Response selectVSet(String claID) {
+    public Response selectAllVSet(String claID) {
         if(null==claID||"".equals(claID)){
             Response response = new Response();
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("查询可签到失败，入参错误!");
             return response;
         }
-        return signBusiness.selectVSet(claID);
+        return signBusiness.selectAllVSet(claID);
     }
 
     @Override
@@ -59,5 +59,21 @@ public class SignServiceImpl implements ISignService {
         }
         sign.setSigTime(TimeUtil.getTime());
         return signBusiness.insertSign(sign);
+    }
+
+    @Override
+    public Response selectVSet(String claID, String stuId) {
+        Response response = new Response();
+        if(claID==null||"".equals(claID)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("班级编号不能为空! ");
+            return response;
+        }
+        if(stuId==null||"".equals(stuId)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("学号不能为空! ");
+            return response;
+        }
+        return signBusiness.selectVSet(claID,stuId);
     }
 }

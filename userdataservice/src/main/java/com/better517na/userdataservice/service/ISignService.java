@@ -11,7 +11,9 @@ import com.better517na.userdataservice.model.Student;
 public interface ISignService {
     Response signRecord(String id, String time);
 
-    Response selectVSet(String claID);
+    Response selectAllVSet(String claID);
 
     Response insertSign(Sign sign);
+
+    Response selectVSet(String claID, String stuId);
 }

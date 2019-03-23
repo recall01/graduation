@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorYanzheng">#00c4b9</color>
+    <color name="colorhuise">#DBD6D0</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorZhuce">#5BB8F3</color>
+    <color name="colorBarGrey">#2f323b</color>
+</resources>

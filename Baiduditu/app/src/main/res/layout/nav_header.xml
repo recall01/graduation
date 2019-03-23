@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:padding="10dp"
+    android:background="#2F323B">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/icon_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/touxiang"
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/nav_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="123456@qq.com"
+        android:textColor="#FFF"
+        android:textSize="14dp"/>
+    <TextView
+        android:id="@+id/nav_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/nav_email"
+        android:layout_below="@+id/icon_image"
+        android:text="Tony Green"
+        android:textColor="#FFF"
+        android:textSize="14dp"/>
+</RelativeLayout>

@@ -43,15 +43,15 @@ public class SignBusinessImpl implements ISignBusiness {
     }
 
     @Override
-    public Response selectVSet(String claID) {
+    public Response selectAllVSet(String claID) {
         try {
-            return userDataFeignClient.selectVSet(claID);
+            return userDataFeignClient.selectAllVSet(claID);
         }catch (Exception e){
             e.printStackTrace();
             //记录日志
             Response response = new Response();
             response.setStatus(RESPONSE_FALSE);
-            response.setMsg("查询可签到失败! " + e.getMessage());
+            response.setMsg("查询全部可签到失败! " + e.getMessage());
 //            logProducer.sendLog("my-topic",new Gson().toJson(student));
             return response;
         }
@@ -67,6 +67,21 @@ public class SignBusinessImpl implements ISignBusiness {
             Response response = new Response();
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("签到异常! " + e.getMessage());
+//            logProducer.sendLog("my-topic",new Gson().toJson(student));
+            return response;
+        }
+    }
+
+    @Override
+    public Response selectVSet(String claID, String stuId) {
+        try {
+            return userDataFeignClient.selectVSet(claID,stuId);
+        }catch (Exception e){
+            e.printStackTrace();
+            //记录日志
+            Response response = new Response();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("查询可签到失败! " + e.getMessage());
 //            logProducer.sendLog("my-topic",new Gson().toJson(student));
             return response;
         }

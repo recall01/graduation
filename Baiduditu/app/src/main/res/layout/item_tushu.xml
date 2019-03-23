@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="0.5dp"
+    android:background="#fff">
+
+    <ImageView
+        android:id="@+id/tupian"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="3dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:srcCompat="@drawable/touxiang" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/timu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="我只是题目"
+            android:textColor="@color/smssdk_black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/shuliang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:text="当前所剩余数量：0"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shijian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="3dp"
+            android:text="2015-05-11"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

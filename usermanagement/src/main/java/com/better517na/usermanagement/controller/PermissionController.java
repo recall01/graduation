@@ -1,5 +1,6 @@
 package com.better517na.usermanagement.controller;
 
+import com.better517na.usermanagement.Annotation.SysLogger;
 import com.better517na.usermanagement.model.Student;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ import static com.better517na.usermanagement.utils.Constant.RESPONSE_FALSE;
 public class PermissionController {
     @Autowired
     private IPermissionService permissionService;
+
+    @SysLogger("queryAllPermissions")
     @HystrixCommand(fallbackMethod = "queryAllFallback")
     @ApiOperation(value = "查询所有权限接口",notes = "查询所有权限")
     @RequestMapping(value = "/queryAllPermissions",method = RequestMethod.GET)

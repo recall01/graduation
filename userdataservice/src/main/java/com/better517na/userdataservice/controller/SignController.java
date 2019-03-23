@@ -30,13 +30,17 @@ public class SignController {
     public Response signRecord(@RequestParam String id, @RequestParam String time) throws Exception{
         return signService.signRecord(id,time);
     }
-    @PostMapping(value = "/selectVSet")
-    public Response selectVSet(@RequestParam String claID) throws Exception{
-        return signService.selectVSet(claID);
+    @PostMapping(value = "/selectAllVSet")
+    public Response selectAllVSet(@RequestParam String claID) throws Exception{
+        return signService.selectAllVSet(claID);
     }
     @PostMapping(value = "/insertSign")
     public Response insertSign(@RequestBody Sign sign) throws Exception{
         return signService.insertSign(sign);
+    }
+    @PostMapping(value = "/selectVSet")
+    public Response selectAllVSet(@RequestParam String claID,@RequestParam String stuId) throws Exception{
+        return signService.selectVSet(claID,stuId);
     }
 
 }

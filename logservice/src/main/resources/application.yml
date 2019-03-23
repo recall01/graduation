@@ -1,0 +1,19 @@
+server:
+  port: 8041
+spring:
+  application:
+    name: logservice
+  rabbitmq:
+    host: 47.101.210.56
+    port: 5672
+    username: admin
+    password: admin
+    publisher-confirms: true
+    virtual-host: /
+eureka:
+  client:
+    service-url:
+      defaultZone: http://47.101.210.56:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}

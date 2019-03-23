@@ -32,12 +32,17 @@ public class SignDaoImpl implements ISignDao {
     }
 
     @Override
-    public List<VSet> selectVSet(String claID) throws Exception {
-        return vSetMapping.selectVSet(claID);
+    public List<VSet> selectAllVSet(String claID) throws Exception {
+        return vSetMapping.selectAllVSet(claID);
     }
 
     @Override
     public boolean insertSign(Sign sign) throws Exception{
         return signMapping.insertSign(sign);
+    }
+
+    @Override
+    public List<VSet> selectVSet(Map m) {
+        return vSetMapping.selectVSet(m);
     }
 }

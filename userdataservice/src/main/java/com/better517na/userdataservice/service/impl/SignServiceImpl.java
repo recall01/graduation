@@ -59,7 +59,7 @@ public class SignServiceImpl implements ISignService {
     }
 
     @Override
-    public Response selectVSet(String claID) {
+    public Response selectAllVSet(String claID) {
         Response response = new Response();
         if(null==claID||"".equals(claID)){
             response.setStatus(RESPONSE_FALSE);
@@ -67,7 +67,7 @@ public class SignServiceImpl implements ISignService {
             return response;
         }
         try {
-            List<VSet> vSets = signDao.selectVSet(claID);
+            List<VSet> vSets = signDao.selectAllVSet(claID);
             response.setStatus(RESPONSE_SUCCESS);
             response.setData(vSets);
             response.setMsg(""+vSets.size());
@@ -100,6 +100,36 @@ public class SignServiceImpl implements ISignService {
             e.printStackTrace();
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("签到异常! "+e.getMessage());
+        }finally {
+            return response;
+        }
+    }
+
+    @Override
+    public Response selectVSet(String claID, String stuId) {
+        Response response = new Response();
+        if(claID==null||"".equals(claID)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("班级编号不能为空! ");
+            return response;
+        }
+        if(stuId==null||"".equals(stuId)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("学号不能为空! ");
+            return response;
+        }
+        Map map = new HashMap();
+        try {
+            map.put("claID",claID);
+            map.put("stuId",stuId);
+            List<VSet> vSets = signDao.selectVSet(map);
+            response.setStatus(RESPONSE_SUCCESS);
+            response.setData(vSets);
+            response.setMsg(""+vSets.size());
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("查询可签到失败 "+e.getMessage());
         }finally {
             return response;
         }

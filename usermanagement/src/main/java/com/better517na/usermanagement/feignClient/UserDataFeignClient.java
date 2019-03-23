@@ -29,14 +29,15 @@ public interface UserDataFeignClient {
 
     @PostMapping("/sign/record")
     Response signRecord(@RequestParam(value = "id") String id, @RequestParam(value = "time") String time) throws Exception;
-    @PostMapping("/sign/selectVSet")
-    Response selectVSet(@RequestParam(value = "claID") String claID) throws Exception;
+    @PostMapping("/sign/selectAllVSet")
+    Response selectAllVSet(@RequestParam(value = "claID") String claID) throws Exception;
     @PostMapping("/sign/insertSign")
     Response insertSign(@RequestBody Sign sign) throws Exception;
 
     @PostMapping("/permission/queryAllPermissions")
     Response queryAllPermissions() throws Exception;
-
+    @PostMapping("/sign/selectVSet")
+    Response selectVSet(@RequestParam(value = "claID")String claID, @RequestParam(value = "stuId")String stuId) throws Exception;
 }
 @Component
 class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeignClient>{
@@ -67,7 +68,7 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
             }
 
             @Override
-            public Response selectVSet(String claID) throws Exception {
+            public Response selectAllVSet(String claID) throws Exception {
                 return getFallback(throwable);
             }
 
@@ -78,6 +79,11 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
 
             @Override
             public Response queryAllPermissions() throws Exception {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response selectVSet(String claID, String stuId) throws Exception {
                 return getFallback(throwable);
             }
         };

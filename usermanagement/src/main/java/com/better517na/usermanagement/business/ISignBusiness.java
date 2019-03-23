@@ -10,7 +10,9 @@ import com.better517na.usermanagement.model.Student;
  */
 public interface ISignBusiness {
     Response signRecord(String id, String time);
-    Response selectVSet(String claID);
+    Response selectAllVSet(String claID);
 
     Response insertSign(Sign sign);
+
+    Response selectVSet(String claID, String stuId);
 }

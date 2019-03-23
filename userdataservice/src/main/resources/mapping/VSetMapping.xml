@@ -4,6 +4,7 @@
     <resultMap id="vSetResult" type="com.better517na.userdataservice.model.VSet">
         <result property="claID" column="ClaID"/>
         <result property="claName" column="ClaName"/>
+        <result property="setID" column="SetID"/>
         <result property="setName" column="SetName"/>
         <result property="longitude" column="Longitude"/>
         <result property="latitude" column="Latitude"/>
@@ -12,10 +13,13 @@
         <result property="endSigTime" column="EndSigTime"/>
         <result property="createrName" column="CreaterName"/>
     </resultMap>
-    <select id="selectVSet" resultMap="vSetResult">
+    <select id="selectAllVSet" resultMap="vSetResult">
         select * from v_set
         where ClaID = #{claID}
     </select>
-
+    <select id="selectVSet" resultMap="vSetResult">
+        SELECT * FROM v_set WHERE SetID NOT IN (
+        SELECT DISTINCT SetID FROM sign WHERE StuID = #{stuId}) and ClaID = #{claID};
+    </select>
 
 </mapper>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">校园签到</string>
+    <string name="zulin_pintai">租赁平台</string>
+    <string name="zulin_chuzu">我要出租</string>
+    <string name="zulin_jilu">租赁记录</string>
+    <string name="zhanghao_zhuxiao">账号注销</string>
+    <string name="icon_text1">签到</string>
+    <string name="icon_text2">商店</string>
+    <string name="icon_text3">分享</string>
+    <string name="icon_text4">求助</string>
+    <string name="icon_techer_location">设置签到位置</string>
+</resources>

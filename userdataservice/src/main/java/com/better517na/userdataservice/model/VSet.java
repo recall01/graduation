@@ -4,12 +4,21 @@ public class VSet {
     private String claID;
     private String claName;
     private String setName;
+    private String setID;
     private String longitude;
     private String latitude;
     private String scope;
     private String startSigTime;
     private String endSigTime;
     private String createrName;
+
+    public String getSetID() {
+        return setID;
+    }
+
+    public void setSetID(String setID) {
+        this.setID = setID;
+    }
 
     public String getLatitude() {
         return latitude;

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <!--标题-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E5E5E5"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="提示"
+            android:textAlignment="center"
+            android:textColor="@color/colorZhuce"
+            android:textSize="20sp" />
+        <!--提示文字-->
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorhuise" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
+            android:paddingTop="20dp"
+            android:text="你确定要退出吗？"
+            android:textAlignment="center"
+            android:textColor="@color/colorZhuce"
+            android:textSize="18sp" />
+        <!--线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorhuise" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!--确定按钮-->
+        <Button
+            android:id="@+id/btn_determine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#E5E5E5"
+            android:text="确定"
+            android:textColor="@color/colorZhuce"
+            android:textSize="18sp" />
+        <!--线-->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorhuise"
+            />
+        <!--取消按钮-->
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#E5E5E5"
+            android:text="取消"
+            android:textColor="@color/colorZhuce"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</LinearLayout>
