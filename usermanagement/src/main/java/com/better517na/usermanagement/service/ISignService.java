@@ -4,6 +4,8 @@ import com.better517na.usermanagement.model.Response;
 import com.better517na.usermanagement.model.Sign;
 import com.better517na.usermanagement.model.Student;
 
+import java.text.ParseException;
+
 public interface ISignService {
     Response signRecord(String id, String time);
 

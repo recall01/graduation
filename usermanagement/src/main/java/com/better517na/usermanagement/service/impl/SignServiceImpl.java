@@ -13,6 +13,9 @@ import com.better517na.usermanagement.utils.IDUtil;
 import com.better517na.usermanagement.utils.TimeUtil;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.util.Date;
+
 @Service
 public class SignServiceImpl implements ISignService {
     @Autowired
@@ -67,17 +70,30 @@ public class SignServiceImpl implements ISignService {
         VSet set = new Gson().fromJson(s,VSet.class);
         //2.判断签到地址是否在范围内
         double scope = Double.valueOf(set.getScope());
-        double setLatitude = Double.valueOf(set.getLatitude())*1000000;
-        double signLatitude = Double.valueOf(sign.getLatitude())*1000000;
-        double setLongitude = Double.valueOf(set.getLongitude())*1000000;
-        double signLongitude = Double.valueOf(sign.getLongitude())*1000000;
-        System.out.println("---Latitude:"+(setLatitude-signLatitude));
+        double setLatitude = Double.valueOf(set.getLatitude())*10000;
+        double signLatitude = Double.valueOf(sign.getLatitude())*10000;
+        double setLongitude = Double.valueOf(set.getLongitude())*10000;
+        double signLongitude = Double.valueOf(sign.getLongitude())*10000;
         if(Math.abs(setLatitude-signLatitude)<=scope&&Math.abs(setLongitude-signLongitude)<=scope){
-            return signBusiness.insertSign(sign);
+            //3.判断是否在签到时间内
+            try {
+                Date startTime = TimeUtil.getTimeByString(set.getStartSigTime());
+                Date endTime = TimeUtil.getTimeByString(set.getEndSigTime());
+                Date nowTime = TimeUtil.getTimeByString(TimeUtil.getTime());
+                System.out.println(startTime.getTime()+" "+endTime.getTime()+" "+nowTime.getTime());
+                if(nowTime.getTime()>=startTime.getTime()&&nowTime.getTime()<=endTime.getTime()){
+                    return signBusiness.insertSign(sign);
+                }else {
+                    response.setStatus(RESPONSE_FALSE);
+                    response.setMsg("该时间暂时无法签到!");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else {
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("该地址暂时无法签到!");
         }
-        //3.判断是否在签到时间内
-        response.setStatus(RESPONSE_FALSE);
-        response.setMsg("该地址暂时无法签到!");
         return response;
     }
 
@@ -94,6 +110,7 @@ public class SignServiceImpl implements ISignService {
             response.setMsg("学号不能为空! ");
             return response;
         }
+        //根据结果，判断该时间是否在签到时间段内
         return signBusiness.selectVSet(claID,stuId);
     }
 
