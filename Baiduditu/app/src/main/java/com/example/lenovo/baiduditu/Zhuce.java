@@ -9,9 +9,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.myClass.common;
+import com.google.gson.Gson;
 import com.mob.MobSDK;
 
 import org.json.JSONObject;
@@ -19,6 +22,7 @@ import org.json.JSONObject;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -27,11 +31,15 @@ import okhttp3.Response;
 import static cn.smssdk.SMSSDK.getSupportedCountries;
 import static cn.smssdk.SMSSDK.getVerificationCode;
 
-public class Zhuce extends AppCompatActivity implements View.OnClickListener {
+public class Zhuce extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener {
+    private final static String REGIST_URL = "http://10.18.42.63:8801/student/regist";
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     //app key和app secret 需要填自己应用的对应的！这里只是我自己创建的应用。
     private final String appKey="22d8290d63094";
     private final String appSecret="5d190cd04e968ca288e776fe376d84d6";
     private EventHandler eh;
+    private RadioGroup genderRG;
+    private Student student = new Student();
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -61,7 +69,7 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener {
     private Button bt_getCode,bt_vertify,bt_back;
     private EditText phoneNum;
     //手机号码
-    private String phone="",code="",stu_id="",name="",password="",repassword="";
+    private String phone="",code="",stuId="",stuName="",password="",repassword="",claId="",stuMail="";
     //控制按钮样式是否改变
     private boolean tag = true;
     //每次验证请求需要间隔60S
@@ -114,6 +122,8 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener {
         bt_getCode= findViewById(R.id.bt_getCode);
         bt_back = findViewById(R.id.back);
         bt_back.setOnClickListener(this);
+        genderRG = findViewById(R.id.gender);
+        genderRG.setOnCheckedChangeListener(this);
         phoneNum = findViewById(R.id.et_phone);
         phoneNum.addTextChangedListener(new TextWatcher() {
 
@@ -143,7 +153,19 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener {
         bt_vertify= findViewById(R.id.bt_verify);
         bt_getCode.setOnClickListener(this);
         bt_vertify.setOnClickListener(this);
+        
     }   //oncreat结束
+    @Override
+    public void onCheckedChanged(RadioGroup group,int checkedId){
+        switch (checkedId){
+            case R.id.male:
+                student.setStuSex(0);break;
+            case R.id.female:
+                student.setStuSex(1);break;
+        }
+    }
+
+
 
     public void onClick(View v){
         switch (v.getId()){
@@ -156,46 +178,59 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener {
     //验证验证码函数
     public void yanzheng(){
         code=((EditText)findViewById(R.id.et_code)).getText().toString();
-        stu_id=((EditText)findViewById(R.id.account)).getText().toString();
-        name=((EditText)findViewById(R.id.wp_shuoming)).getText().toString();
+        stuId=((EditText)findViewById(R.id.stuId)).getText().toString();
+        claId = ((EditText)findViewById(R.id.claId)).getText().toString();
+        stuName=((EditText)findViewById(R.id.stuName)).getText().toString();
+        stuMail = ((EditText)findViewById(R.id.stuMail)).getText().toString();
         password=((EditText)findViewById(R.id.password)).getText().toString();
         repassword=((EditText)findViewById(R.id.repassword)).getText().toString();
-        if(stu_id.length()>8&&stu_id.length()<12){
-            boolean i = common.isConSpeCharacters(name);
-            if(i&&!name.equals("")){
-                boolean result1=password.matches("[0-9]+");
-                boolean result2=password.matches("[a-zA-Z]+");
-                if(!result1&&!result2&&password.length()>5&&password.length()<20){
-                    if(password.equals(repassword)){
-                        password = common.md5(password);
-                        if (code.equals("")){
-                            Toast.makeText(Zhuce.this,"验证码不能为空",Toast.LENGTH_SHORT).show();
-                        }else{
-                            //填写了验证码，进行验证
-                            sendRequestWithOkHttp();
-                        }
-                    }else {
-                        Toast.makeText(Zhuce.this,"两次密码不一样！",Toast.LENGTH_SHORT).show();
-                    }
-                }else {
-                    Toast.makeText(Zhuce.this,"密码输入错误！",Toast.LENGTH_SHORT).show();
-                }
-            }else {
-                Toast.makeText(Zhuce.this,"名字不正确！",Toast.LENGTH_SHORT).show();
-            }
-        }else {
+        phone=((EditText)findViewById(R.id.et_phone)).getText().toString();
+        student.setStuPhone(phone);
+        if(stuId.length()<6||stuId.length()>12){
             Toast.makeText(Zhuce.this,"学号输入错误！",Toast.LENGTH_SHORT).show();
+            return;
         }
-
-
-
-
+        student.setStuNumber(stuId);
+        if(claId.length()<4||claId.length()>12){
+            Toast.makeText(Zhuce.this,"班级编号错误！",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        student.setClaID(claId);
+        boolean i = common.isConSpeCharacters(stuName);
+        if(!i||"".equals(stuName)){
+            Toast.makeText(Zhuce.this,"名字不正确！",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        student.setStuName(stuName);
+        if(stuMail.length()<6||stuMail.length()>20){
+            Toast.makeText(Zhuce.this,"邮箱有误！",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        student.setStuMail(stuMail);
+        boolean result1=password.matches("[0-9]+");
+        boolean result2=password.matches("[a-zA-Z]+");
+        if(result1||result2||password.length()<6||password.length()>20){
+            Toast.makeText(Zhuce.this,"密码输入错误！",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!password.equals(repassword)){
+            Toast.makeText(Zhuce.this,"两次密码不一样！",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        password = common.md5(password);
+        student.setStuPassword(password);
+        if("".equals(code)){
+            Toast.makeText(Zhuce.this,"验证码不能为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //填写了验证码，进行验证
+        sendRequestWithOkHttp();
     }
 
     //获得验证码函数
     public void getCode(){
         phone=((EditText)findViewById(R.id.et_phone)).getText().toString();
-        if(phone.equals("")){
+        if("".equals(phone)){
             Toast.makeText(Zhuce.this,"手机号不能为空",Toast.LENGTH_SHORT).show();
         }else{
             //填写了手机号码
@@ -269,7 +304,8 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener {
                 try {
                     //已POST方式传递数据
                     OkHttpClient client = new OkHttpClient();
-                    if(phone==""){
+                    RequestBody body = RequestBody.create(JSON,new Gson().toJson(student));
+    /*                if(phone==""){
                         phone=((EditText)findViewById(R.id.et_phone)).getText().toString();
                     }else if(code=="") {
                         code=((EditText)findViewById(R.id.et_code)).getText().toString();
@@ -278,10 +314,10 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener {
                             .add("phone", phone)
                             .add("zone", "86")
                             .add("code", code)
-                            .add("user_id", stu_id)
-                            .add("use_name", name)
-                            .add("use_password", password).build();
-                    Request request = new Request.Builder().url("http://1.873717549.applinzi.com/Android_duanxinyanzheng.php").post(requestBody).build();
+                            .add("user_id", stuId)
+                            .add("use_name", stuName)
+                            .add("use_password", password).build();*/
+                    Request request = new Request.Builder().url(REGIST_URL).post(body).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     parseJSONWithJSONObject(responseData);

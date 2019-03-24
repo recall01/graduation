@@ -16,7 +16,10 @@
     </resultMap>
     <select id="selectStudent" resultMap="vStdentResult">
         select * from v_students
-        where StuNumber = #{account} or StuPhone = #{account} and StuPassword = #{password}
+        where StuNumber = #{account} and StuPassword = #{password}
+        union
+        select * from v_students
+        where StuPhone = #{account} and StuPassword = #{password}
     </select>
 
 

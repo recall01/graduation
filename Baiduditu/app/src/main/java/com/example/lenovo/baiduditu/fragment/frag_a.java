@@ -114,7 +114,7 @@ public class frag_a extends Fragment {
         name = student.getStuName();
         id = student.getStuId();
         email = student.getStuMail();
-        HttpUtil.getOkHttpRequest(URL+"?claID="+student.getClaId()+"&stuID="+student.getStuId(), new Callback() {
+        HttpUtil.getOkHttpRequest(URL+"?claID="+student.getClaID()+"&stuID="+student.getStuId(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Message message = new Message();

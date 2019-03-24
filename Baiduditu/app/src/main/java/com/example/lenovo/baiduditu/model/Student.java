@@ -10,7 +10,7 @@ public class Student implements Serializable{
     private String stuId;
     private String registerTime;
     private String permissions;
-    private String claId;
+    private String claID;
     private String className;
     private String stuMail;
     private String stuName;
@@ -19,12 +19,12 @@ public class Student implements Serializable{
     private String stuPhone;
     private int stuSex;
 
-    public String getClaId() {
-        return claId;
+    public String getClaID() {
+        return claID;
     }
 
-    public void setClaId(String claId) {
-        this.claId = claId;
+    public void setClaID(String claId) {
+        this.claID = claId;
     }
 
     public String getStuId() {

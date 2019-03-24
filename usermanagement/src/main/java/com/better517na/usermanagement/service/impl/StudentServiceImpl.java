@@ -30,6 +30,7 @@ public class StudentServiceImpl implements IStudentService {
 //    @HystrixCommand(fallbackMethod = "requestFallBack")
     @Override
     public Response registStudent(Student student) {
+        //1.先根据claId判断该班级是否存在
         student.setStuId(IDUtil.getStudentID());
         if(student.getStuMail()==null){
             student.setStuMail("");
@@ -54,7 +55,13 @@ public class StudentServiceImpl implements IStudentService {
     public Response loginStudent(String account,String password) {
         Response response = new Response();
         if(account!=null&&!"".equals(account)&&password!=null&&!"".equals(password)){
-            return studentBusiness.selectStudent(account,password);
+            //判断查询结果是否为空，为空返回查询失败
+            response = studentBusiness.selectStudent(account, password);
+            if(response.getData()==null){
+                response.setStatus(RESPONSE_FALSE);
+                response.setMsg("查询结果为空,检查账号密码是否正确。");
+            }
+            return response;
         }else {
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("账号或密码为空 account:"+account+"--password:"+password);

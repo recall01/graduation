@@ -70,7 +70,7 @@
                         android:textSize="16sp" />
 
                     <EditText
-                        android:id="@+id/account"
+                        android:id="@+id/stuId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -102,7 +102,7 @@
                         android:textSize="16sp" />
 
                     <EditText
-                        android:id="@+id/wp_shuoming"
+                        android:id="@+id/claId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -137,7 +137,7 @@
                         android:textSize="16sp" />
 
                     <EditText
-                        android:id="@+id/wp_shuoming"
+                        android:id="@+id/stuName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -160,6 +160,43 @@
                     android:background="#ffffff"
                     android:orientation="horizontal">
 
+                    <RadioGroup
+                        android:id="@+id/gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="男生" />
+
+                        <RadioButton
+                            android:id="@+id/female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="女生" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#E3E4E4" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -170,7 +207,7 @@
                         android:textSize="16sp" />
 
                     <EditText
-                        android:id="@+id/wp_shuoming"
+                        android:id="@+id/stuMail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -210,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#ffffff"
-                        android:hint="请输入密码"
+                        android:hint="数字和字母组合"
                         android:inputType="textPassword"
                         android:padding="12dp"
                         android:textSize="16sp" />

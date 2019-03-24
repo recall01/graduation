@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loginService.rememberPassword(pref,account.getText().toString(),password.getText().toString());
-                RequestBody requestBody =new FormBody.Builder().add("account",account.getText().toString()).add("password",password.getText().toString()).build();
+                RequestBody requestBody =new FormBody.Builder().add("account",account.getText().toString()).add("password",common.md5(password.getText().toString())).build();
 //                MediaType mt = MediaType.parse("application/json; charset=utf-8");
 //                Student student = new Student();
 //                student.setStuSex(1);
@@ -154,18 +154,22 @@ public class LoginActivity extends AppCompatActivity {
             int status = jsonObject.getInt("status");
             if(status==200){
                 JSONObject js = jsonObject.getJSONObject("data");
-                student.setStuName(js.getString("stuName"));
-                student.setStuId(js.getString("stuId"));
-                student.setStuSex(js.getInt("stuSex"));
-                student.setStuNumber(js.getString("stuNumber"));
-                student.setStuPassword(js.getString("stuPassword"));
-                student.setStuPhone(js.getString("stuPhone"));
-                student.setStuMail(js.getString("stuMail"));
-                student.setClaId(js.getString("claID"));
-                student.setClassName(js.getString("claName"));
-                student.setRegisterTime(js.getString("registerTime"));
-                student.setPermissions(js.getString("permissions"));
-                message.what = 3;
+                if(js!=null){
+                    student.setStuName(js.getString("stuName"));
+                    student.setStuId(js.getString("stuId"));
+                    student.setStuSex(js.getInt("stuSex"));
+                    student.setStuNumber(js.getString("stuNumber"));
+                    student.setStuPassword(js.getString("stuPassword"));
+                    student.setStuPhone(js.getString("stuPhone"));
+                    student.setStuMail(js.getString("stuMail"));
+                    student.setClaID(js.getString("claID"));
+                    student.setClassName(js.getString("claName"));
+                    student.setRegisterTime(js.getString("registerTime"));
+                    student.setPermissions(js.getString("permissions"));
+                    message.what = 3;
+                }else {
+                    message.what = 2;
+                }
             }else {
                 message.what = 2;
             }
