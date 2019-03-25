@@ -8,4 +8,6 @@ public interface IStudentService {
     Response registStudent(Student student);
     Response loginStudent(String account, String password);
     Response changeInfo(Student student);
+
+    Response verifySMSCode(String url, String params);
 }
