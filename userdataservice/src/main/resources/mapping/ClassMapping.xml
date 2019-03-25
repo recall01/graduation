@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.better517na.userdataservice.mapping.ClassMapping">
+    <resultMap id="classResult" type="com.better517na.userdataservice.model.Class">
+        <result property="claID" column="ClaID"/>
+        <result property="claName" column="ClaName"/>
+        <result property="createTime" column="CreateTime"/>
+        <result property="createrID" column="CreaterID"/>
+    </resultMap>
+    <select id="queryClassByClaID" resultMap="classResult">
+        select * from classes
+        where ClaID = #{claID}
+    </select>
+</mapper>

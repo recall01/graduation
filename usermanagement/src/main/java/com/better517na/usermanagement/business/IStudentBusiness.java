@@ -11,4 +11,6 @@ public interface IStudentBusiness {
     Response registStudent(Student student);
     Response selectStudent(String account,String password);
     Response changeInfo(Student student);
+
+    Response queryClassByClaID(String claID);
 }

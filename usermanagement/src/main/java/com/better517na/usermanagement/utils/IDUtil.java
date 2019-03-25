@@ -16,4 +16,10 @@ public class IDUtil {
         String format = simpleDateFormat.format(date);
         return "Sig"+format;
     }
+    public static String getSignID(String stuNumber){
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HHmmss");
+        String format = simpleDateFormat.format(date);
+        return "Sig"+stuNumber+format;
+    }
 }

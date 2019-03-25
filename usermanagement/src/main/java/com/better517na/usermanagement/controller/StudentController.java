@@ -58,14 +58,12 @@ public class StudentController {
     public Response changeInfo(@RequestBody  @ApiParam(name = "student",value = "修改学生数据",required = true) Student student){
         return studentService.changeInfo(student);
     }
-    //短信验证码验证接口
-    @SysLogger("verifySMSCode")
-    @ApiOperation(value = "短信验证码验证接口",notes = "填写验证码")
-    @RequestMapping(value = "verifySMSCode",method = RequestMethod.GET)
-    public Response verifySMSCode(@RequestParam  @ApiParam(name = "phone",value = "手机号",required = true) String phone,@RequestParam  @ApiParam(name = "code",value = "验证码",required = true) String code){
-        String url = "https://webapi.sms.mob.com/sms/verify";
-        String params = "appkey=22d8290d63094&phone="+phone+"&zone=86&&code="+code;
-        return studentService.verifySMSCode(url,params);
+
+    @SysLogger("queryClassByClaID")
+    @ApiOperation(value = "根据班级编号查询班级是否存在",notes = "填写必要的班级编号")
+    @RequestMapping(value = "/queryClass",method = RequestMethod.GET)
+    public Response queryClassByClaID(@RequestParam @ApiParam(name = "claID",value = "班级编号",required = true) String claID){
+        return studentService.queryClassByClaID(claID);
     }
 
 //回调函数

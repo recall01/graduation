@@ -36,6 +36,10 @@ public class StudentController {
     public Response changeInfo(@RequestBody Student student) throws Exception{
         return studentService.changeInfo(student);
     }
+    @PostMapping(value = "/queryClass")
+    public Response queryClassByClaID(@RequestParam String claID) throws Exception{
+        return studentService.queryClassByClaID(claID);
+    }
 
     @PostMapping(value = "/test")
     public void test() throws Exception{

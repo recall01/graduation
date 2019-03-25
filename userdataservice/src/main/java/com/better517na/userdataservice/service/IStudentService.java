@@ -11,4 +11,6 @@ public interface IStudentService {
     Response registStudent(Student student);
     Response selectStudent(String account,String password) throws Exception;
     Response changeInfo(Student student);
+
+    Response queryClassByClaID(String claID);
 }

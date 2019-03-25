@@ -66,4 +66,19 @@ public class StudentBusinessImpl implements IStudentBusiness {
             return response;
         }
     }
+
+    @Override
+    public Response queryClassByClaID(String claID) {
+        try {
+            return userDataFeignClient.queryClassByClaID(claID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //记录日志
+            Response response = new Response();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("查询班级信息失败! " + e.getMessage());
+//            logProducer.sendLog("my-topic",new Gson().toJson(student));
+            return response;
+        }
+    }
 }

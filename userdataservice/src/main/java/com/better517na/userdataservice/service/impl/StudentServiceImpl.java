@@ -1,6 +1,8 @@
 package com.better517na.userdataservice.service.impl;
 
 import javax.annotation.Resource;
+
+import com.better517na.userdataservice.model.Class;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import com.better517na.userdataservice.dao.IStudentDao;
@@ -76,6 +78,28 @@ public class StudentServiceImpl implements IStudentService {
             e.printStackTrace();
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("修改学生信息异常 "+e.getMessage());
+        }finally {
+            return response;
+        }
+    }
+
+    @Override
+    public Response queryClassByClaID(String claID) {
+        Response response = new Response();
+        try {
+            Class c = studentDao.queryClassByClaID(claID);
+            if(c!=null){
+                response.setStatus(RESPONSE_SUCCESS);
+                response.setData(c);
+                response.setMsg("查询班级信息成功");
+            }else {
+                response.setStatus(RESPONSE_FALSE);
+                response.setMsg("暂无该班级信息");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("查询班级信息异常 "+e.getMessage());
         }finally {
             return response;
         }

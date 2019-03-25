@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+
+import com.better517na.userdataservice.mapping.ClassMapping;
+import com.better517na.userdataservice.model.Class;
 import org.springframework.stereotype.Component;
 import com.better517na.userdataservice.dao.IStudentDao;
 import com.better517na.userdataservice.mapping.StudentsMapping;
@@ -21,6 +24,8 @@ public class StudentDaoImpl implements IStudentDao {
     StudentsMapping studentsMapping;
     @Resource
     private VStudentsMapping vStudentsMapping;
+    @Resource
+    private ClassMapping classMapping;
 
     @Override
     public boolean registStudent(Student student) throws Exception{
@@ -42,5 +47,10 @@ public class StudentDaoImpl implements IStudentDao {
     @Override
     public boolean changeInfo(Student student) throws Exception {
         return studentsMapping.changeInfo(student);
+    }
+
+    @Override
+    public Class queryClassByClaID(String claID) throws Exception {
+        return classMapping.queryClassByClaID(claID);
     }
 }

@@ -19,8 +19,12 @@ import com.mob.MobSDK;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -33,6 +37,7 @@ import static cn.smssdk.SMSSDK.getVerificationCode;
 
 public class Zhuce extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener {
     private final static String REGIST_URL = "http://10.18.42.63:8801/student/regist";
+    private final static String VERIFY_URL = "http://10.18.42.63:8801/sms/verifySMSCode";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     //app key和app secret 需要填自己应用的对应的！这里只是我自己创建的应用。
     private final String appKey="22d8290d63094";
@@ -46,21 +51,21 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
             switch (msg.arg1) {
                 case 0:
                     //客户端验证成功，可以进行注册,返回校验的手机和国家代码phone/country
-                    Toast.makeText(Zhuce.this, msg.obj.toString()+"验证成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Zhuce.this, "验证成功", Toast.LENGTH_SHORT).show();
                     break;
                 case 1:
                     //获取验证码成功
                     Toast.makeText(Zhuce.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     break;
-                case 2:
                     //返回支持发送验证码的国家列表
-                    //Toast.makeText(Zhuce.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
-                    if(msg.obj.toString()=="0"){
-                        common.myDailog("账号注册成功！",Zhuce.this);
-                    }else {
-                        common.myDailog(msg.obj.toString(),Zhuce.this);
-                    }
+                case 2:
+                    Toast.makeText(Zhuce.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     break;
+                    //注册成功
+                case 3:
+                    common.myDailog(msg.obj.toString(),Zhuce.this);
+                    break;
+                 default:common.myDailog("系统异常 "+msg.obj.toString(),Zhuce.this);break;
             }
         }
     };
@@ -87,20 +92,17 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
         eh=new EventHandler(){
             @Override
             public void afterEvent(int event, int result, Object data) {
+                Message msg = new Message();
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                        Message msg = new Message();
                         msg.arg1 = 0;
-                        msg.obj = data;
-                        handler.sendMessage(msg);
                         //提交验证码,并且正确成功
                     }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                         //获取验证码成功
-                        Message msg = new Message();
+                        //Message msg = new Message();
                         msg.arg1 = 1;
                         msg.obj = "获取验证码成功";
-                        handler.sendMessage(msg);
                     }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
                         //返回支持发送验证码的国家列表
  /*                       Message msg = new Message();
@@ -109,13 +111,12 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
                         handler.sendMessage(msg); */
                     }
                 }else{
-                    Message msg = new Message();
                     //返回支持发送验证码的国家列表
-                    msg.arg1 = 3;
+                    msg.arg1 = 2;
                     msg.obj = "验证失败";
-                    handler.sendMessage(msg);
                     ((Throwable)data).printStackTrace();
                 }
+                handler.sendMessage(msg);
             }
         };
         SMSSDK.registerEventHandler(eh); //注册短信回调
@@ -302,47 +303,70 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
             @Override
             public void run() {
                 try {
-                    //已POST方式传递数据
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody body = RequestBody.create(JSON,new Gson().toJson(student));
-    /*                if(phone==""){
-                        phone=((EditText)findViewById(R.id.et_phone)).getText().toString();
-                    }else if(code=="") {
-                        code=((EditText)findViewById(R.id.et_code)).getText().toString();
-                    }
-                    RequestBody requestBody = new FormBody.Builder()
-                            .add("phone", phone)
-                            .add("zone", "86")
-                            .add("code", code)
-                            .add("user_id", stuId)
-                            .add("use_name", stuName)
-                            .add("use_password", password).build();*/
-                    Request request = new Request.Builder().url(REGIST_URL).post(body).build();
-                    Response response = client.newCall(request).execute();
-                    String responseData = response.body().string();
-                    parseJSONWithJSONObject(responseData);
+                    final OkHttpClient client = new OkHttpClient();
+                    //1.先验证验证码是否正确Get
+                    Request request = new Request.Builder().url(VERIFY_URL+"?code="+code+"&phone="+phone).build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Message message = new Message();
+                            message.arg1 = 4;
+                            message.obj = e.getMessage();
+                            handler.sendMessage(message);
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            Message message = new Message();
+                            String responseData = response.body().string();
+                            try {
+                                JSONObject jsonObject = new JSONObject(responseData);
+                                int status = jsonObject.getInt("status");
+                                System.out.println("验证结果:"+jsonObject.getInt("status"));
+                                if(status == 200){
+                                    //2.验证成功，进行注册
+                                    RequestBody body = RequestBody.create(JSON,new Gson().toJson(student));
+                                    Request request = new Request.Builder().url(REGIST_URL).post(body).build();
+                                    Response response2 = client.newCall(request).execute();
+                                    String response2Data = response2.body().string();
+                                    parseJSONWithJSONObject(response2Data);
+                                }else {
+                                    message.arg1 = 3;
+                                    message.obj = "验证码错误 "+jsonObject.getString("msg");
+                                }
+                            }catch (Exception e){
+                                message.arg1 = 4;
+                                message.obj = e.getMessage();
+                                e.printStackTrace();
+                            }finally {
+                                handler.sendMessage(message);
+                            }
+
+                        }
+                    });
                 } catch (Exception e) {
+                    e.printStackTrace();
                     Message msg = new Message();
-                    msg.arg1 = 2;
-                    msg.obj = e.getMessage()+"---1";
+                    msg.arg1 = 4;
+                    msg.obj = e.getMessage();
                     handler.sendMessage(msg);
                 }
             }
         }).start();
     }
     private void parseJSONWithJSONObject(String jsonData) {
+        Message msg = new Message();
         try{
             JSONObject jsonObject = new JSONObject(jsonData);
-            String status = jsonObject.getString("status");
-            Message msg = new Message();
-            msg.arg1 = 2;
-            msg.obj = status;
-            handler.sendMessage(msg);
+            //int status = jsonObject.getInt("status");
+            msg.arg1 = 3;
+            msg.obj = jsonObject.getString("msg");
         }catch (Exception e){
             e.printStackTrace();
-            Message msg = new Message();
-            msg.arg1 = 2;
-            msg.obj = jsonData;
+            msg.arg1 = 4;
+            msg.obj = e.getMessage()+"|"+jsonData;
+        }finally {
             handler.sendMessage(msg);
         }
     }

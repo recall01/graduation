@@ -9,5 +9,5 @@ public interface IStudentService {
     Response loginStudent(String account, String password);
     Response changeInfo(Student student);
 
-    Response verifySMSCode(String url, String params);
+    Response queryClassByClaID(String claID);
 }

@@ -19,7 +19,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
             android:text="【xx老师课的签到】"
-            android:textColor="@color/smssdk_black"
+            android:textColor="#436EEE"
             android:textSize="20dp" />
 
         <TextView
