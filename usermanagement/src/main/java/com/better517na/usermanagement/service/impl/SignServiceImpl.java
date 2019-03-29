@@ -60,7 +60,6 @@ public class SignServiceImpl implements ISignService {
         sign.setSigTime(TimeUtil.getTime());
         //1.根据setId查询该次签到的x,y坐标，范围
         Response reset = this.queryVSetBySetId(sign.getSetId());
-        System.out.println("---"+new Gson().toJson(reset.getData()));
         if(reset == null||reset.getData()==null){
             response.setStatus(RESPONSE_FALSE);
             response.setMsg("查询编号信息失败! "+new Gson().toJson(sign));
@@ -80,7 +79,6 @@ public class SignServiceImpl implements ISignService {
                 Date startTime = TimeUtil.getTimeByString(set.getStartSigTime());
                 Date endTime = TimeUtil.getTimeByString(set.getEndSigTime());
                 Date nowTime = TimeUtil.getTimeByString(TimeUtil.getTime());
-                System.out.println(startTime.getTime()+" "+endTime.getTime()+" "+nowTime.getTime());
                 if(nowTime.getTime()>=startTime.getTime()&&nowTime.getTime()<=endTime.getTime()){
                     return signBusiness.insertSign(sign);
                 }else {

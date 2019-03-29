@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:background="#F9F9FB"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,10 +16,10 @@
 
         <Button
             android:id="@+id/xinxi_back"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/back" />
 
         <TextView
@@ -34,13 +35,13 @@
 
         <TextView
             android:id="@+id/xinxi_queding"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:gravity="center"
-            android:layout_marginRight="10dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_gravity="center"
-            android:textColor="#fff"
-            android:text="确定" />
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="#fff" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -112,14 +113,13 @@
         >
 
         <TextView
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="昵称"
             android:layout_alignParentLeft="true"
-            />
+            android:padding="10dp"
+            android:text="姓名"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_nickname"
@@ -139,6 +139,75 @@
         android:layout_height="1dp"
         android:background="#E3E4E4"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="10dp"
+            android:text="邮箱"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:padding="10dp"
+            android:textAlignment="textEnd"
+            android:textSize="16sp"
+            android:gravity="end" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E3E4E4" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="10dp"
+            android:text="手机号"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:padding="10dp"
+            android:textAlignment="textEnd"
+            android:textSize="16sp"
+            android:gravity="end" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E3E4E4" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -311,43 +380,7 @@
         android:layout_height="1dp"
         android:background="#E3E4E4"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#ffffff"
-        >
 
-        <TextView
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:textColor="#000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="年级"
-            android:layout_alignParentLeft="true"
-            />
-
-        <EditText
-            android:id="@+id/et_nianji"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:gravity="end"
-            android:inputType="number"
-            android:maxLength="8"
-            android:padding="10dp"
-            android:textAlignment="textEnd"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E3E4E4"
-        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

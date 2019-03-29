@@ -49,8 +49,8 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
                 android:background="#01000000"
                 android:fitsSystemWindows="true" />
         </LinearLayout>

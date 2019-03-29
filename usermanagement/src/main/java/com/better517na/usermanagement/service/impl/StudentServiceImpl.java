@@ -90,6 +90,22 @@ public class StudentServiceImpl implements IStudentService {
         return response;
     }
 
+    @Override
+    public Response changePassword(String phone, String password) {
+        Response response = new Response();
+        if(phone.length()!=11||"".equals(phone)||phone == null){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("输入的手机号有误");
+            return response;
+        }
+        if(password.length()<6||password.length()>20||"".equals(password)||password == null){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("输入的密码有误");
+            return response;
+        }
+        return studentBusiness.changePassword(phone,password);
+    }
+
     private boolean checkStudent(Student student){
         if(student==null){
             return false;

@@ -10,4 +10,6 @@ public interface IStudentService {
     Response changeInfo(Student student);
 
     Response queryClassByClaID(String claID);
+
+    Response changePassword(String phone, String password);
 }

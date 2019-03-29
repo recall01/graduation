@@ -66,6 +66,14 @@ public class StudentController {
         return studentService.queryClassByClaID(claID);
     }
 
+    @SysLogger("changePassword")
+    @HystrixCommand(fallbackMethod = "changePasswordFallback")
+    @ApiOperation(value = "修改学生密码接口",notes = "填写要修改后的密码进行修改")
+    @RequestMapping(value = "changePassword",method = RequestMethod.POST)
+    public Response changePassword(@RequestParam  @ApiParam(name = "phone",value = "手机号",required = true) String phone,@RequestParam  @ApiParam(name = "password",value = "修改后的密码",required = true) String password){
+        return studentService.changePassword(phone,password);
+    }
+
 //回调函数
     private Response registFallback(Student student){
         return getFallback();
@@ -74,6 +82,9 @@ public class StudentController {
         return getFallback();
     }
     private Response changeFallback(Student student){
+        return getFallback();
+    }
+    private Response changePasswordFallback(String phone,String password){
         return getFallback();
     }
     private Response getFallback(){

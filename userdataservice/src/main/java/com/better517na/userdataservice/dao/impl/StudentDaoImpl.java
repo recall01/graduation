@@ -53,4 +53,16 @@ public class StudentDaoImpl implements IStudentDao {
     public Class queryClassByClaID(String claID) throws Exception {
         return classMapping.queryClassByClaID(claID);
     }
+
+    @Override
+    public boolean changePassword(String phone, String password) throws Exception {
+        if(phone!=null&&!"".equals(phone)&&password!=null&&!"".equals(password)){
+            Map m = new HashMap();
+            m.put("phone",phone);
+            m.put("password",password);
+            return studentsMapping.changePassword(m);
+        }else {
+            return false;
+        }
+    }
 }

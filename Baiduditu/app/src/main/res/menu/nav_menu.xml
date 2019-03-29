@@ -2,14 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_call"
-            android:icon="@drawable/call"
-            android:title="Call" />
-        <item
-            android:id="@+id/nav_friends"
-            android:icon="@drawable/friends"
-            android:title="Friends" />
-        <item
             android:id="@+id/nav_location"
             android:icon="@drawable/location"
             android:title="签到记录" />
@@ -17,10 +9,6 @@
             android:id="@+id/nav_infor"
             android:icon="@drawable/myinformation"
             android:title="完善信息" />
-        <item
-            android:id="@+id/nav_order"
-            android:icon="@drawable/order"
-            android:title="我的订单" />
         <item
             android:id="@+id/nav_quit"
             android:icon="@drawable/change"

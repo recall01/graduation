@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.lenovo.baiduditu.ChangeHead;
 import com.example.lenovo.baiduditu.Jingweidu;
 import com.example.lenovo.baiduditu.LoginActivity;
+import com.example.lenovo.baiduditu.MainActivity;
 import com.example.lenovo.baiduditu.MyInformation;
 import com.example.lenovo.baiduditu.R;
 import com.example.lenovo.baiduditu.Zhujie_xinxiActivity;
@@ -59,7 +60,7 @@ import okhttp3.Response;
 public class frag_a extends Fragment {
     private final static String URL = "http://10.18.42.63:8801/sign/queryVSet";
     Student student = new Student();
-    String id,name,email;
+    String stuId,name,email;
     TextView nameTV,emailTV;
     CircleImageView image;
     Button nav;
@@ -112,7 +113,7 @@ public class frag_a extends Fragment {
             return;
         }
         name = student.getStuName();
-        id = student.getStuId();
+        stuId = student.getStuId();
         email = student.getStuMail();
         HttpUtil.getOkHttpRequest(URL+"?claID="+student.getClaID()+"&stuID="+student.getStuId(), new Callback() {
             @Override
@@ -139,7 +140,7 @@ public class frag_a extends Fragment {
                 Intent mIntent= new Intent();
                 Bundle mBundle = new Bundle();
                 Sign sign = new Sign();
-                sign.setStuId(id);
+                sign.setStuId(stuId);
                 sign.setSetId(vSets.get(pos).getSetId());
                 mBundle.putSerializable("sign",sign);
                 mIntent.putExtras(mBundle);
@@ -166,11 +167,11 @@ public class frag_a extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ChangeHead.class);
-                intent.putExtra("id",id);
+                intent.putExtra("id",stuId);
                 startActivity(intent);//修改头像
             }
         });
-        navView.setCheckedItem(R.id.nav_call);
+        navView.setCheckedItem(R.id.nav_location);
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -179,16 +180,14 @@ public class frag_a extends Fragment {
                     case R.id.nav_location:
                     case R.id.nav_infor://完善信息按钮
                         Intent intent = new Intent(getActivity(), MyInformation.class);
-                        intent.putExtra("id",id);
+                        Bundle mBundle = new Bundle();
+                        mBundle.putSerializable("student",student);
+                        intent.putExtras(mBundle);
                         startActivity(intent);break;
                     case R.id.nav_quit://切换账号按钮
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         getActivity().finish();break;
-                    case R.id.nav_order: //我的订单按钮
-                        intent = new Intent(getActivity(), dingdanActivity.class);
-                        intent.putExtra("id",id);
-                        startActivity(intent);break;
                     default:mDrawerLayout.closeDrawers();break;
                 }
                 return true;

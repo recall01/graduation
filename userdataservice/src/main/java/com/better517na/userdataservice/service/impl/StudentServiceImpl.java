@@ -9,6 +9,10 @@ import com.better517na.userdataservice.dao.IStudentDao;
 import com.better517na.userdataservice.model.Response;
 import com.better517na.userdataservice.model.Student;
 import com.better517na.userdataservice.service.IStudentService;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.better517na.userdataservice.utils.Constant.RESPONSE_FALSE;
 import static com.better517na.userdataservice.utils.Constant.RESPONSE_SUCCESS;
 
@@ -39,7 +43,8 @@ public class StudentServiceImpl implements IStudentService {
         }catch (Exception e){
             e.printStackTrace();
             response.setStatus(RESPONSE_FALSE);
-            response.setMsg(e.getMessage());
+            response.setData(e.getMessage());
+            response.setMsg("注册学生异常");
         }finally {
             return response;
         }
@@ -55,7 +60,8 @@ public class StudentServiceImpl implements IStudentService {
         }catch (Exception e){
             e.printStackTrace();
             response.setStatus(RESPONSE_FALSE);
-            response.setMsg("查询学生异常 "+e.getMessage());
+            response.setData(e.getMessage());
+            response.setMsg("查询学生异常");
         }finally {
             return response;
         }
@@ -77,7 +83,8 @@ public class StudentServiceImpl implements IStudentService {
         }catch (Exception e){
             e.printStackTrace();
             response.setStatus(RESPONSE_FALSE);
-            response.setMsg("修改学生信息异常 "+e.getMessage());
+            response.setData(e.getMessage());
+            response.setMsg("修改学生信息异常");
         }finally {
             return response;
         }
@@ -99,7 +106,29 @@ public class StudentServiceImpl implements IStudentService {
         }catch (Exception e){
             e.printStackTrace();
             response.setStatus(RESPONSE_FALSE);
-            response.setMsg("查询班级信息异常 "+e.getMessage());
+            response.setData(e.getMessage());
+            response.setMsg("查询班级信息异常");
+        }finally {
+            return response;
+        }
+    }
+
+    @Override
+    public Response changePassword(String phone, String password) {
+        Response response = new Response();
+        try {
+            if(studentDao.changePassword(phone,password)){
+                response.setStatus(RESPONSE_SUCCESS);
+                response.setMsg("修改密码成功");
+            }else {
+                response.setStatus(RESPONSE_FALSE);
+                response.setMsg("修改密码失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setData(e.getMessage());
+            response.setMsg("修改密码异常");
         }finally {
             return response;
         }

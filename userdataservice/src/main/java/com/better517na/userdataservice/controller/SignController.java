@@ -44,7 +44,6 @@ public class SignController {
     }
     @PostMapping(value = "/queryVSetBySetId")
     public Response queryVSetBySetId(@RequestParam String setID) throws Exception{
-        System.out.println("---queryVSetBySetId----"+setID);
         Response response = signService.queryVSetBySetId(setID);
         return response;
     }

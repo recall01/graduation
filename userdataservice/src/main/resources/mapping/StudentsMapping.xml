@@ -34,4 +34,9 @@
         </trim>
         where StuNumber=#{stuNumber} or StuPhone=#{stuPhone}
     </update>
+    <update id="changePassword">
+        update students set
+            StuPassword=#{password}
+        where StuPhone=#{phone}
+    </update>
 </mapper>

@@ -41,6 +41,11 @@ public class StudentController {
         return studentService.queryClassByClaID(claID);
     }
 
+    @PostMapping(value = "/changePassword")
+    public Response changePassword(@RequestParam String phone,@RequestParam String password) throws Exception{
+        return studentService.changePassword(phone,password);
+    }
+
     @PostMapping(value = "/test")
     public void test() throws Exception{
         System.out.println("---test执行啦---");

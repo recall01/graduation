@@ -10,11 +10,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.common;
 import com.example.lenovo.baiduditu.myactivity.Teacher;
@@ -32,16 +34,17 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class StartActivity extends AppCompatActivity {
+    private final static String LOGIN_URL = "http://10.18.42.63:8801/student/login";
     /*
     * 1.验证网络信息
     * 2.验证权限
     * 3.验证版本信息，如有更新，则提示
     * 4.从SharePreferences读取用户信息
-        * 4.1.如存在，请求http验证（成功跳转学生页面|老师页面），并更新SharePreferences
+        * 4.1.如存在，请求http验证（成功跳转学生页面）
         * 4.2.若不存在，跳转登陆界面
     * */
-
-    String xuehao,name;
+    private String account,name,password;
+    private Student student = new Student();
     private IntentFilter intentFilter;
     private NetworkChangeReceiver networkChangeReceiver;
     @Override
@@ -75,7 +78,7 @@ public class StartActivity extends AppCompatActivity {
             }
         }
     } //NetworkChangeReceiver
-
+    //验证权限
     private void applyJurisdiction(){
         List<String> permissionList = new ArrayList<>();
         if(ContextCompat.checkSelfPermission(StartActivity.this,android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
@@ -91,21 +94,17 @@ public class StartActivity extends AppCompatActivity {
             String[] permissions =permissionList.toArray(new String[permissionList.size()]);
             ActivityCompat.requestPermissions(StartActivity.this,permissions,1);
         }else {
-            version();
+            readInfo();
         }
     }
-    //校验版本及其信息
-    private void version(){
-        readInfo();
-    }
-
-    //从SharePreferences读取用户信息
+    //校验学生信息
     private void readInfo(){
+        //从SharePreferences读取用户信息
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         if(pref!=null){
-            xuehao = pref.getString("stu_id","");
-            String pass = common.md5(pref.getString("password",""));
-            verifyInfo(xuehao,pass);
+            account = pref.getString("account","");
+            password = common.md5(pref.getString("password",""));
+            verifyInfo();
         }else {
             goToLogin(StartActivity.this);
         }
@@ -119,24 +118,20 @@ public class StartActivity extends AppCompatActivity {
     }
     //跳转到学生界面
     private void goToStudentHome(Context context){
-        Intent mainIntent = new Intent(context,MainActivity.class);
-        mainIntent.putExtra("name",name);
-        mainIntent.putExtra("user_id",xuehao);
-        context.startActivity(mainIntent);//跳转到Xuanzejiemian
-    }
-    //跳转到老师界面
-    private void goToTeacherHome(Context context){
-        Intent mainIntent = new Intent(context,Teacher.class);
-        context.startActivity(mainIntent);
+        Intent intent = new Intent(context,MainActivity.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putSerializable("student",student);
+        intent.putExtras(mBundle);
+        startActivity(intent);
     }
 
     //验证信息
-    private void verifyInfo(String xueha,String pass){
-        RequestBody requestBody =new FormBody.Builder().add("stu_id",xueha).add("mima",pass).build();
-        String mUrl ="http://1.873717549.applinzi.com/Android_text.php";
-        HttpUtil.postEnqueueRequest(requestBody, mUrl, new Callback() {
+    private void verifyInfo(){
+        RequestBody requestBody =new FormBody.Builder().add("account",account).add("password",password).build();
+        HttpUtil.postEnqueueRequest(requestBody, LOGIN_URL, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
                 common.myDailog("连接服务器失败！",StartActivity.this);
             }
 
@@ -150,26 +145,30 @@ public class StartActivity extends AppCompatActivity {
     private void parseJSONWithJSONObject(String jsonData) {
         try{
             JSONObject jsonObject = new JSONObject(jsonData);
-            String status = jsonObject.getString("status");
-            if(status.equals("ok")){
-                name = jsonObject.getString("name");
-                String type = jsonObject.getString("type");
-                if(type.equals("0")){
+            int status = jsonObject.getInt("status");
+            if(status==200){
+                JSONObject js = jsonObject.getJSONObject("data");
+                if(js!=null){
+                    student.setStuName(js.getString("stuName"));
+                    student.setStuId(js.getString("stuId"));
+                    student.setStuSex(js.getInt("stuSex"));
+                    student.setStuNumber(js.getString("stuNumber"));
+                    student.setStuPassword(js.getString("stuPassword"));
+                    student.setStuPhone(js.getString("stuPhone"));
+                    student.setStuMail(js.getString("stuMail"));
+                    student.setClaID(js.getString("claID"));
+                    student.setClassName(js.getString("claName"));
+                    student.setRegisterTime(js.getString("registerTime"));
+                    student.setPermissions(js.getString("permissions"));
                     goToStudentHome(StartActivity.this);
-                }else if(type.equals("1")){
-                    goToTeacherHome(StartActivity.this);
+                    return;
                 }
-            }else {
-                goToLogin(StartActivity.this);
             }
-        }catch (Exception e){
             goToLogin(StartActivity.this);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }//parseJSONWithJSONObject
-    //更新用户数据
-
-
-
 
     protected void onDestroy(){
         super.onDestroy();

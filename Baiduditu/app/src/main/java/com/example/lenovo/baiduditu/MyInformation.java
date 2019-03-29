@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.myClass.common;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
@@ -26,14 +27,15 @@ import okhttp3.RequestBody;
 
 public class MyInformation extends AppCompatActivity implements View.OnClickListener {
     String user_id,mUrl,nickname,sex,birthday,school,major,nianji,banji,schoolId;
-    EditText et_nickname,et_major,et_nianji,et_myClass;
+    EditText et_nickname,et_major,et_nianji,et_myClass,et_email,et_phone;
     TextView et_sex,et_birthday,et_school,queding;
     LoadingDialog ld;
+    private Student student = new Student();
     RequestBody requestBody;
     private Handler handler = new Handler(){
         public void handleMessage(Message msg){
             switch (msg.what){
-                case 0:upDateInfor();ld.close();break;
+                case 0:ld.close();break;
                 case 1:
                     common.myDailog(msg.obj.toString(),MyInformation.this);break;
                 default:
@@ -46,10 +48,10 @@ public class MyInformation extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_information);
         common.setHeadBackground(getWindow());
-        Intent intent = getIntent();
-        user_id = intent.getStringExtra("user_id");
-        mUrl ="http://1.873717549.applinzi.com/Android_allInformation.php";
-        RequestBody requestBody =new FormBody.Builder().add("user_id", user_id).add("isbreak", "true").build();
+
+        student = (Student) getIntent().getSerializableExtra("student");
+//        mUrl ="http://1.873717549.applinzi.com/Android_allInformation.php";
+//        RequestBody requestBody =new FormBody.Builder().add("user_id", user_id).add("isbreak", "true").build();
 //        HttpUtil.postOkHttpRequest(requestBody,mUrl, new Callback() {
 //            @Override
 //            public void onFailure(Call call, IOException e) {
@@ -63,8 +65,8 @@ public class MyInformation extends AppCompatActivity implements View.OnClickList
 //                parseJSONWithJSONObject(responseData,false);
 //            }
 //        });
-        ld = new LoadingDialog(MyInformation.this);
-        ld.setLoadingText("加载中...").show();
+//        ld = new LoadingDialog(MyInformation.this);
+//        ld.setLoadingText("加载中...").show();
         but();
     }
     private void parseJSONWithJSONObject(String jsonData,boolean isChangeInfor) {
@@ -107,26 +109,31 @@ public class MyInformation extends AppCompatActivity implements View.OnClickList
         TextView head = findViewById(R.id.changeHead);
         head.setOnClickListener(this);
         et_nickname = findViewById(R.id.et_nickname);
+        et_nickname.setText(student.getStuName());
         et_sex = findViewById(R.id.et_sex);
         et_sex.setOnClickListener(this);
+        if(student.getStuSex()==0){
+            et_sex.setText("男");
+        }else {
+            et_sex.setText("女");
+        }
         et_birthday = findViewById(R.id.et_birthday);
         et_birthday.setOnClickListener(this);
+        et_email = findViewById(R.id.et_email);
+        et_email.setText(student.getStuMail());
+        et_email.setEnabled(false);
         et_school = findViewById(R.id.et_school);
         et_school.setOnClickListener(this);
-        et_major =findViewById(R.id.et_major);
+        et_school.setText("成都信息工程大学");
+        et_phone = findViewById(R.id.et_phone);
+        et_phone.setText(student.getStuPhone());
+        et_phone.setEnabled(false);
+        et_major = findViewById(R.id.et_major);
+        et_major.setText("计算机科学与技术");
         et_nianji = findViewById(R.id.et_nianji);
         et_myClass = findViewById(R.id.et_myClass);
         queding = findViewById(R.id.xinxi_queding);
         queding.setOnClickListener(this);
-    }
-    private void upDateInfor(){
-        et_nickname.setText(nickname);
-        et_sex.setText(sex);
-        et_birthday.setText(birthday);
-        et_school.setText(school);
-        et_major.setText(major);
-        et_nianji.setText(nianji);
-        et_myClass.setText(banji);
     }
     private void getDate() {
         Calendar cal=Calendar.getInstance();

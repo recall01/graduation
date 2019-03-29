@@ -81,4 +81,19 @@ public class StudentBusinessImpl implements IStudentBusiness {
             return response;
         }
     }
+
+    @Override
+    public Response changePassword(String phone, String password) {
+        try {
+            return userDataFeignClient.changePassword(phone,password);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //记录日志
+            Response response = new Response();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("修改密码失败! " + e.getMessage());
+//            logProducer.sendLog("my-topic",new Gson().toJson(student));
+            return response;
+        }
+    }
 }

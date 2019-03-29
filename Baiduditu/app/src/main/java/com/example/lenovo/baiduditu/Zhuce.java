@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.myClass.common;
+import com.example.lenovo.baiduditu.utils.Constants;
 import com.google.gson.Gson;
 import com.mob.MobSDK;
 
@@ -36,15 +37,18 @@ import static cn.smssdk.SMSSDK.getSupportedCountries;
 import static cn.smssdk.SMSSDK.getVerificationCode;
 
 public class Zhuce extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener {
-    private final static String REGIST_URL = "http://10.18.42.63:8801/student/regist";
-    private final static String VERIFY_URL = "http://10.18.42.63:8801/sms/verifySMSCode";
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    //app key和app secret 需要填自己应用的对应的！这里只是我自己创建的应用。
-    private final String appKey="22d8290d63094";
-    private final String appSecret="5d190cd04e968ca288e776fe376d84d6";
     private EventHandler eh;
     private RadioGroup genderRG;
     private Student student = new Student();
+    //View控件
+    private Button bt_getCode,bt_vertify,bt_back;
+    private EditText phoneNum;
+    //手机号码
+    private String phone="",code="",stuId="",stuName="",password="",repassword="",claId="",stuMail="";
+    //控制按钮样式是否改变
+    private boolean tag = true;
+    //每次验证请求需要间隔60S
+    private int i=60;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -70,15 +74,7 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
         }
     };
 
-    //View控件
-    private Button bt_getCode,bt_vertify,bt_back;
-    private EditText phoneNum;
-    //手机号码
-    private String phone="",code="",stuId="",stuName="",password="",repassword="",claId="",stuMail="";
-    //控制按钮样式是否改变
-    private boolean tag = true;
-    //每次验证请求需要间隔60S
-    private int i=60;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +83,7 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
         common.setHeadBackground(getWindow());
 
         // 启动短信验证sdk
-        MobSDK.init(this, appKey, appSecret);
+        MobSDK.init(this, Constants.mobAppKey, Constants.mobAppSecret);
 
         eh=new EventHandler(){
             @Override
@@ -100,13 +96,11 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
                         //提交验证码,并且正确成功
                     }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                         //获取验证码成功
-                        //Message msg = new Message();
                         msg.arg1 = 1;
                         msg.obj = "获取验证码成功";
                     }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
                         //返回支持发送验证码的国家列表
- /*                       Message msg = new Message();
-                        msg.arg1 = 2;
+ /*                      msg.arg1 = 2;
                         msg.obj = "返回支持发送验证码的国家列表";
                         handler.sendMessage(msg); */
                     }
@@ -305,7 +299,7 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
                 try {
                     final OkHttpClient client = new OkHttpClient();
                     //1.先验证验证码是否正确Get
-                    Request request = new Request.Builder().url(VERIFY_URL+"?code="+code+"&phone="+phone).build();
+                    Request request = new Request.Builder().url(Constants.VERIFY_URL+"?code="+code+"&phone="+phone).build();
                     client.newCall(request).enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
@@ -326,8 +320,8 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
                                 System.out.println("验证结果:"+jsonObject.getInt("status"));
                                 if(status == 200){
                                     //2.验证成功，进行注册
-                                    RequestBody body = RequestBody.create(JSON,new Gson().toJson(student));
-                                    Request request = new Request.Builder().url(REGIST_URL).post(body).build();
+                                    RequestBody body = RequestBody.create(Constants.JSONTYPE,new Gson().toJson(student));
+                                    Request request = new Request.Builder().url(Constants.REGIST_URL).post(body).build();
                                     Response response2 = client.newCall(request).execute();
                                     String response2Data = response2.body().string();
                                     parseJSONWithJSONObject(response2Data);
