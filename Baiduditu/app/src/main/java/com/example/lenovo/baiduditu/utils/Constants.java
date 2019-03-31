@@ -13,4 +13,5 @@ public class Constants {
     public static final String CHANGE_URL = "http://"+URl+"/student/change";
     public final static String SIGN_URL = "http://"+URl+"/sign/sign";
     public final static String QUERYVSET_URL = "http://"+URl+"/sign/queryVSet";
+    public final static String RECORD_URL = "http://"+URl+"/sign/record";
 }

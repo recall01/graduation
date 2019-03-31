@@ -62,9 +62,6 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
                 common.myDailog(""+message.obj,MainActivity.this);
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_title,frag_a.newInstance(student)).commitAllowingStateLoss();
-        }else if(resultCode == 1){
-            boolean isFresh = (Boolean) getIntent().getSerializableExtra("isFresh");
-            System.out.println("isFresh的值:"+isFresh);
         }else {
             System.out.println("resultCode的值:"+resultCode);
         }
@@ -104,8 +101,6 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
     }
 
     protected void onRestart(){
-        //重新请求数据
-        System.out.println("onRestart执行啦");
         super.onRestart();
     }
 

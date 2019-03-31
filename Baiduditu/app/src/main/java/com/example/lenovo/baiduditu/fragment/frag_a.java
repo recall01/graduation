@@ -1,5 +1,6 @@
 package com.example.lenovo.baiduditu.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,15 +25,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.example.lenovo.baiduditu.ChangeHead;
 import com.example.lenovo.baiduditu.Jingweidu;
 import com.example.lenovo.baiduditu.LoginActivity;
-import com.example.lenovo.baiduditu.MainActivity;
 import com.example.lenovo.baiduditu.MyInformation;
 import com.example.lenovo.baiduditu.R;
-import com.example.lenovo.baiduditu.Zhujie_xinxiActivity;
 import com.example.lenovo.baiduditu.adapter.VSetAdapter;
 import com.example.lenovo.baiduditu.dingdanActivity;
 import com.example.lenovo.baiduditu.model.Sign;
@@ -41,21 +39,14 @@ import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -64,6 +55,7 @@ import okhttp3.Response;
 
 public class frag_a extends Fragment {
     Student student = new Student();
+    private SwipeRefreshLayout swipeRefresh;
     TextView nameTV,emailTV;
     CircleImageView image;
     Button nav;
@@ -107,6 +99,54 @@ public class frag_a extends Fragment {
         if(student==null){
             return;
         }
+        NavigationView navView = view.findViewById(R.id.nav_view);
+        View headerLayout = navView.inflateHeaderView(R.layout.nav_header);
+        nameTV =headerLayout.findViewById(R.id.nav_nickname);
+        emailTV = headerLayout.findViewById(R.id.nav_email);
+        mDrawerLayout = view.findViewById(R.id.drawer_layout);
+        nav =view.findViewById(R.id.nav);
+        nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_location:
+                        Intent intent = new Intent(getActivity(), dingdanActivity.class);
+                        Bundle mBundle = new Bundle();
+                        mBundle.putSerializable("student",student);
+                        intent.putExtras(mBundle);
+                        startActivity(intent);break;
+                    case R.id.nav_infor://完善信息按钮
+                        intent = new Intent(getActivity(), MyInformation.class);
+                        mBundle = new Bundle();
+                        mBundle.putSerializable("student",student);
+                        intent.putExtras(mBundle);
+                        startActivity(intent);break;
+                    case R.id.nav_quit://切换账号按钮
+                        intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();break;
+                    default:mDrawerLayout.closeDrawers();break;
+                }
+                return true;
+            }
+        });
+        image = headerLayout.findViewById(R.id.icon_image);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                common.myDailog("作者太懒,该功能还未实现",getActivity());
+            }
+        });
+        loadData();
+        initView(student);
+    }//onViewCreated
+    private void loadData(){
         HttpUtil.getOkHttpRequest(Constants.QUERYVSET_URL+"?claID="+student.getClaID()+"&stuID="+student.getStuId(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -121,8 +161,10 @@ public class frag_a extends Fragment {
                 parseJSONWithJSONObject(responseData);
             }
         });
-    }//onViewCreated
+    }
 
+
+    @SuppressLint("ResourceAsColor")
     public void loadView(View view ){
         vSetRV = view.findViewById(R.id.dd_main);
         vSetRV.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -140,50 +182,21 @@ public class frag_a extends Fragment {
                 startActivityForResult(mIntent,0);
             }
         }));
-        mDrawerLayout = view.findViewById(R.id.drawer_layout);
-        nav =view.findViewById(R.id.nav);
-        nav.setOnClickListener(new View.OnClickListener() {
+        swipeRefresh = view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeColors(R.color.colorPrimary);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View view) {
-                mDrawerLayout.openDrawer(GravityCompat.START);
+            public void onRefresh() {
+                vSets.clear();
+                loadData();
+                swipeRefresh.setRefreshing(false);
             }
         });
-        NavigationView navView = view.findViewById(R.id.nav_view);
-        View headerLayout = navView.inflateHeaderView(R.layout.nav_header);
-        nameTV =headerLayout.findViewById(R.id.nav_nickname);
-        emailTV = headerLayout.findViewById(R.id.nav_email);
-        initView(student);
-        image = headerLayout.findViewById(R.id.icon_image);
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ChangeHead.class);
-                intent.putExtra("id",student.getStuId());
-                startActivity(intent);//修改头像
-            }
-        });
-        navView.setCheckedItem(R.id.nav_location);
 
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_location:
-                    case R.id.nav_infor://完善信息按钮
-                        Intent intent = new Intent(getActivity(), MyInformation.class);
-                        Bundle mBundle = new Bundle();
-                        mBundle.putSerializable("student",student);
-                        intent.putExtras(mBundle);
-                        startActivity(intent);break;
-                    case R.id.nav_quit://切换账号按钮
-                        intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();break;
-                    default:mDrawerLayout.closeDrawers();break;
-                }
-                return true;
-            }
-        });
+/*
+        navView.setCheckedItem(R.id.nav_location);
+*/
+
     }  //btn
     private void initView(Student student){
         nameTV.setText(student.getStuName());

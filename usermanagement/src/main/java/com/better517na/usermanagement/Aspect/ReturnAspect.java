@@ -2,14 +2,12 @@ package com.better517na.usermanagement.Aspect;
 
 import com.better517na.usermanagement.Annotation.ExceptionLogger;
 import com.better517na.usermanagement.Annotation.SysLogger;
+import com.better517na.usermanagement.model.Response;
 import com.better517na.usermanagement.model.SysLog;
 import com.better517na.usermanagement.utils.HttpUtils;
 import com.google.gson.Gson;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +19,16 @@ import java.util.Date;
 
 @Aspect
 @Component
-public class ExceptionLoggerAspect {
-/*    @Autowired
+public class ReturnAspect {
+    @Autowired
     private AmqpTemplate amqpTemplate;
     //切点
-    @Pointcut("execution(* com.better517na.usermanagement.business.*.*(..))")
+    @Pointcut("execution(* com.better517na.usermanagement.controller.*.*(..))")
     public void loggerPointCut(){ }
-    @Before("loggerPointCut()")
-    public void printBeforeLog(){
-        System.out.println("ExceptionLoggerAspect-printBeforeLog执行啦");
+
+    //returning:定义一个返参名用来获取返参
+    @AfterReturning(returning = "r",pointcut = "loggerPointCut()")
+    public void printAfterThrowingLog(Response r){
+        System.out.println("返参:"+new Gson().toJson(r));
     }
-    @AfterThrowing("loggerPointCut()")
-    public void printAfterThrowingLog(){
-        System.out.println("ExceptionLoggerAspect-printAfterThrowingLog执行啦");
-    }  */
 }

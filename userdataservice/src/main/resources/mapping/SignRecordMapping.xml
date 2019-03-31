@@ -11,7 +11,7 @@
     </resultMap>
     <select id="selectSignRecord" resultMap="signRecordResult">
         select * from v_signrecord
-        where StuID = #{id} and SigTime like "%"#{time}"%"
+        where StuNumber = #{id} and SigTime like "%"#{time}"%"
     </select>
 
 </mapper>

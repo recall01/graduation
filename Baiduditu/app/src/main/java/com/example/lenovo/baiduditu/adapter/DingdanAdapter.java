@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.lenovo.baiduditu.R;
+import com.example.lenovo.baiduditu.model.VSign;
 import com.example.lenovo.baiduditu.myClass.Utils;
 import com.example.lenovo.baiduditu.myClass.dingdan;
 
@@ -19,11 +20,11 @@ import java.util.List;
 
 public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.LinearViewHolder> {
     private Context mcontext;
-    private List<dingdan> mDingdans;
+    private List<VSign> signLists;
     private OnItemClickListener mlistener;
-    public DingdanAdapter(Context context, List<dingdan>dingdans, OnItemClickListener listener){
+    public DingdanAdapter(Context context, List<VSign>signLists, OnItemClickListener listener){
         this.mcontext = context;
-        this.mDingdans=dingdans;
+        this.signLists = signLists;
         this.mlistener = listener;
     }
     @Override
@@ -34,21 +35,21 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.LinearVi
     @Override
     public void onBindViewHolder(final DingdanAdapter.LinearViewHolder holder, final int position) {
         holder.layout_content.getLayoutParams().width = Utils.getScreenWidth(mcontext);
-        holder.order_time.setText(mDingdans.get(position).gettime());
-        holder.order_xinxi.setText("租借"+mDingdans.get(position).getgname()+"成功！消耗"+mDingdans.get(position).getprice()+"积分。");
+        holder.order_time.setText(signLists.get(position).getSigTime());
+        holder.order_xinxi.setText("["+signLists.get(position).getSetName()+"]签到成功！");
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mlistener.onClick(position);
                 notifyItemRemoved(position);
-                mDingdans.remove(position);
+                signLists.remove(position);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mDingdans.size();
+        return signLists.size();
     }
 
     class LinearViewHolder extends RecyclerView.ViewHolder{
