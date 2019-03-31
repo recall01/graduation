@@ -23,9 +23,7 @@ public class SysLoggerAspect {
     private AmqpTemplate amqpTemplate;
 
     @Pointcut("@annotation(com.better517na.usermanagement.Annotation.SysLogger)")
-    public void loggerPointCut(){
-        System.out.println("---loggerPointCut---");
-    }
+    public void loggerPointCut(){ }
     @Before("loggerPointCut()")
     public void printSysLog(JoinPoint joinPoint){
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

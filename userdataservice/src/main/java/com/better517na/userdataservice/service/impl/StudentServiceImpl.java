@@ -10,6 +10,7 @@ import com.better517na.userdataservice.model.Response;
 import com.better517na.userdataservice.model.Student;
 import com.better517na.userdataservice.service.IStudentService;
 
+import java.beans.Transient;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,12 +69,16 @@ public class StudentServiceImpl implements IStudentService {
 
     }
 
+    @Transient
     @Override
     public Response changeInfo(Student student) {
+        //1.判断学生信息是否修改成功
         Response response = new Response();
         try {
             if(studentDao.changeInfo(student)){
                 response.setStatus(RESPONSE_SUCCESS);
+                //1.返回修改成功后的数据
+                response = this.selectStudent(student.getStuNumber(), student.getStuPassword());
                 response.setMsg("修改学生信息成功");
             }else {
                 response.setStatus(RESPONSE_FALSE);

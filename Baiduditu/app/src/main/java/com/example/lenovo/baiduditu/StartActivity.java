@@ -43,7 +43,7 @@ public class StartActivity extends AppCompatActivity {
         * 4.1.如存在，请求http验证（成功跳转学生页面）
         * 4.2.若不存在，跳转登陆界面
     * */
-    private String account,name,password;
+    private String account,password;
     private Student student = new Student();
     private IntentFilter intentFilter;
     private NetworkChangeReceiver networkChangeReceiver;
@@ -51,7 +51,6 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
 
         new Handler().postDelayed(new Runnable(){
 
@@ -131,8 +130,9 @@ public class StartActivity extends AppCompatActivity {
         HttpUtil.postEnqueueRequest(requestBody, LOGIN_URL, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                System.out.println("连接服务器失败");
                 e.printStackTrace();
-                common.myDailog("连接服务器失败！",StartActivity.this);
+                goToLogin(StartActivity.this);
             }
 
             @Override
@@ -166,7 +166,9 @@ public class StartActivity extends AppCompatActivity {
             }
             goToLogin(StartActivity.this);
         }catch (Exception e){
+            System.out.println("系统异常");
             e.printStackTrace();
+            goToLogin(StartActivity.this);
         }
     }//parseJSONWithJSONObject
 
@@ -174,6 +176,4 @@ public class StartActivity extends AppCompatActivity {
         super.onDestroy();
         unregisterReceiver(networkChangeReceiver);
     }//onDestroy
-
-
 }

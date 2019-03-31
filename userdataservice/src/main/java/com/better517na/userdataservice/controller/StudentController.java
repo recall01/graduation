@@ -50,5 +50,4 @@ public class StudentController {
     public void test() throws Exception{
         System.out.println("---test执行啦---");
     }
-
 }

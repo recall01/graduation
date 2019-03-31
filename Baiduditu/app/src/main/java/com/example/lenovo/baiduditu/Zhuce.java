@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lenovo.baiduditu.model.Student;
@@ -41,7 +42,8 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
     private RadioGroup genderRG;
     private Student student = new Student();
     //View控件
-    private Button bt_getCode,bt_vertify,bt_back;
+    private Button bt_getCode,bt_back;
+    private TextView tv_vertify;
     private EditText phoneNum;
     //手机号码
     private String phone="",code="",stuId="",stuName="",password="",repassword="",claId="",stuMail="";
@@ -145,9 +147,9 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
         });
         bt_getCode.setEnabled(false);
         bt_getCode.setClickable(false);
-        bt_vertify= findViewById(R.id.bt_verify);
+        tv_vertify= findViewById(R.id.tv_verify);
         bt_getCode.setOnClickListener(this);
-        bt_vertify.setOnClickListener(this);
+        tv_vertify.setOnClickListener(this);
         
     }   //oncreat结束
     @Override
@@ -164,7 +166,7 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
 
     public void onClick(View v){
         switch (v.getId()){
-            case R.id.bt_verify:yanzheng();break;//验证码按钮
+            case R.id.tv_verify:yanzheng();break;//验证码按钮
             case R.id.bt_getCode:getCode();break;//注册按钮
             case R.id.back:finish();break;//注册按钮
             default:break;

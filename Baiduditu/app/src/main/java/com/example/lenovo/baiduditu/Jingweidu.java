@@ -33,6 +33,7 @@ import com.example.lenovo.baiduditu.model.MyMessage;
 import com.example.lenovo.baiduditu.model.Sign;
 import com.example.lenovo.baiduditu.myClass.common;
 import com.example.lenovo.baiduditu.myClass.CryptoObjectHelper;
+import com.example.lenovo.baiduditu.utils.Constants;
 import com.google.gson.Gson;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 import org.json.JSONObject;
@@ -43,14 +44,11 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Jingweidu extends AppCompatActivity {
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private final static String SIGN_URL = "http://10.18.42.63:8801/sign/sign";
-    public LocationClient mLocationClient;
+    private LocationClient mLocationClient;
     private TextView Text;
     private TextureMapView mMapView;
     private BaiduMap mBaiduMap;
     private Sign sign;
-    Intent intent;
     LoadingDialog ld;
     private boolean isFirstLoacate = true;
     private FingerprintManagerCompat manager;
@@ -59,7 +57,7 @@ public class Jingweidu extends AppCompatActivity {
 
     private Handler handler = new Handler(){
         public void handleMessage(Message msg){
-            intent = new Intent(Jingweidu.this, MainActivity.class);
+            Intent intent = new Intent(Jingweidu.this, MainActivity.class);
             MyMessage message = new MyMessage();
             message.what = msg.what;
             message.obj = msg.obj;
@@ -94,8 +92,8 @@ public class Jingweidu extends AppCompatActivity {
             public void run() {
                 try{
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody body = RequestBody.create(JSON,new Gson().toJson(sign));
-                    Request request = new Request.Builder().url(SIGN_URL).post(body).build();
+                    RequestBody body = RequestBody.create(Constants.JSONTYPE,new Gson().toJson(sign));
+                    Request request = new Request.Builder().url(Constants.SIGN_URL).post(body).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     parseJSONWithJSONObject(responseData);

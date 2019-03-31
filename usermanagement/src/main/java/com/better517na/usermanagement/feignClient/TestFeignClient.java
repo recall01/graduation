@@ -21,7 +21,6 @@ class TestFeignClientFallbackFactory implements FallbackFactory<TestFeignClient>
     @Override
     public TestFeignClient create(Throwable throwable) {
         return new TestFeignClient(){
-
             @Override
             public void test() {
                 System.out.println("test方法回调了---"+throwable);

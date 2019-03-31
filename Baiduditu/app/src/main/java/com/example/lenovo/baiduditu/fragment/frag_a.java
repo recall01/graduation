@@ -1,6 +1,9 @@
 package com.example.lenovo.baiduditu.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +39,7 @@ import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.model.VSet;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.common;
+import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import org.json.JSONArray;
@@ -58,9 +63,7 @@ import okhttp3.Response;
  */
 
 public class frag_a extends Fragment {
-    private final static String URL = "http://10.18.42.63:8801/sign/queryVSet";
     Student student = new Student();
-    String stuId,name,email;
     TextView nameTV,emailTV;
     CircleImageView image;
     Button nav;
@@ -78,15 +81,7 @@ public class frag_a extends Fragment {
             }
         }
     };
-/*    public static frag_a newInstance(String name,String id,String error){
-        frag_a a =new frag_a();
-        Bundle bundle = new Bundle();
-        bundle.putString("name",name);
-        bundle.putString("id",id);
-        bundle.putString("error",error);
-        a.setArguments(bundle);
-        return a;
-    }*/
+
     public static frag_a newInstance(Student student){
         frag_a a =new frag_a();
         Bundle bundle = new Bundle();
@@ -112,10 +107,7 @@ public class frag_a extends Fragment {
         if(student==null){
             return;
         }
-        name = student.getStuName();
-        stuId = student.getStuId();
-        email = student.getStuMail();
-        HttpUtil.getOkHttpRequest(URL+"?claID="+student.getClaID()+"&stuID="+student.getStuId(), new Callback() {
+        HttpUtil.getOkHttpRequest(Constants.QUERYVSET_URL+"?claID="+student.getClaID()+"&stuID="+student.getStuId(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Message message = new Message();
@@ -140,7 +132,7 @@ public class frag_a extends Fragment {
                 Intent mIntent= new Intent();
                 Bundle mBundle = new Bundle();
                 Sign sign = new Sign();
-                sign.setStuId(stuId);
+                sign.setStuId(student.getStuId());
                 sign.setSetId(vSets.get(pos).getSetId());
                 mBundle.putSerializable("sign",sign);
                 mIntent.putExtras(mBundle);
@@ -159,15 +151,14 @@ public class frag_a extends Fragment {
         NavigationView navView = view.findViewById(R.id.nav_view);
         View headerLayout = navView.inflateHeaderView(R.layout.nav_header);
         nameTV =headerLayout.findViewById(R.id.nav_nickname);
-        nameTV.setText(name);
         emailTV = headerLayout.findViewById(R.id.nav_email);
-        emailTV.setText(email);
+        initView(student);
         image = headerLayout.findViewById(R.id.icon_image);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ChangeHead.class);
-                intent.putExtra("id",stuId);
+                intent.putExtra("id",student.getStuId());
                 startActivity(intent);//修改头像
             }
         });
@@ -194,6 +185,10 @@ public class frag_a extends Fragment {
             }
         });
     }  //btn
+    private void initView(Student student){
+        nameTV.setText(student.getStuName());
+        emailTV.setText(student.getStuMail());
+    }
 
     private void parseJSONWithJSONObject(String jsonData) {
         Message message = new Message();
@@ -230,4 +225,21 @@ public class frag_a extends Fragment {
             handler.sendMessage(message);
         }
     }  //parseJSONWithJSONObject
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.CART_BROADCAST");
+        BroadcastReceiver mItemviewListClickReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                student = (Student) intent.getSerializableExtra("student");
+                initView(student);
+            }
+        };
+        broadcastManager.registerReceiver(mItemviewListClickReceiver, intentFilter);
+    }
+
 }

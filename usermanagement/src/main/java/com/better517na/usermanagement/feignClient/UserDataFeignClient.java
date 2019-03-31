@@ -6,12 +6,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.better517na.usermanagement.model.Response;
 import com.better517na.usermanagement.model.Sign;
 import com.better517na.usermanagement.model.Student;
-
-import static com.better517na.usermanagement.utils.Constant.RESPONSE_FALSE;
+import static com.better517na.usermanagement.utils.Constant.RESPONSE_FALLBACK;
 
 /**
  * @author zhuojiu
@@ -112,8 +110,9 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
 //封装方法，回调信息
     private Response getFallback(Throwable throwable){
         Response response = new Response<>();
-        response.setStatus(RESPONSE_FALSE);
-        response.setMsg("回调原因："+throwable);
+        response.setStatus(RESPONSE_FALLBACK);
+        response.setData(throwable.getMessage());
+        response.setMsg("Feign回调");
         return response;
     }
 }

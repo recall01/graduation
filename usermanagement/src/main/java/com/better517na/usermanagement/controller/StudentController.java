@@ -50,7 +50,7 @@ public class StudentController {
     public Response loginStudent(@RequestParam String account, @RequestParam String password){
         return studentService.loginStudent(account,password);
     }
-
+//返回修改后的学生信息
     @SysLogger("changeInfo")
     @HystrixCommand(fallbackMethod = "changeFallback")
     @ApiOperation(value = "修改学生信息接口",notes = "填写要修改的信息进行修改")

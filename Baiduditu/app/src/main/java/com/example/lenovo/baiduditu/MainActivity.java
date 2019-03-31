@@ -1,13 +1,18 @@
 package com.example.lenovo.baiduditu;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.LruCache;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -39,6 +44,7 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
         common.setHeadBackground(getWindow());
 
         student = (Student) getIntent().getSerializableExtra("student");
+
         if(student!=null){
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -48,13 +54,21 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
     }  //onCreat
     //0为跳转签到界面
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        MyMessage message = (MyMessage) data.getSerializableExtra("message");
-        if (message.what == 200){
-            common.myToast(MainActivity.this,"签到成功!");
+        if(resultCode == 0){
+            MyMessage message = (MyMessage) data.getSerializableExtra("message");
+            if (message.what == 200){
+                common.myToast(MainActivity.this,"签到成功!");
+            }else {
+                common.myDailog(""+message.obj,MainActivity.this);
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_title,frag_a.newInstance(student)).commitAllowingStateLoss();
+        }else if(resultCode == 1){
+            boolean isFresh = (Boolean) getIntent().getSerializableExtra("isFresh");
+            System.out.println("isFresh的值:"+isFresh);
         }else {
-            common.myDailog(""+message.obj,MainActivity.this);
+            System.out.println("resultCode的值:"+resultCode);
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_title,frag_a.newInstance(student)).commitAllowingStateLoss();
+
     }//onActivityResult
 
     public boolean onKeyDown(int keyCode, KeyEvent event){
@@ -90,6 +104,8 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
     }
 
     protected void onRestart(){
+        //重新请求数据
+        System.out.println("onRestart执行啦");
         super.onRestart();
     }
 

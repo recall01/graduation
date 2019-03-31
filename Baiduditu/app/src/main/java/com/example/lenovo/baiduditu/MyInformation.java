@@ -6,32 +6,44 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.LruCache;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.lenovo.baiduditu.fragment.frag_a;
 import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.myClass.common;
+import com.example.lenovo.baiduditu.utils.Constants;
+import com.google.gson.Gson;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Calendar;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MyInformation extends AppCompatActivity implements View.OnClickListener {
-    String user_id,mUrl,nickname,sex,birthday,school,major,nianji,banji,schoolId;
-    EditText et_nickname,et_major,et_nianji,et_myClass,et_email,et_phone;
-    TextView et_sex,et_birthday,et_school,queding;
+    EditText nameET,classET,emailET,phoneET,stuNumET;
+    TextView sexTV,birthdayET,saveTV;
     LoadingDialog ld;
+    private boolean isFresh = false;  //是否刷新
     private Student student = new Student();
-    RequestBody requestBody;
     private Handler handler = new Handler(){
         public void handleMessage(Message msg){
             switch (msg.what){
@@ -50,90 +62,74 @@ public class MyInformation extends AppCompatActivity implements View.OnClickList
         common.setHeadBackground(getWindow());
 
         student = (Student) getIntent().getSerializableExtra("student");
-//        mUrl ="http://1.873717549.applinzi.com/Android_allInformation.php";
-//        RequestBody requestBody =new FormBody.Builder().add("user_id", user_id).add("isbreak", "true").build();
-//        HttpUtil.postOkHttpRequest(requestBody,mUrl, new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                Message message = new Message();
-//                message.what = 3;
-//                handler.sendMessage(message);
-//            }
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String responseData = response.body().string();
-//                parseJSONWithJSONObject(responseData,false);
-//            }
-//        });
-//        ld = new LoadingDialog(MyInformation.this);
-//        ld.setLoadingText("加载中...").show();
-        but();
+        if(student == null){
+            return;
+        }
+        init();//初始化按键信息
     }
-    private void parseJSONWithJSONObject(String jsonData,boolean isChangeInfor) {
+    private void parseJSONWithJSONObject(String jsonData) {
+        Message message = new Message();
         try{
             JSONObject jsonObject = new JSONObject(jsonData);
-            Message message = new Message();
-            if(!isChangeInfor){
-                nickname = jsonObject.getString("nickName");
-                sex = jsonObject.getString("useSex");
-                birthday = jsonObject.getString("birthday");
-                school = jsonObject.getString("mySchool");
-                String myClass = jsonObject.getString("myClass");
-                if(myClass!=null){
-                    String[] strs=myClass.split("\\|");
-                    major = strs[0];
-                    nianji = strs[1];
-                    banji = strs[2];
+            int status = jsonObject.getInt("status");
+            if(status==200){
+                JSONObject js = jsonObject.getJSONObject("data");
+                if(js!=null){
+                    student.setStuName(js.getString("stuName"));
+                    student.setStuId(js.getString("stuId"));
+                    student.setStuSex(js.getInt("stuSex"));
+                    student.setStuNumber(js.getString("stuNumber"));
+                    student.setStuPassword(js.getString("stuPassword"));
+                    student.setStuPhone(js.getString("stuPhone"));
+                    student.setStuMail(js.getString("stuMail"));
+                    student.setClaID(js.getString("claID"));
+                    student.setClassName(js.getString("claName"));
+                    student.setRegisterTime(js.getString("registerTime"));
+                    student.setPermissions(js.getString("permissions"));
+                    isFresh = true;
                 }
-            /*    major = jsonObject.getString("major");
-                nianji = jsonObject.getString("nianji");
-                banji = jsonObject.getString("banji"); */
-                message.what = 0;
-            }else {
-                String status = jsonObject.getString("status");
-                message.obj = status;
-                message.what = 1;
             }
-            handler.sendMessage(message);
-            //            isLoge = "true";
+            message.what = 1;
+            message.obj = jsonObject.getString("msg");
         }catch (Exception e){
             e.printStackTrace();
-            Message message = new Message();
-            message.what = 5;
+            message.obj = e.getMessage();
+            message.what = 0;
+        }finally {
             handler.sendMessage(message);
         }
+
     }  //parseJSONWithJSONObject
-    private void but() {
+    private void init() {
         Button back = findViewById(R.id.xinxi_back);
         back.setOnClickListener(this);
         TextView head = findViewById(R.id.changeHead);
         head.setOnClickListener(this);
-        et_nickname = findViewById(R.id.et_nickname);
-        et_nickname.setText(student.getStuName());
-        et_sex = findViewById(R.id.et_sex);
-        et_sex.setOnClickListener(this);
+        nameET = findViewById(R.id.et_name);
+        nameET.setText(student.getStuName());
+        sexTV = findViewById(R.id.et_sex);
+        sexTV.setOnClickListener(this);
         if(student.getStuSex()==0){
-            et_sex.setText("男");
+            sexTV.setText("男");
         }else {
-            et_sex.setText("女");
+            sexTV.setText("女");
         }
-        et_birthday = findViewById(R.id.et_birthday);
-        et_birthday.setOnClickListener(this);
-        et_email = findViewById(R.id.et_email);
-        et_email.setText(student.getStuMail());
-        et_email.setEnabled(false);
-        et_school = findViewById(R.id.et_school);
-        et_school.setOnClickListener(this);
-        et_school.setText("成都信息工程大学");
-        et_phone = findViewById(R.id.et_phone);
-        et_phone.setText(student.getStuPhone());
-        et_phone.setEnabled(false);
-        et_major = findViewById(R.id.et_major);
-        et_major.setText("计算机科学与技术");
-        et_nianji = findViewById(R.id.et_nianji);
-        et_myClass = findViewById(R.id.et_myClass);
-        queding = findViewById(R.id.xinxi_queding);
-        queding.setOnClickListener(this);
+        birthdayET = findViewById(R.id.et_birthday);
+        birthdayET.setOnClickListener(this);
+        emailET = findViewById(R.id.et_email);
+        emailET.setText(student.getStuMail());
+        emailET.setEnabled(false);
+        stuNumET = findViewById(R.id.et_stuNum);
+        stuNumET.setText(student.getStuNumber());
+        stuNumET.setEnabled(false);
+        phoneET = findViewById(R.id.et_phone);
+        phoneET.setText(student.getStuPhone());
+        phoneET.setEnabled(false);
+        classET = findViewById(R.id.et_myClass);
+        classET.setText(student.getClassName());
+        classET.setEnabled(false);
+        saveTV = findViewById(R.id.et_save);
+        saveTV.setOnClickListener(this);
     }
     private void getDate() {
         Calendar cal=Calendar.getInstance();
@@ -146,7 +142,7 @@ public class MyInformation extends AppCompatActivity implements View.OnClickList
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                et_birthday.setText(i+"-"+(i1+1)+"-"+i2);
+                birthdayET.setText(i+"-"+(i1+1)+"-"+i2);
             }
         };
         DatePickerDialog dialog=new DatePickerDialog(MyInformation.this, 0,listener,year,month,day);//后边三个参数为显示dialog时默认的日期，月份从0开始，0-11对应1-12个月
@@ -155,66 +151,53 @@ public class MyInformation extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.xinxi_queding:
+            case R.id.et_save:
                 changeInfor();
                 break;
-            case R.id.xinxi_back:finish();break;//返回按钮
+            case R.id.xinxi_back:
+                Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("student",student);
+                intent.putExtras(mBundle);
+                LocalBroadcastManager.getInstance(MyInformation.this).sendBroadcast(intent);
+                sendBroadcast(intent);
+                finish();break;//返回按钮
             case R.id.changeHead:
-                Intent intent = new Intent(MyInformation.this, ChangeHead.class);
-                intent.putExtra("user_id",user_id);
-                startActivity(intent);break;//修改头像
+                common.myDailog("作者太懒,该功能还未实现",MyInformation.this);
+                break;//修改头像
             case R.id.et_sex:selectSex();break;
             case R.id.et_birthday:
                 getDate();break;
-            case R.id.et_school:
-                intent = new Intent(MyInformation.this, School.class);
-                intent.putExtra("user_id",user_id);
-                startActivityForResult(intent,3);break;//修改头像
             default:break;
         }
     }
     private void changeInfor(){
-        nickname = et_nickname.getText().toString();
-        sex = et_sex.getText().toString();
-        birthday = et_birthday.getText().toString();
-        if(et_major.getText().toString()!=null&&et_nianji.getText().toString()!=null&&et_myClass.getText().toString()!=null){
-            major = et_major.getText().toString()+"|"+et_nianji.getText().toString()+"|"+et_myClass.getText().toString();
-            mUrl = "http://1.873717549.applinzi.com/Android/Android_handInfor.php";
-
-            if(schoolId != null){
-                requestBody =new FormBody.Builder().add("user_id", user_id)
-                        .add("nickname", nickname)
-                        .add("sex", sex)
-                        .add("school", schoolId)
-                        .add("major", major)
-                        .add("birthday", birthday).build();
-            }else {
-                requestBody =new FormBody.Builder().add("user_id", user_id)
-                        .add("nickname", nickname)
-                        .add("sex", sex)
-                        .add("major", major)
-                        .add("birthday", birthday).build();
-            }
-
-//            HttpUtil.postOkHttpRequest(requestBody,mUrl, new Callback() {
-//                @Override
-//                public void onFailure(Call call, IOException e) {
-//                    Message message = new Message();
-//                    message.what = 3;
-//                    handler.sendMessage(message);
-//                }
-//                @Override
-//                public void onResponse(Call call, Response response) throws IOException {
-//                    String responseData = response.body().string();
-//                    parseJSONWithJSONObject(responseData,true);
-//                }
-//            });
-        }else {
-            common.myToast(MyInformation.this,"请输入学校信息！");
+        student.setStuName(nameET.getText().toString());
+        if(birthdayET.getText().toString()!=null&&!"".equals(birthdayET.getText().toString())){
+            System.out.println("生日:"+birthdayET.getText().toString());
         }
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(Constants.JSONTYPE,new Gson().toJson(student));
+        Request request = new Request.Builder().url(Constants.CHANGE_URL).post(body).build();
+        try {
+            client.newCall(request).enqueue(new Callback(){
 
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseData = response.body().string();
+                    parseJSONWithJSONObject(responseData);
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 
     private void selectSex(){
         final String[] sexArray = new String[]{"男","女"};
@@ -222,19 +205,10 @@ public class MyInformation extends AppCompatActivity implements View.OnClickList
         builder.setTitle("选择性别").setSingleChoiceItems(sexArray,0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                et_sex.setText(sexArray[i]);
+                student.setStuSex(i);
+                sexTV.setText(sexArray[i]);
             }
         }).show();
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode){
-            case 3:
-                String mySchool = data.getStringExtra("mySchoolName");
-                schoolId = data.getStringExtra("mySchoolId");
-                et_school.setText(mySchool);break;
-            default:break;
-        }
-    }
 }
