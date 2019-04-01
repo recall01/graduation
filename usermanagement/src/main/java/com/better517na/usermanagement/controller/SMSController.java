@@ -28,8 +28,7 @@ public class SMSController {
     @ApiOperation(value = "短信验证码验证接口",notes = "填写验证码")
     @RequestMapping(value = "verifySMSCode",method = RequestMethod.GET)
     public Response verifySMSCode(@RequestParam @ApiParam(name = "phone",value = "手机号",required = true) String phone, @RequestParam  @ApiParam(name = "code",value = "验证码",required = true) String code){
-        String url = "https://webapi.sms.mob.com/sms/verify";
-        String params = "appkey=22d8290d63094&phone="+phone+"&zone=86&&code="+code;
-        return sMSService.verifySMSCode(url,params);
+
+        return sMSService.verifySMSCode(phone,code);
     }
 }

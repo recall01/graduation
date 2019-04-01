@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spingar1">
+        <item>热门推荐</item>
+        <item>最新发布</item>
+        <item>最受欢迎</item>
+    </string-array>
+    <string-array name="spingar2">
+        <item>书籍资料</item>
+        <item>生活用品</item>
+        <item>服装首饰</item>
+        <item>餐饮食材</item>
+        <item>水果素菜</item>
+    </string-array>
+    <string-array name="spingar3">
+        <item>智能推荐</item>
+        <item>生活用品</item>
+        <item>服装首饰</item>
+        <item>餐饮食材</item>
+    </string-array>
+</resources>

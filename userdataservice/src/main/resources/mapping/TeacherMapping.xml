@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.better517na.userdataservice.mapping.TeacherMapping">
+    <resultMap id="teacherResult" type="com.better517na.userdataservice.model.Teacher">
+        <result property="teaID" column="TeaID"/>
+        <result property="teaName" column="TeaName"/>
+        <result property="teaPhone" column="TeaPhone"/>
+        <result property="registerTime" column="RegisterTime"/>
+        <result property="permissions" column="Permissions"/>
+    </resultMap>
+    <select id="selectTeacher" resultMap="teacherResult">
+        select * from teachers
+        where TeaPhone = #{phone}
+    </select>
+</mapper>

@@ -29,7 +29,9 @@ import static com.better517na.usermanagement.utils.Constant.RESPONSE_SUCCESS;
 public class SMSServiceImpl implements ISMSService {
 
     @Override
-    public Response verifySMSCode(String address, String params) {
+    public Response verifySMSCode(String phone, String code) {
+        String address = "https://webapi.sms.mob.com/sms/verify";
+        String params = "appkey=22d8290d63094&phone="+phone+"&zone=86&&code="+code;
         Response response = new Response();
         HttpURLConnection conn = null;
         try {
