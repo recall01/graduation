@@ -21,7 +21,6 @@ public class TeacherController {
 
     @PostMapping(value = "/select")
     public Response selectTeacher(@RequestParam String phone) throws Exception{
-        System.out.println("---selectTeacher---");
         return teacherService.selectTeacher(phone);
     }
 }

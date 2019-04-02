@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lenovo.baiduditu.model.Student;
+import com.example.lenovo.baiduditu.model.Teacher;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.activityCollector;
 import com.example.lenovo.baiduditu.myClass.common;
@@ -44,9 +45,9 @@ import static cn.smssdk.SMSSDK.getVerificationCode;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button loginBT,getCodeBT;
     EditText codeET,phoneET;
-    Student student = new Student();
-    LoadingDialog ld;
+    Teacher teacher = new Teacher();
     private EventHandler eh;
+    LoadingDialog ld;
     //控制按钮样式是否改变
     private boolean tag = true;
     //每次验证请求需要间隔60S
@@ -56,19 +57,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         public void handleMessage(Message msg){
             switch (msg.what){
                 case 0:
-                    common.myDailog("系统异常！"+msg.obj,LoginActivity.this);
                     ld.close();
+                    common.myDailog("系统异常!"+msg.obj,LoginActivity.this);
                     break;
                 case 1:
-                    common.myDailog("连接服务器失败！",LoginActivity.this);
                     ld.close();
+                    common.myDailog("连接服务器失败!",LoginActivity.this);
                     break;
                 case 2:
-                    common.myDailog("验证失败，请检查账号和密码！",LoginActivity.this);
                     ld.close();
+                    common.myDailog(msg.obj.toString(),LoginActivity.this);
                     break;
-                case 3:ld.close();
+                case 3:
+                    ld.close();
                     login();
+                    break;
+                case 4://发短信逻辑
+                    common.myToast(LoginActivity.this,msg.obj.toString());
                     break;
                 default:break;
             }
@@ -86,23 +91,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterEvent(int event, int result, Object data) {
                 Message msg = new Message();
+                msg.what = 4;
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     //回调完成
-                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                        msg.arg1 = 0;
-                        //提交验证码,并且正确成功
-                    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+                    if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                         //获取验证码成功
-                        msg.arg1 = 1;
                         msg.obj = "获取验证码成功";
+                        handler.sendMessage(msg);
                     }
                 }else{
                     //返回支持发送验证码的国家列表
-                    msg.arg1 = 2;
-                    msg.obj = "验证失败";
+                    msg.obj = "获取验证失败";
                     ((Throwable)data).printStackTrace();
+                    handler.sendMessage(msg);
                 }
-                handler.sendMessage(msg);
             }
         };
         SMSSDK.registerEventHandler(eh); //注册短信回调
@@ -111,7 +113,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //view
     public void loadView(){
+
         codeET = findViewById(R.id.et_code);
+        getCodeBT = findViewById(R.id.bt_getCode);
+        getCodeBT.setOnClickListener(this);
         phoneET = findViewById(R.id.et_phone);
         phoneET.addTextChangedListener(new TextWatcher() {
 
@@ -123,11 +128,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(charSequence.toString().length()==11){
-                    codeET.setEnabled(true);
-                    codeET.setBackgroundResource(R.drawable.bg_but_yanzheng_ok);
+                    getCodeBT.setEnabled(true);
+                    getCodeBT.setBackgroundResource(R.drawable.bg_but_yanzheng_ok);
                 }else {
-                    codeET.setEnabled(false);
-                    codeET.setBackgroundResource(R.drawable.bg_but_yanzheng_no);
+                    getCodeBT.setEnabled(false);
+                    getCodeBT.setBackgroundResource(R.drawable.bg_but_yanzheng_no);
                 }
             }
 
@@ -137,7 +142,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
         loginBT =  findViewById(R.id.bt_login);
-        getCodeBT = findViewById(R.id.bt_getCode);
+        loginBT.setOnClickListener(this);
     }
 
     //重写按键函数
@@ -152,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void login(){
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
         Bundle mBundle = new Bundle();
-        mBundle.putSerializable("teacher",student);
+        mBundle.putSerializable("teacher",teacher);
         intent.putExtras(mBundle);
         startActivity(intent);
         LoginActivity.this.finish();
@@ -161,8 +166,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.bt_getCode:getCode() ;break;
-            case R.id.bt_login: loginRequest();break;
+            case R.id.bt_getCode:
+                getCode();break;
+            case R.id.bt_login:
+                ld = new LoadingDialog(LoginActivity.this);
+                ld.setLoadingText("加载中...").show();
+                loginRequest();break;
             default:break;
         }
     }
@@ -192,24 +201,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if(status==200){
                 JSONObject js = jsonObject.getJSONObject("data");
                 if(js!=null){
-                    student.setStuName(js.getString("stuName"));
-                    student.setStuId(js.getString("stuId"));
-                    student.setStuSex(js.getInt("stuSex"));
-                    student.setStuNumber(js.getString("stuNumber"));
-                    student.setStuPassword(js.getString("stuPassword"));
-                    student.setStuPhone(js.getString("stuPhone"));
-                    student.setStuMail(js.getString("stuMail"));
-                    student.setClaID(js.getString("claID"));
-                    student.setClassName(js.getString("claName"));
-                    student.setRegisterTime(js.getString("registerTime"));
-                    student.setPermissions(js.getString("permissions"));
+                    teacher.setTeaId(js.getString("teaID"));
+                    teacher.setTeaName(js.getString("teaName"));
+                    teacher.setTeaPhone(js.getString("teaPhone"));
+                    teacher.setRegisterTime(js.getString("registerTime"));
+                    teacher.setPermissions(js.getString("permissions"));
                     message.what = 3;
                 }else {
                     message.what = 2;
                 }
+
             }else {
                 message.what = 2;
             }
+            message.obj = jsonObject.getString("msg");
         }catch (Exception e){
             e.printStackTrace();
             message.obj = e.getMessage();

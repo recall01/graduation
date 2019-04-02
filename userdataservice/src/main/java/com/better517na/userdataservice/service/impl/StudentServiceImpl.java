@@ -12,6 +12,7 @@ import com.better517na.userdataservice.service.IStudentService;
 
 import java.beans.Transient;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.better517na.userdataservice.utils.Constant.RESPONSE_FALSE;
@@ -134,6 +135,24 @@ public class StudentServiceImpl implements IStudentService {
             response.setStatus(RESPONSE_FALSE);
             response.setData(e.getMessage());
             response.setMsg("修改密码异常");
+        }finally {
+            return response;
+        }
+    }
+
+    @Override
+    public Response queryStudentsByClaID(String claID) {
+        Response response = new Response();
+        try {
+            List<Student> students = studentDao.queryStudentsByClaID(claID);
+            response.setStatus(RESPONSE_SUCCESS);
+            response.setData(students);
+            response.setMsg(""+students.size());
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setData(e.getMessage());
+            response.setMsg("查询学生异常");
         }finally {
             return response;
         }

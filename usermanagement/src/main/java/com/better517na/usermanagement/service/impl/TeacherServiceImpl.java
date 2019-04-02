@@ -36,10 +36,10 @@ public class TeacherServiceImpl implements ITeacherService {
             response.setMsg("手机号错误");
             return response;
         }
-        response = smsService.verifySMSCode(account, code);
+/*        response = smsService.verifySMSCode(account, code);
         if(response.getStatus() != 200){
             return response;
-        }
+        }*/
         //2.根据手机号查询老师信息
         response = teacherBusiness.loginTeacher(account);
         if(response.getStatus() == 200){

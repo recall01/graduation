@@ -44,6 +44,8 @@ public interface UserDataFeignClient {
     Response changePassword(@RequestParam(value = "phone")String phone, @RequestParam(value = "password")String password);
     @PostMapping("/teacher/select")
     Response selectTeacher(@RequestParam(value = "phone")String phone);
+    @PostMapping("/student/queryStudents")
+    Response queryStudentsByClaID(@RequestParam(value = "claID")String claID);
 }
 @Component
 class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeignClient>{
@@ -110,6 +112,11 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
 
             @Override
             public Response selectTeacher(String phone) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response queryStudentsByClaID(String claID) {
                 return getFallback(throwable);
             }
         };

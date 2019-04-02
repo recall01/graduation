@@ -96,4 +96,9 @@ public class StudentBusinessImpl implements IStudentBusiness {
             return response;
         }
     }
+
+    @Override
+    public Response queryStudentsByClaID(String claID) {
+        return userDataFeignClient.queryStudentsByClaID(claID);
+    }
 }

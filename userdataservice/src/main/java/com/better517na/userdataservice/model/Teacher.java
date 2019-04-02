@@ -6,6 +6,9 @@ public class Teacher {
     private String teaPhone;
     private String registerTime;
     private String permissions;
+    //创建的班级 一对一
+    private Class aClass;
+    //设置的签到
 
     public String getTeaID() {
         return teaID;
@@ -45,5 +48,13 @@ public class Teacher {
 
     public void setPermissions(String permissions) {
         this.permissions = permissions;
+    }
+
+    public Class getaClass() {
+        return aClass;
+    }
+
+    public void setaClass(Class aClass) {
+        this.aClass = aClass;
     }
 }

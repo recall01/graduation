@@ -1,6 +1,7 @@
 package com.better517na.userdataservice.dao.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -64,5 +65,10 @@ public class StudentDaoImpl implements IStudentDao {
         }else {
             return false;
         }
+    }
+
+    @Override
+    public List<Student> queryStudentsByClaID(String claID) {
+        return vStudentsMapping.queryStudentsByClaID(claID);
     }
 }

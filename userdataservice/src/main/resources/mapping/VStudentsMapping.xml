@@ -21,6 +21,9 @@
         select * from v_students
         where StuPhone = #{account} and StuPassword = #{password}
     </select>
-
+    <select id="queryStudentsByClaID" resultMap="vStdentResult">
+        select * from v_students
+        where ClaID = #{claID}
+    </select>
 
 </mapper>

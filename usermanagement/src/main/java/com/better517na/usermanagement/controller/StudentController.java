@@ -66,6 +66,13 @@ public class StudentController {
         return studentService.queryClassByClaID(claID);
     }
 
+    @SysLogger("queryStudentsByClaID")
+    @ApiOperation(value = "根据班级编号查询班级里所有的学生",notes = "填写必要的班级编号")
+    @RequestMapping(value = "/queryStudents",method = RequestMethod.GET)
+    public Response queryStudentsByClaID(@RequestParam @ApiParam(name = "claID",value = "班级编号",required = true) String claID){
+        return studentService.queryStudentsByClaID(claID);
+    }
+
     @SysLogger("changePassword")
     @HystrixCommand(fallbackMethod = "changePasswordFallback")
     @ApiOperation(value = "修改学生密码接口",notes = "填写要修改后的密码进行修改")

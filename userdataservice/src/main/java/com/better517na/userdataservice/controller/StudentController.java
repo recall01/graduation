@@ -41,6 +41,12 @@ public class StudentController {
         return studentService.queryClassByClaID(claID);
     }
 
+    @PostMapping(value = "/queryStudents")
+    public Response queryStudentsByClaID(@RequestParam String claID) throws Exception{
+        System.out.println("---queryStudentsByClaID---");
+        return studentService.queryStudentsByClaID(claID);
+    }
+
     @PostMapping(value = "/changePassword")
     public Response changePassword(@RequestParam String phone,@RequestParam String password) throws Exception{
         return studentService.changePassword(phone,password);

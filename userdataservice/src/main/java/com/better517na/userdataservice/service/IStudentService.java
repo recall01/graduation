@@ -15,4 +15,6 @@ public interface IStudentService {
     Response queryClassByClaID(String claID);
 
     Response changePassword(String phone, String password);
+
+    Response queryStudentsByClaID(String claID);
 }

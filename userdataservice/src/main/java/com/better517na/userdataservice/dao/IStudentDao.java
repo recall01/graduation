@@ -4,6 +4,8 @@ import com.better517na.userdataservice.model.Class;
 import com.better517na.userdataservice.model.Response;
 import com.better517na.userdataservice.model.Student;
 
+import java.util.List;
+
 /**
  * @author zhuojiu
  * @date 2019-02-27 09:03
@@ -16,4 +18,6 @@ public interface IStudentDao {
     Class queryClassByClaID(String claID) throws Exception;
 
     boolean changePassword(String phone, String password) throws Exception;
+
+    List<Student> queryStudentsByClaID(String claID);
 }

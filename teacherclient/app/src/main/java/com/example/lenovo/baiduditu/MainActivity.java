@@ -1,18 +1,12 @@
 package com.example.lenovo.baiduditu;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.util.LruCache;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +17,7 @@ import android.widget.Toast;
 import com.example.lenovo.baiduditu.fragment.frag_a;
 import com.example.lenovo.baiduditu.model.MyMessage;
 import com.example.lenovo.baiduditu.model.Student;
+import com.example.lenovo.baiduditu.model.Teacher;
 import com.example.lenovo.baiduditu.myClass.activityCollector;
 import com.example.lenovo.baiduditu.myClass.common;
 import com.example.lenovo.baiduditu.view.ChangeIcon;
@@ -30,28 +25,39 @@ import com.example.lenovo.baiduditu.view.ChangeIcon;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements  ViewPager.OnPageChangeListener {
-    Button button_determine,button_cancel;
-    AlertDialog dlg;
-    Student student = new Student();
+public class MainActivity extends FragmentActivity implements  ViewPager.OnPageChangeListener,View.OnClickListener {
+    Button studentsBT,signBT,signdataBT,exitBT;
+    Teacher teacher = new Teacher();
     private List<ChangeIcon> lTabIndicators = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    //    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_xuanzejiemian);
-        activityCollector.addActivity(this);
+        setContentView(R.layout.activity_mian);
+//        activityCollector.addActivity(this);
         common.setHeadBackground(getWindow());
 
-        student = (Student) getIntent().getSerializableExtra("student");
-
-        if(student!=null){
+        initView();
+        teacher = (Teacher) getIntent().getSerializableExtra("teacher");
+/*        if(teacher!=null){
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(R.id.fragment_title,frag_a.newInstance(student)).commitAllowingStateLoss();
-        }
+            transaction.add(R.id.fragment_title,frag_a.newInstance(teacher)).commitAllowingStateLoss();
+        }*/
 
     }  //onCreat
+    private void initView(){
+        studentsBT = findViewById(R.id.bt_students);
+        studentsBT.setOnClickListener(this);
+        signBT = findViewById(R.id.bt_sign);
+        signBT.setOnClickListener(this);
+        signdataBT = findViewById(R.id.bt_signdata);
+        signdataBT.setOnClickListener(this);
+        exitBT = findViewById(R.id.bt_exit);
+        exitBT.setOnClickListener(this);
+    }
+
+
+
     //0为跳转签到界面
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode == 0){
@@ -61,44 +67,13 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
             }else {
                 common.myDailog(""+message.obj,MainActivity.this);
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_title,frag_a.newInstance(student)).commitAllowingStateLoss();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_title,frag_a.newInstance(student)).commitAllowingStateLoss();
         }else {
             System.out.println("resultCode的值:"+resultCode);
         }
 
     }//onActivityResult
 
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        if (event.getKeyCode()== KeyEvent.KEYCODE_BACK){
-            dlg = new AlertDialog.Builder(this).create();
-            dlg.show();
-            final Window window = dlg.getWindow();
-            window.setGravity(Gravity.CENTER);
-            window.setWindowAnimations(R.style.myStyle);
-            window.setContentView(R.layout.dialog_layout);
-            button_determine = window.findViewById(R.id.btn_determine);
-            button_cancel = window.findViewById(R.id.btn_cancel);
-            initEvent();
-        }
-        return super.onKeyDown(keyCode,event);
-    }
-
-    private void initEvent() {
-        button_determine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dlg.dismiss();                //对话框移动到底部消失
-                activityCollector.finishAll();//关闭当前应用
-            }
-        });
-        button_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"真是个明智的选择！",Toast.LENGTH_SHORT).show();
-                dlg.dismiss();                //对话框移动到底部消失
-            }
-        });
-    }
 
     protected void onRestart(){
         super.onRestart();
@@ -123,5 +98,24 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bt_students:
+
+                System.out.println("按钮bt_students");
+                common.myToast(MainActivity.this,"bt_students");break;
+            case R.id.bt_sign:
+                System.out.println("按钮bt_sign");
+                common.myToast(MainActivity.this,"bt_sign");break;
+            case R.id.bt_signdata:
+                System.out.println("按钮bt_signdata");
+                common.myToast(MainActivity.this,"bt_signdata");break;
+            case R.id.bt_exit:
+                System.out.println("按钮bt_exit");
+                common.myToast(MainActivity.this,"bt_exit");break;
+        }
     }
 }

@@ -106,6 +106,17 @@ public class StudentServiceImpl implements IStudentService {
         return studentBusiness.changePassword(phone,password);
     }
 
+    @Override
+    public Response queryStudentsByClaID(String claID) {
+        Response response = new Response();
+        if(claID == null||"".equals(claID)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("班级编号有误");
+            return response;
+        }
+        return studentBusiness.queryStudentsByClaID(claID);
+    }
+
     private boolean checkStudent(Student student){
         if(student==null){
             return false;

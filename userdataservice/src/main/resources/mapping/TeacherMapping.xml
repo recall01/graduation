@@ -7,9 +7,24 @@
         <result property="teaPhone" column="TeaPhone"/>
         <result property="registerTime" column="RegisterTime"/>
         <result property="permissions" column="Permissions"/>
+        <association property="aClass" javaType="com.better517na.userdataservice.model.Class">
+            <result property="claID" column="ClaID"/>
+            <result property="claName" column="ClaName"/>
+            <result property="createTime" column="CreateTime"/>
+            <result property="createrID" column="CreaterID"/>
+        </association>
     </resultMap>
-    <select id="selectTeacher" resultMap="teacherResult">
+    <!--SELECT * FROM `teachers` LEFT JOIN `classes` ON `teachers`.`TeaNumber` = `classes`.`CreaterID` AND `classes`.`IsDelete` = 0 AND `teachers`.`IsDelete` = 0-->
+<!--    <select id="selectTeacher" resultMap="teacherResult">
         select * from teachers
         where TeaPhone = #{phone}
+    </select>-->
+    <select id="selectTeacher" resultMap="teacherResult">
+        SELECT * FROM teachers
+        LEFT JOIN classes
+        ON teachers.TeaNumber = classes.CreaterID
+        AND classes.IsDelete = 0
+        AND teachers.IsDelete = 0
+        AND TeaPhone = #{phone}
     </select>
 </mapper>
