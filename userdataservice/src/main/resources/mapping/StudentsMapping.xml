@@ -39,4 +39,16 @@
             StuPassword=#{password}
         where StuPhone=#{phone}
     </update>
+    <update id="removeStudent">
+        update students
+        set ClaID = 0
+        where StuNumber = #{stuNumber}
+        AND IsDelete = 0
+    </update>
+    <update id="changeClaID">
+        update students
+        set ClaID = #{claID}
+        where StuNumber = #{stuNumber}
+        AND IsDelete = 0
+    </update>
 </mapper>

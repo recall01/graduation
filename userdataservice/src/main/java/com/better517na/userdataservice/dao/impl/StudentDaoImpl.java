@@ -71,4 +71,26 @@ public class StudentDaoImpl implements IStudentDao {
     public List<Student> queryStudentsByClaID(String claID) {
         return vStudentsMapping.queryStudentsByClaID(claID);
     }
+
+    @Override
+    public Class queryClassByStuNumber(String stuNumber) throws Exception {
+        return classMapping.queryClassByStuNumber(stuNumber);
+    }
+
+    @Override
+    public boolean removeStudent(String stuNumber) throws Exception {
+        return studentsMapping.removeStudent(stuNumber);
+    }
+
+    @Override
+    public boolean addStudent(String stuNumber, String claID) throws Exception {
+        if(stuNumber!=null&&!"".equals(stuNumber)&&claID!=null&&!"".equals(claID)){
+            Map m = new HashMap();
+            m.put("stuNumber",stuNumber);
+            m.put("claID",claID);
+            return studentsMapping.changeClaID(m);
+        }else {
+            return false;
+        }
+    }
 }

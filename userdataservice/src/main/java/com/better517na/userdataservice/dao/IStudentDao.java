@@ -19,5 +19,11 @@ public interface IStudentDao {
 
     boolean changePassword(String phone, String password) throws Exception;
 
-    List<Student> queryStudentsByClaID(String claID);
+    List<Student> queryStudentsByClaID(String claID) throws Exception;
+
+    Class queryClassByStuNumber(String stuNumber) throws Exception;
+
+    boolean removeStudent(String stuNumber) throws Exception;
+
+    boolean addStudent(String stuNumber, String claID) throws Exception;
 }

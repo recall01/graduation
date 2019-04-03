@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,10 +21,11 @@ import org.json.JSONObject;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 
-public class School extends AppCompatActivity {
+public class AddStudent extends AppCompatActivity {
     String mUrl;
     EditText ser_school;
     private String[] dateName,dateId;
+    private Button addBT;
     ListView schoolList;
     LinearLayout layout;
     private Handler handler = new Handler(){
@@ -40,7 +40,7 @@ public class School extends AppCompatActivity {
     };
 
     private void changeView() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(School.this,android.R.layout.simple_list_item_1,dateName);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddStudent.this,android.R.layout.simple_list_item_1,dateName);
         schoolList.setAdapter(adapter);
         schoolList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,9 +58,17 @@ public class School extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_school);
+        setContentView(R.layout.activity_addstudent);
         common.setHeadBackground(getWindow());
-        schoolList = findViewById(R.id.school_list);
+
+        addBT = findViewById(R.id.bt_add);
+        addBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                common.myToast(AddStudent.this,"bt_add");
+            }
+        });
+        /*schoolList = findViewById(R.id.school_list);
         layout = findViewById(R.id.tuijian);
         ser_school = findViewById(R.id.ser_school);
         ser_school.addTextChangedListener(new TextWatcher() {
@@ -84,7 +92,7 @@ public class School extends AppCompatActivity {
                     handler.sendMessage(message);
                 }
             }
-        });
+        });*/
     }
 
     private void upDate(String school_name){

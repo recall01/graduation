@@ -16,8 +16,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lenovo.baiduditu.model.Classes;
 import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.model.Teacher;
+import com.example.lenovo.baiduditu.model.VO.TeacherVO;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.activityCollector;
 import com.example.lenovo.baiduditu.myClass.common;
@@ -45,7 +47,7 @@ import static cn.smssdk.SMSSDK.getVerificationCode;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button loginBT,getCodeBT;
     EditText codeET,phoneET;
-    Teacher teacher = new Teacher();
+    TeacherVO teacher = new TeacherVO();
     private EventHandler eh;
     LoadingDialog ld;
     //控制按钮样式是否改变
@@ -202,15 +204,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 JSONObject js = jsonObject.getJSONObject("data");
                 if(js!=null){
                     teacher.setTeaId(js.getString("teaID"));
+                    teacher.setTeaNumber(js.getString("teaNumber"));
                     teacher.setTeaName(js.getString("teaName"));
                     teacher.setTeaPhone(js.getString("teaPhone"));
                     teacher.setRegisterTime(js.getString("registerTime"));
                     teacher.setPermissions(js.getString("permissions"));
+                    if (!js.isNull("aClass")){
+                        JSONObject aclass = js.getJSONObject("aClass");
+                        if(aclass != null){
+                            Classes classes = new Classes();
+                            classes.setClaId(aclass.getString("claID"));
+                            classes.setClaName(aclass.getString("claName"));
+                            classes.setCreateTime(aclass.getString("createTime"));
+                            classes.setCreaterId(aclass.getString("createrID"));
+                            teacher.setAClass(classes);
+                        }
+                    }
                     message.what = 3;
                 }else {
                     message.what = 2;
                 }
-
             }else {
                 message.what = 2;
             }
@@ -242,8 +255,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }
     }
-    /*
-     * 改变按钮样式
+    /* 改变按钮样式
      * */
     private void changeBtnGetCode() {
 

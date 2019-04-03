@@ -13,4 +13,8 @@ public interface StudentsMapping {
     boolean changeInfo(Student student);
 
     boolean changePassword(Map m);
+
+    boolean removeStudent(String stuNumber);
+
+    boolean changeClaID(Map m);
 }

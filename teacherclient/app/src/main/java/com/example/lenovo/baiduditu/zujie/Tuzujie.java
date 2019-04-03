@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.lenovo.baiduditu.R;
-import com.example.lenovo.baiduditu.School;
+import com.example.lenovo.baiduditu.AddStudent;
 import com.example.lenovo.baiduditu.Zhujie_xinxiActivity;
 import com.example.lenovo.baiduditu.adapter.LinearAdapter;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
@@ -103,7 +103,7 @@ public class Tuzujie extends AppCompatActivity {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Tuzujie.this, School.class);
+                Intent intent = new Intent(Tuzujie.this, AddStudent.class);
                 startActivity(intent);
             }
         });

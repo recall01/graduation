@@ -1,6 +1,7 @@
 package com.example.lenovo.baiduditu;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,13 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import com.example.lenovo.baiduditu.adapter.DingdanAdapter;
+import com.example.lenovo.baiduditu.adapter.StudentsAdapter;
 import com.example.lenovo.baiduditu.model.Student;
-import com.example.lenovo.baiduditu.model.VSet;
-import com.example.lenovo.baiduditu.model.VSign;
+import com.example.lenovo.baiduditu.model.VO.TeacherVO;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.common;
-import com.example.lenovo.baiduditu.myClass.dingdan;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 import org.json.JSONArray;
@@ -29,27 +28,25 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class dingdanActivity extends AppCompatActivity {
-    private Student student = new Student();
-    private Button backBT;
+public class StudentsActivity extends AppCompatActivity {
+    private TeacherVO teacher = new TeacherVO();
+    private Button backBT,addBT;
     RecyclerView mRvMain;
     private SwipeRefreshLayout swipeRefresh;
     LoadingDialog ld;
-    private List<VSign> signLists = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
     private Handler handler = new Handler(){
         public void handleMessage(Message msg){
             switch (msg.what){
                 case 1:ld.close();changeView();
                     break;
                 case 2:ld.close();
-                    Toast.makeText(dingdanActivity.this,msg.obj.toString(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentsActivity.this,msg.obj.toString(),Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
-                    Toast.makeText(dingdanActivity.this,"系统异常",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentsActivity.this,"系统异常",Toast.LENGTH_SHORT).show();
                     break;
                 default:break;
             }
@@ -59,11 +56,11 @@ public class dingdanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dingdan);
+        setContentView(R.layout.activity_students);
         common.setHeadBackground(getWindow());
 
-        student = (Student) getIntent().getSerializableExtra("student");
-        if(student == null){
+        teacher = (TeacherVO) getIntent().getSerializableExtra("teacher");
+        if(teacher == null){
             return;
         }
         backBT = findViewById(R.id.bt_back);
@@ -73,23 +70,37 @@ public class dingdanActivity extends AppCompatActivity {
                 finish();
             }
         });
+        addBT = findViewById(R.id.bt_add);
+        addBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainIntent = new Intent(StudentsActivity.this,AddStudentActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("teacher",teacher);
+                mainIntent.putExtras(mBundle);
+                startActivity(mainIntent);
+            }
+        });
         swipeRefresh = findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeColors(R.color.colorPrimary);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                signLists.clear();
+                students.clear();
                 initView();
                 swipeRefresh.setRefreshing(false);
             }
         });
-        initView();
-        ld = new LoadingDialog(dingdanActivity.this);
-        ld.setLoadingText("加载中...").show();
+        if(teacher.getAClass()!=null){
+            initView();
+            ld = new LoadingDialog(StudentsActivity.this);
+            ld.setLoadingText("加载中...").show();
+        }
+
     }
     //请求查看签到记录
     private void initView(){
-        HttpUtil.getOkHttpRequest(Constants.RECORD_URL+"?id="+student.getStuNumber()+"&time=2019-03-31", new Callback() {
+        HttpUtil.getOkHttpRequest(Constants.QUERYSTUDENTS_URL+"?claID="+teacher.getAClass().getClaId(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Message message = new Message();
@@ -107,11 +118,11 @@ public class dingdanActivity extends AppCompatActivity {
 
     public void changeView(){
         mRvMain =findViewById(R.id.dd_main);
-        mRvMain.setLayoutManager(new LinearLayoutManager(dingdanActivity.this));
-        mRvMain.setAdapter(new DingdanAdapter(dingdanActivity.this, signLists, new DingdanAdapter.OnItemClickListener() {
+        mRvMain.setLayoutManager(new LinearLayoutManager(StudentsActivity.this));
+        mRvMain.setAdapter(new StudentsAdapter(StudentsActivity.this, students, new StudentsAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                System.out.println("onClick执行啦 "+signLists.get(position).getSetName());
+                System.out.println("onClick执行啦");
 /*                dingdan oneDingdan =new dingdan();
                 oneDingdan.setid(signLists.get(position).getid());
                 oneDingdan.setgname(signLists.get(position).getgname());
@@ -122,23 +133,6 @@ public class dingdanActivity extends AppCompatActivity {
             }
         }));
     }//changeView()
-    public void RequestHTTP(String mUrl,dingdan one){
-        RequestBody requestBody =new FormBody.Builder().add("good_id", ""+one.getid()).add("order_time", ""+one.gettime()).add("user_id", student.getStuId()).build();
-//        HttpUtil.postOkHttpRequest(requestBody,mUrl, new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                Message message = new Message();
-//                message.what = 3;
-//                handler.sendMessage(message);
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String responseData = response.body().string();
-//                parseJSONWithJSONObject(responseData,true);
-//            }
-//        });
-    }  //RequestHTTP
     private void parseJSONWithJSONObject(String jsonData) {
         Message message = new Message();
         try{
@@ -147,16 +141,21 @@ public class dingdanActivity extends AppCompatActivity {
             if(status == 200){
                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                 for(int i=0;i<jsonArray.length();i++){
-                    VSign sign = new VSign();
+                    Student student = new Student();
                     JSONObject jo = jsonArray.getJSONObject(i);
                     if(jo!=null){
-                        sign.setStuId(jo.getString("stuId"));
-                        sign.setStuNumber(jo.getString("stuNumber"));
-                        sign.setStuName(jo.getString("stuName"));
-                        sign.setSetId(jo.getString("setId"));
-                        sign.setSetName(jo.getString("setName"));
-                        sign.setSigTime(jo.getString("sigTime"));
-                        signLists.add(sign);
+                        student.setStuId(jo.getString("stuId"));
+                        student.setStuName(jo.getString("stuName"));
+                        student.setStuSex(jo.getInt("stuSex"));
+                        student.setStuNumber(jo.getString("stuNumber"));
+                        student.setStuPassword(jo.getString("stuPassword"));
+                        student.setStuPhone(jo.getString("stuPhone"));
+                        student.setStuMail(jo.getString("stuMail"));
+                        student.setClaID(jo.getString("claID"));
+                        student.setRegisterTime(jo.getString("registerTime"));
+                        student.setPermissions(jo.getString("permissions"));
+                        student.setClassName(jo.getString("claName"));
+                        students.add(student);
                     }
                 }
             }

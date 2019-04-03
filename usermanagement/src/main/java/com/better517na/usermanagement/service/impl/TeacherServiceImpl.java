@@ -1,16 +1,14 @@
 package com.better517na.usermanagement.service.impl;
 
-import com.better517na.usermanagement.business.IStudentBusiness;
 import com.better517na.usermanagement.business.ITeacherBusiness;
+import com.better517na.usermanagement.model.Class;
 import com.better517na.usermanagement.model.LogProducer;
 import com.better517na.usermanagement.model.Response;
-import com.better517na.usermanagement.model.Student;
+import com.better517na.usermanagement.model.Teacher;
 import com.better517na.usermanagement.service.ISMSService;
-import com.better517na.usermanagement.service.IStudentService;
 import com.better517na.usermanagement.service.ITeacherService;
 import com.better517na.usermanagement.utils.IDUtil;
 import com.better517na.usermanagement.utils.TimeUtil;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +45,31 @@ public class TeacherServiceImpl implements ITeacherService {
         }else {
             response.setMsg("登录失败");
         }
+        return response;
+    }
+
+    @Override
+    public Response creatClass(Teacher teacher) {
+        //判断老师是否已经创建班级了
+        Response response = new Response();
+        if(teacher.getaClass() != null){
+            if(teacher.getaClass().getClaID() != null){
+                response.setStatus(RESPONSE_FALSE);
+                response.setMsg("已经创建了班级");
+                return response;
+            }
+        }else {
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("创建班级信息错误");
+            return response;
+        }
+        //没有创建班级，封装数据
+        Class aClass = new Class();
+        aClass.setClaID(IDUtil.getClaID(teacher.getTeaNumber()));
+        aClass.setClaName(teacher.getaClass().getClaName());
+        aClass.setCreaterID(teacher.getTeaNumber());
+        aClass.setCreateTime(TimeUtil.getTime());
+        response = teacherBusiness.creatClass(aClass);
         return response;
     }
 }

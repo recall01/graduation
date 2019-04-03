@@ -33,4 +33,9 @@ public class TeacherDaoImpl implements ITeacherDao {
     public Teacher selectTeacher(String phone) {
         return teacherMapping.selectTeacher(phone);
     }
+
+    @Override
+    public boolean creatClass(Class aClass) {
+        return classMapping.insertClass(aClass);
+    }
 }

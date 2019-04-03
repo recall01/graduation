@@ -1,4 +1,4 @@
-package com.better517na.userdataservice.model;
+package com.better517na.usermanagement.model;
 
 public class Teacher {
     private String teaID;

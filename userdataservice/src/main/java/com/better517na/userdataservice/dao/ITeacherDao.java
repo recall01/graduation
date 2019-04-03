@@ -10,4 +10,6 @@ import com.better517na.userdataservice.model.Teacher;
  */
 public interface ITeacherDao {
     Teacher selectTeacher(String phone);
+
+    boolean creatClass(Class aClass);
 }

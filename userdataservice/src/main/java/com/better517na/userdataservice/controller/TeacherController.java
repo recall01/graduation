@@ -1,5 +1,6 @@
 package com.better517na.userdataservice.controller;
 
+import com.better517na.userdataservice.model.Class;
 import com.better517na.userdataservice.model.Response;
 import com.better517na.userdataservice.model.Student;
 import com.better517na.userdataservice.service.IStudentService;
@@ -22,5 +23,9 @@ public class TeacherController {
     @PostMapping(value = "/select")
     public Response selectTeacher(@RequestParam String phone) throws Exception{
         return teacherService.selectTeacher(phone);
+    }
+    @PostMapping(value = "/creatClass")
+    public Response creatClass(@RequestBody Class aClass) throws Exception{
+        return teacherService.creatClass(aClass);
     }
 }

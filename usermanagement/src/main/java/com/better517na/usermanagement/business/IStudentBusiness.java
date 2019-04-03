@@ -17,4 +17,10 @@ public interface IStudentBusiness {
     Response changePassword(String phone, String password);
 
     Response queryStudentsByClaID(String claID);
+
+    Response queryClassByStuNumber(String stuNumber);
+
+    Response removeStudent(String stuNumber);
+
+    Response addStudent(String stuNumber, String claID);
 }

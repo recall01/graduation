@@ -70,6 +70,7 @@ public class StartActivity extends AppCompatActivity {
         if(!permissionList.isEmpty()){
             String[] permissions =permissionList.toArray(new String[permissionList.size()]);
             ActivityCompat.requestPermissions(StartActivity.this,permissions,1);
+            this.applyJurisdiction();
         }else {
             Intent mainIntent = new Intent(StartActivity.this,LoginActivity.class);
             StartActivity.this.startActivity(mainIntent);//跳转到MainActivity

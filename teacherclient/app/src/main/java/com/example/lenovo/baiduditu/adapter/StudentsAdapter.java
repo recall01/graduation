@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.lenovo.baiduditu.R;
-import com.example.lenovo.baiduditu.model.VSign;
+import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.myClass.Utils;
-import com.example.lenovo.baiduditu.myClass.dingdan;
 
 import java.util.List;
 
@@ -18,38 +17,38 @@ import java.util.List;
  * Created by lenovo on 2017/12/14.
  */
 
-public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.LinearViewHolder> {
+public class StudentsAdapter extends RecyclerView.Adapter<StudentsAdapter.LinearViewHolder> {
     private Context mcontext;
-    private List<VSign> signLists;
+    private List<Student> students;
     private OnItemClickListener mlistener;
-    public DingdanAdapter(Context context, List<VSign>signLists, OnItemClickListener listener){
+    public StudentsAdapter(Context context, List<Student>students, OnItemClickListener listener){
         this.mcontext = context;
-        this.signLists = signLists;
+        this.students = students;
         this.mlistener = listener;
     }
     @Override
-    public DingdanAdapter.LinearViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new LinearViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.item_dingdan,parent,false));
+    public StudentsAdapter.LinearViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new LinearViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.item_students_list,parent,false));
     }
 
     @Override
-    public void onBindViewHolder(final DingdanAdapter.LinearViewHolder holder, final int position) {
+    public void onBindViewHolder(final StudentsAdapter.LinearViewHolder holder, final int position) {
         holder.layout_content.getLayoutParams().width = Utils.getScreenWidth(mcontext);
-        holder.order_time.setText(signLists.get(position).getSigTime());
-        holder.order_xinxi.setText("["+signLists.get(position).getSetName()+"]签到成功！");
+        holder.order_time.setText(students.get(position).getStuName()+"("+students.get(position).getStuNumber()+")");
+        holder.order_xinxi.setText("手机号:"+students.get(position).getStuPhone()+" 邮箱:"+students.get(position).getStuMail());
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mlistener.onClick(position);
                 notifyItemRemoved(position);
-                signLists.remove(position);
+                students.remove(position);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return signLists.size();
+        return students.size();
     }
 
     class LinearViewHolder extends RecyclerView.ViewHolder{

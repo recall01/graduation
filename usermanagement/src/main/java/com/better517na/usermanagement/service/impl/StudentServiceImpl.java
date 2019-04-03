@@ -117,6 +117,57 @@ public class StudentServiceImpl implements IStudentService {
         return studentBusiness.queryStudentsByClaID(claID);
     }
 
+    @Override
+    public Response addStudent(String stuNumber,String claID) {
+        //1.先查询学生是否有班级
+        //2.若有班级,无法添加,若没有将该学生添加至本班级
+        Response response = this.queryClassByStuNumber(stuNumber);
+        if(response.getStatus() == 200 && response.getData() == null){
+            //该学生没有班级,添加到本班级
+                //判断claID的班级是否存在
+            Response rp = this.queryClassByClaID(claID);
+            if(rp.getStatus() == 200){
+                response = studentBusiness.addStudent(stuNumber,claID);
+            }else {
+                response.setStatus(RESPONSE_FALSE);
+                response.setMsg("该班级不存在");
+            }
+        }else {
+            //该学生有班级或查询该学生是否有班级的接口出现异常
+            response.setStatus(RESPONSE_FALSE);
+            if(response.getData() != null){
+                response.setMsg("该学生已有班级,无法将该学生添加到本班级");
+            }else {
+                response.setMsg("无法将该学生添加到本班级");
+            }
+        }
+        return response;
+    }
+
+    @Override
+    public Response queryClassByStuNumber(String stuNumber) {
+        Response response = new Response();
+        if(stuNumber == null||"".equals(stuNumber)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("学号有误");
+            return response;
+        }
+        return studentBusiness.queryClassByStuNumber(stuNumber);
+    }
+
+    @Override
+    public Response removeStudent(Student student) {
+        Response response = new Response();
+        if(student.getClaID() == null|| "0".equals(student.getClaID())){
+            //学生没有班级,不需要移除
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("该学生没有班级,无法移除");
+            return response;
+        }else {
+            return studentBusiness.removeStudent(student.getStuNumber());
+        }
+    }
+
     private boolean checkStudent(Student student){
         if(student==null){
             return false;

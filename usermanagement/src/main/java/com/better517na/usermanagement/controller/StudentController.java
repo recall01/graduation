@@ -46,7 +46,7 @@ public class StudentController {
             @ApiImplicitParam(name = "account",value = "用户账号",required = true,dataType = "String"),
             @ApiImplicitParam(name = "password",value = "用户密码",required = true,dataType = "String")
     })
-    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Response loginStudent(@RequestParam String account, @RequestParam String password){
         return studentService.loginStudent(account,password);
     }
@@ -54,7 +54,7 @@ public class StudentController {
     @SysLogger("changeInfo")
     @HystrixCommand(fallbackMethod = "changeFallback")
     @ApiOperation(value = "修改学生信息接口",notes = "填写要修改的信息进行修改")
-    @RequestMapping(value = "change",method = RequestMethod.POST)
+    @RequestMapping(value = "/change",method = RequestMethod.POST)
     public Response changeInfo(@RequestBody  @ApiParam(name = "student",value = "修改学生数据",required = true) Student student){
         return studentService.changeInfo(student);
     }
@@ -76,10 +76,33 @@ public class StudentController {
     @SysLogger("changePassword")
     @HystrixCommand(fallbackMethod = "changePasswordFallback")
     @ApiOperation(value = "修改学生密码接口",notes = "填写要修改后的密码进行修改")
-    @RequestMapping(value = "changePassword",method = RequestMethod.POST)
+    @RequestMapping(value = "/changePassword",method = RequestMethod.POST)
     public Response changePassword(@RequestParam  @ApiParam(name = "phone",value = "手机号",required = true) String phone,@RequestParam  @ApiParam(name = "password",value = "修改后的密码",required = true) String password){
         return studentService.changePassword(phone,password);
     }
+
+    @SysLogger("addStudent")
+    @ApiOperation(value = "将学生添加到本班级",notes = "根据stuNumber将学生添加到本班级")
+    @RequestMapping(value = "/addStudent",method = RequestMethod.POST)
+    public Response addStudent(@RequestParam  @ApiParam(name = "stuNumber",value = "学号",required = true) String stuNumber,@RequestParam  @ApiParam(name = "claID",value = "班级编号",required = true) String claID){
+        return studentService.addStudent(stuNumber,claID);
+    }
+
+    @SysLogger("removeStudent")
+    @ApiOperation(value = "将学生从班级移除",notes = "根据student的model将学生从班级移除")
+    @RequestMapping(value = "/remove",method = RequestMethod.POST)
+    public Response removeStudent(@RequestBody @ApiParam(name = "student",value = "要移除学生的model",required = true) Student student){
+        return studentService.removeStudent(student);
+    }
+
+    @SysLogger("queryClassByStuNumber")
+    @ApiOperation(value = "查询学生所在班级信息",notes = "根据stuNumber查询学生所在班级信息")
+    @RequestMapping(value = "/queryClass",method = RequestMethod.POST)
+    public Response queryClassByStuNumber(@RequestParam  @ApiParam(name = "stuNumber",value = "学号",required = true) String stuNumber){
+        return studentService.queryClassByStuNumber(stuNumber);
+    }
+
+
 
 //回调函数
     private Response registFallback(Student student){

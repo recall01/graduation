@@ -7,11 +7,12 @@ import java.io.Serializable;
  */
 
 public class Teacher implements Serializable{
-    private String teaId;
-    private String teaName;
-    private String teaPhone;
-    private String registerTime;
-    private String permissions;
+    protected String teaId;
+    protected String teaNumber;
+    protected String teaName;
+    protected String teaPhone;
+    protected String registerTime;
+    protected String permissions;
 
     public String getTeaId() {
         return teaId;
@@ -19,6 +20,14 @@ public class Teacher implements Serializable{
 
     public void setTeaId(String teaId) {
         this.teaId = teaId;
+    }
+
+    public String getTeaNumber() {
+        return teaNumber;
+    }
+
+    public void setTeaNumber(String teaNumber) {
+        this.teaNumber = teaNumber;
     }
 
     public String getTeaName() {

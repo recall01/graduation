@@ -1,5 +1,6 @@
 package com.better517na.usermanagement.business;
 
+import com.better517na.usermanagement.model.Class;
 import com.better517na.usermanagement.model.Response;
 import com.better517na.usermanagement.model.Student;
 
@@ -10,4 +11,6 @@ import com.better517na.usermanagement.model.Student;
 public interface ITeacherBusiness {
 
     Response loginTeacher(String account);
+
+    Response creatClass(Class aClass);
 }

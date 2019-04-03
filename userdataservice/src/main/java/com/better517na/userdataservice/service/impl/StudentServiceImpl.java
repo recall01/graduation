@@ -157,4 +157,68 @@ public class StudentServiceImpl implements IStudentService {
             return response;
         }
     }
+
+    @Override
+    public Response queryClassByStuNumber(String stuNumber) {
+        Response response = new Response();
+        try {
+            Class aClass = studentDao.queryClassByStuNumber(stuNumber);
+            response.setStatus(RESPONSE_SUCCESS);
+            response.setData(aClass);
+            if(aClass == null){
+                response.setMsg("该学生还没有班级");
+            }else {
+                response.setMsg("查询该学生班级信息成功");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setData(e.getMessage());
+            response.setMsg("查询该学生班级信息异常");
+        }finally {
+            return response;
+        }
+    }
+
+    @Override
+    public Response removeStudent(String stuNumber) {
+        Response response = new Response();
+        try {
+            if(studentDao.removeStudent(stuNumber)){
+                response.setStatus(RESPONSE_SUCCESS);
+                response.setMsg("该学生被移除本班级");
+            }else {
+                response.setStatus(RESPONSE_FALSE);
+                response.setMsg("移除失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setData(e.getMessage());
+            response.setMsg("移除学生异常");
+        }finally {
+            return response;
+        }
+    }
+
+    @Override
+    public Response addStudent(String stuNumber, String claID) {
+        Response response = new Response();
+        try {
+            if(studentDao.addStudent(stuNumber,claID)){
+                response.setStatus(RESPONSE_SUCCESS);
+                response.setMsg("该学生成功添加至本班级");
+            }else {
+                response.setStatus(RESPONSE_FALSE);
+                response.setMsg("添加失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setData(e.getMessage());
+            response.setMsg("添加学生异常");
+        }finally {
+            return response;
+        }
+    }
 }

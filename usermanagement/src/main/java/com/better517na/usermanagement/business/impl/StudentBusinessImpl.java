@@ -101,4 +101,19 @@ public class StudentBusinessImpl implements IStudentBusiness {
     public Response queryStudentsByClaID(String claID) {
         return userDataFeignClient.queryStudentsByClaID(claID);
     }
+
+    @Override
+    public Response queryClassByStuNumber(String stuNumber) {
+        return userDataFeignClient.queryClassByStuNumber(stuNumber);
+    }
+
+    @Override
+    public Response removeStudent(String stuNumber) {
+        return userDataFeignClient.removeStudent(stuNumber);
+    }
+
+    @Override
+    public Response addStudent(String stuNumber, String claID) {
+        return userDataFeignClient.addStudent(stuNumber,claID);
+    }
 }

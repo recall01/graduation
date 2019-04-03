@@ -25,13 +25,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.lenovo.baiduditu.ChangeHead;
+
 import com.example.lenovo.baiduditu.Jingweidu;
 import com.example.lenovo.baiduditu.LoginActivity;
-import com.example.lenovo.baiduditu.MyInformation;
+import com.example.lenovo.baiduditu.AddStudentActivity;
 import com.example.lenovo.baiduditu.R;
 import com.example.lenovo.baiduditu.adapter.VSetAdapter;
-import com.example.lenovo.baiduditu.dingdanActivity;
+import com.example.lenovo.baiduditu.StudentsActivity;
 import com.example.lenovo.baiduditu.model.Sign;
 import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.model.VSet;
@@ -116,13 +116,13 @@ public class frag_a extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_location:
-                        Intent intent = new Intent(getActivity(), dingdanActivity.class);
+                        Intent intent = new Intent(getActivity(), StudentsActivity.class);
                         Bundle mBundle = new Bundle();
                         mBundle.putSerializable("student",student);
                         intent.putExtras(mBundle);
                         startActivity(intent);break;
                     case R.id.nav_infor://完善信息按钮
-                        intent = new Intent(getActivity(), MyInformation.class);
+                        intent = new Intent(getActivity(), AddStudentActivity.class);
                         mBundle = new Bundle();
                         mBundle.putSerializable("student",student);
                         intent.putExtras(mBundle);

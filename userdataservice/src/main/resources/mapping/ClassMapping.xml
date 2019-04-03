@@ -10,5 +10,19 @@
     <select id="queryClassByClaID" resultMap="classResult">
         select * from classes
         where ClaID = #{claID}
+        AND IsDelete = 0
     </select>
+    <select id="queryClassByStuNumber" resultMap="classResult">
+        SELECT * FROM classes WHERE classes.ClaID
+        IN (
+        SELECT students.ClaID
+        FROM students
+        WHERE students.StuNumber = #{stuNumber} and IsDelete = 0)
+        AND IsDelete = 0;
+    </select>
+    <insert id="insertClass">
+        insert into classes
+        (ClaID,ClaName,CreateTime,CreaterID,IsDelete)
+        values (#{claID},#{claName},#{createTime},#{createrID},0)
+    </insert>
 </mapper>

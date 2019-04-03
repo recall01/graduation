@@ -1,5 +1,6 @@
 package com.better517na.usermanagement.feignClient;
 
+import com.better517na.usermanagement.model.Class;
 import feign.hystrix.FallbackFactory;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,14 @@ public interface UserDataFeignClient {
     Response selectTeacher(@RequestParam(value = "phone")String phone);
     @PostMapping("/student/queryStudents")
     Response queryStudentsByClaID(@RequestParam(value = "claID")String claID);
+    @PostMapping("/student/queryClassByStuNumber")
+    Response queryClassByStuNumber(@RequestParam(value = "stuNumber")String stuNumber);
+    @PostMapping("/student/remove")
+    Response removeStudent(@RequestParam(value = "stuNumber")String stuNumber);
+    @PostMapping("/student/addStudent")
+    Response addStudent(@RequestParam(value = "stuNumber")String stuNumber, @RequestParam(value = "claID")String claID);
+    @PostMapping("/teacher/creatClass")
+    Response creatClass(@RequestBody Class aClass);
 }
 @Component
 class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeignClient>{
@@ -117,6 +126,26 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
 
             @Override
             public Response queryStudentsByClaID(String claID) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response queryClassByStuNumber(String stuNumber) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response removeStudent(String stuNumber) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response addStudent(String stuNumber, String claID) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response creatClass(Class aClass) {
                 return getFallback(throwable);
             }
         };

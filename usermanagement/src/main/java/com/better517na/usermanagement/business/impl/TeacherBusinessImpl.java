@@ -3,6 +3,7 @@ package com.better517na.usermanagement.business.impl;
 import com.better517na.usermanagement.business.IStudentBusiness;
 import com.better517na.usermanagement.business.ITeacherBusiness;
 import com.better517na.usermanagement.feignClient.UserDataFeignClient;
+import com.better517na.usermanagement.model.Class;
 import com.better517na.usermanagement.model.LogProducer;
 import com.better517na.usermanagement.model.Response;
 import com.better517na.usermanagement.model.Student;
@@ -27,5 +28,10 @@ public class TeacherBusinessImpl implements ITeacherBusiness {
     @Override
     public Response loginTeacher(String phone) {
         return userDataFeignClient.selectTeacher(phone);
+    }
+
+    @Override
+    public Response creatClass(Class aClass) {
+        return userDataFeignClient.creatClass(aClass);
     }
 }

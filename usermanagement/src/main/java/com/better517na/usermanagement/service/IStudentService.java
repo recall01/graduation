@@ -14,4 +14,10 @@ public interface IStudentService {
     Response changePassword(String phone, String password);
 
     Response queryStudentsByClaID(String claID);
+
+    Response queryClassByStuNumber(String stuNumber);
+
+    Response removeStudent(Student student);
+
+    Response addStudent(String stuNumber, String claID);
 }

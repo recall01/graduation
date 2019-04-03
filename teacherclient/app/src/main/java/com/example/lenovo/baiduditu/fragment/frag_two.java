@@ -13,12 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lenovo.baiduditu.Chuzu;
 import com.example.lenovo.baiduditu.R;
-import com.example.lenovo.baiduditu.School;
+import com.example.lenovo.baiduditu.AddStudent;
 import com.example.lenovo.baiduditu.Zhujie_xinxiActivity;
 import com.example.lenovo.baiduditu.adapter.LinearAdapter;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
@@ -84,20 +82,11 @@ public class frag_two extends Fragment {
             name = getArguments().getString("name");
             user_id = getArguments().getString("user_id");
         }
-        TextView sell = view.findViewById(R.id.sell);
-        sell.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Chuzu.class);
-                intent.putExtra("user_id",user_id);
-                startActivity(intent);
-            }
-        });
         LinearLayout layout = view.findViewById(R.id.shousuo);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), School.class);
+                Intent intent = new Intent(getActivity(), AddStudent.class);
                 startActivity(intent);
             }
         });

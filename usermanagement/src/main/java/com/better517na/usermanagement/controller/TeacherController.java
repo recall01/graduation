@@ -3,7 +3,7 @@ package com.better517na.usermanagement.controller;
 import com.better517na.usermanagement.Annotation.SysLogger;
 import com.better517na.usermanagement.model.Response;
 import com.better517na.usermanagement.model.Student;
-import com.better517na.usermanagement.service.IStudentService;
+import com.better517na.usermanagement.model.Teacher;
 import com.better517na.usermanagement.service.ITeacherService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.swagger.annotations.*;
@@ -33,6 +33,13 @@ public class TeacherController {
         return studentService.registStudent(student);
     }*/
 
+    @SysLogger("creatClass")
+    @ApiOperation(value = "创建班级",notes = "根据teaNumber创建班级")
+    @RequestMapping(value = "/creatClass",method = RequestMethod.POST)
+    public Response creatClass(@RequestBody @ApiParam(name = "teacher",value = "要创建班级的信息",required = true) Teacher teacher){
+        return teacherService.creatClass(teacher);
+    }
+
     @SysLogger("loginTeacher")
     @HystrixCommand(fallbackMethod = "loginFallback")
     @ApiOperation(value = "教师登录接口",notes = "填写正确的手机号和验证码")
@@ -40,10 +47,11 @@ public class TeacherController {
             @ApiImplicitParam(name = "phone",value = "用户手机号",required = true,dataType = "String"),
             @ApiImplicitParam(name = "code",value = "验证码",required = true,dataType = "String")
     })
-    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Response loginTeacher(@RequestParam String phone, @RequestParam String code){
         return teacherService.loginTeacher(phone,code);
     }
+
 //不提供教师信息修改接口
 /*    @SysLogger("changeInfo")
     @HystrixCommand(fallbackMethod = "changeFallback")

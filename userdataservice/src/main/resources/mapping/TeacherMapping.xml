@@ -3,6 +3,7 @@
 <mapper namespace="com.better517na.userdataservice.mapping.TeacherMapping">
     <resultMap id="teacherResult" type="com.better517na.userdataservice.model.Teacher">
         <result property="teaID" column="TeaID"/>
+        <result property="teaNumber" column="TeaNumber"/>
         <result property="teaName" column="TeaName"/>
         <result property="teaPhone" column="TeaPhone"/>
         <result property="registerTime" column="RegisterTime"/>
@@ -23,8 +24,7 @@
         SELECT * FROM teachers
         LEFT JOIN classes
         ON teachers.TeaNumber = classes.CreaterID
-        AND classes.IsDelete = 0
+        WHERE TeaPhone = #{phone}
         AND teachers.IsDelete = 0
-        AND TeaPhone = #{phone}
     </select>
 </mapper>

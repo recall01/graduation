@@ -18,6 +18,7 @@ import com.example.lenovo.baiduditu.fragment.frag_a;
 import com.example.lenovo.baiduditu.model.MyMessage;
 import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.model.Teacher;
+import com.example.lenovo.baiduditu.model.VO.TeacherVO;
 import com.example.lenovo.baiduditu.myClass.activityCollector;
 import com.example.lenovo.baiduditu.myClass.common;
 import com.example.lenovo.baiduditu.view.ChangeIcon;
@@ -26,8 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements  ViewPager.OnPageChangeListener,View.OnClickListener {
-    Button studentsBT,signBT,signdataBT,exitBT;
-    Teacher teacher = new Teacher();
+    Button studentsBT,signBT,signdataBT,exitBT,setClassBT;
+    TeacherVO teacher = new TeacherVO();
     private List<ChangeIcon> lTabIndicators = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
         common.setHeadBackground(getWindow());
 
         initView();
-        teacher = (Teacher) getIntent().getSerializableExtra("teacher");
+        teacher = (TeacherVO) getIntent().getSerializableExtra("teacher");
 /*        if(teacher!=null){
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -54,6 +55,8 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
         signdataBT.setOnClickListener(this);
         exitBT = findViewById(R.id.bt_exit);
         exitBT.setOnClickListener(this);
+        setClassBT = findViewById(R.id.bt_setclass);
+        setClassBT.setOnClickListener(this);
     }
 
 
@@ -104,9 +107,28 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_students:
+                if(teacher.getAClass() != null){
+                    Intent intent = new Intent(MainActivity.this,StudentsActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("teacher",teacher);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }else {
+                    common.myDailog("你还没有班级,请先创建班级",MainActivity.this);
+                }
+                break;
+            case R.id.bt_setclass:
+                if(teacher.getAClass() == null){
+                    Intent intent = new Intent(MainActivity.this,AddClassActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("teacher",teacher);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }else {
+                    common.myDailog("你已经创建过班级了",MainActivity.this);
+                }
+                break;
 
-                System.out.println("按钮bt_students");
-                common.myToast(MainActivity.this,"bt_students");break;
             case R.id.bt_sign:
                 System.out.println("按钮bt_sign");
                 common.myToast(MainActivity.this,"bt_sign");break;

@@ -22,4 +22,11 @@ public class IDUtil {
         String format = simpleDateFormat.format(date);
         return "Sig"+stuNumber+format;
     }
+    public static String getClaID(String teaNumber){
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HHmmss");
+        String format = simpleDateFormat.format(date);
+        return "Cla"+teaNumber+format;
+    }
+
 }
