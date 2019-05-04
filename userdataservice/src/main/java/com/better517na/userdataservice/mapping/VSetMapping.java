@@ -13,4 +13,8 @@ public interface VSetMapping {
     List<VSet> selectVSet(Map m);
 
     VSet queryVSetBySetId(String setID);
+
+    void insertSet(VSet set);
+
+    List<VSet> selectVsets(String teaNumber);
 }

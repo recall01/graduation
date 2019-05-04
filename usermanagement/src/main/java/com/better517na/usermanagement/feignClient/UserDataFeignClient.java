@@ -1,5 +1,6 @@
 package com.better517na.usermanagement.feignClient;
 
+import com.better517na.usermanagement.model.*;
 import com.better517na.usermanagement.model.Class;
 import feign.hystrix.FallbackFactory;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -7,9 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.better517na.usermanagement.model.Response;
-import com.better517na.usermanagement.model.Sign;
-import com.better517na.usermanagement.model.Student;
+
 import static com.better517na.usermanagement.utils.Constant.RESPONSE_FALLBACK;
 
 /**
@@ -55,6 +54,16 @@ public interface UserDataFeignClient {
     Response addStudent(@RequestParam(value = "stuNumber")String stuNumber, @RequestParam(value = "claID")String claID);
     @PostMapping("/teacher/creatClass")
     Response creatClass(@RequestBody Class aClass);
+    @PostMapping("/teacher/changeClass")
+    Response changeClass(@RequestBody Class cla);
+    @PostMapping("/teacher/getClassN")
+    Response getClassNByTeaNumber(@RequestParam(value = "teaNumber")String teaNumber);
+    @PostMapping("/teacher/creatSet")
+    Response creatSet(@RequestBody VSet set);
+    @PostMapping("/teacher/getVSets")
+    Response getVSetsByTeaNumber(@RequestParam(value = "teaNumber")String teaNumber);
+    @PostMapping("/sign/getRecords")
+    Response getRecordsBySetId(@RequestParam(value = "setId")String setId);
 }
 @Component
 class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeignClient>{
@@ -148,6 +157,32 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
             public Response creatClass(Class aClass) {
                 return getFallback(throwable);
             }
+
+            @Override
+            public Response changeClass(Class cla) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response getClassNByTeaNumber(String teaNumber) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response creatSet(VSet set) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response getVSetsByTeaNumber(String teaNumber) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response getRecordsBySetId(String setId) {
+                return getFallback(throwable);
+            }
+
         };
     }
 //封装方法，回调信息

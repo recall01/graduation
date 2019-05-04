@@ -10,6 +10,6 @@ public class T_pubInfor extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_t_pub_infor);
+        setContentView(R.layout.activity_sign);
     }
 }

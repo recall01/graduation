@@ -18,4 +18,6 @@ public interface ISignService {
     Response selectVSet(String claID, String stuId);
 
     Response queryVSetBySetId(String setID);
+
+    Response getRecordsBySetId(String setID);
 }

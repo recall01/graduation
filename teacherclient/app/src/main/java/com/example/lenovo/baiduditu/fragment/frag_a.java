@@ -26,7 +26,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lenovo.baiduditu.Jingweidu;
+import com.example.lenovo.baiduditu.SignActivity;
 import com.example.lenovo.baiduditu.LoginActivity;
 import com.example.lenovo.baiduditu.AddStudentActivity;
 import com.example.lenovo.baiduditu.R;
@@ -178,7 +178,7 @@ public class frag_a extends Fragment {
                 sign.setSetId(vSets.get(pos).getSetId());
                 mBundle.putSerializable("sign",sign);
                 mIntent.putExtras(mBundle);
-                mIntent.setClass(getActivity(), Jingweidu.class);
+                mIntent.setClass(getActivity(), SignActivity.class);
                 startActivityForResult(mIntent,0);
             }
         }));

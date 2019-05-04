@@ -25,4 +25,12 @@
         select * from v_set
         where SetID = #{setID}
     </select>
+    <insert id="insertSet">
+        insert into `set`
+        values (#{setID},#{setName},#{claID},#{longitude},#{latitude},#{scope},#{startSigTime},#{endSigTime},#{createrID},0)
+    </insert>
+    <select id="selectVsets" resultMap="vSetResult">
+        select * from v_set
+        where CreaterID = #{teaNumber}
+    </select>
 </mapper>

@@ -8,4 +8,6 @@ import com.better517na.userdataservice.model.SignRecord;
 @Mapper
 public interface SignRecordMapping {
     List<SignRecord> selectSignRecord(Map m);
+
+    List<SignRecord> selectRecordsBySetId(String setId);
 }

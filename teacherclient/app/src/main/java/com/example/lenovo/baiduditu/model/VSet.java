@@ -13,6 +13,7 @@ public class VSet implements Serializable {
     private String startSigTime;
     private String endSigTime;
     private String createrName;
+    private String createrID;
 
     @Override
     public String toString() {
@@ -87,7 +88,7 @@ public class VSet implements Serializable {
 
     public String getStartSigTime() {
         if(startSigTime.length()>20){
-            return startSigTime.substring(5,19);
+            return startSigTime.substring(0,19);
         }else {
             return startSigTime;
         }
@@ -99,7 +100,7 @@ public class VSet implements Serializable {
 
     public String getEndSigTime() {
         if(endSigTime.length()>20){
-            return endSigTime.substring(5,19);
+            return endSigTime.substring(0,19);
         }else {
             return endSigTime;
         }
@@ -115,5 +116,13 @@ public class VSet implements Serializable {
 
     public void setCreaterName(String createrName) {
         this.createrName = createrName;
+    }
+
+    public String getCreaterID() {
+        return createrID;
+    }
+
+    public void setCreaterID(String createrID) {
+        this.createrID = createrID;
     }
 }

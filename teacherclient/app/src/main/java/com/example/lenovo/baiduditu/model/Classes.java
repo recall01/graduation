@@ -1,5 +1,7 @@
 package com.example.lenovo.baiduditu.model;
 
+import com.example.lenovo.baiduditu.utils.TimeUtils;
+
 import java.io.Serializable;
 
 /**
@@ -7,17 +9,17 @@ import java.io.Serializable;
  */
 
 public class Classes implements Serializable{
-    protected String claId;
+    protected String claID;
     protected String claName;
     protected String createTime;
-    protected String createrId;
+    protected String createrID;
 
-    public String getClaId() {
-        return claId;
+    public String getClaID() {
+        return claID;
     }
 
-    public void setClaId(String claId) {
-        this.claId = claId;
+    public void setClaID(String claID) {
+        this.claID = claID;
     }
 
     public String getClaName() {
@@ -29,18 +31,18 @@ public class Classes implements Serializable{
     }
 
     public String getCreateTime() {
-        return createTime;
+        return TimeUtils.handTimeForm(createTime);
     }
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public String getCreaterId() {
-        return createrId;
+    public String getCreaterID() {
+        return createrID;
     }
 
-    public void setCreaterId(String createrId) {
-        this.createrId = createrId;
+    public void setCreaterID(String createrID) {
+        this.createrID = createrID;
     }
 }

@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.lenovo.baiduditu.R;
-import com.example.lenovo.baiduditu.AddStudent;
+import com.example.lenovo.baiduditu.ClassInfoActivity;
 import com.example.lenovo.baiduditu.Zhujie_xinxiActivity;
 import com.example.lenovo.baiduditu.adapter.LinearAdapter;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
@@ -86,7 +86,7 @@ public class frag_two extends Fragment {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddStudent.class);
+                Intent intent = new Intent(getActivity(), ClassInfoActivity.class);
                 startActivity(intent);
             }
         });

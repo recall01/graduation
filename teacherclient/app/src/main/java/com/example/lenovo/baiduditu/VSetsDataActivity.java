@@ -12,13 +12,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.example.lenovo.baiduditu.adapter.StudentsAdapter;
+import com.example.lenovo.baiduditu.adapter.VSetsAdapter;
 import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.model.VO.TeacherVO;
+import com.example.lenovo.baiduditu.model.VSet;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
+
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,23 +35,23 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class StudentsActivity extends AppCompatActivity {
+public class VSetsDataActivity extends AppCompatActivity {
     private TeacherVO teacher = new TeacherVO();
-    private Button backBT,addBT;
+    private Button backBT;
     RecyclerView mRvMain;
     private SwipeRefreshLayout swipeRefresh;
     LoadingDialog ld;
-    private List<Student> students = new ArrayList<>();
+    private List<VSet> vSets = new ArrayList<>();
     private Handler handler = new Handler(){
         public void handleMessage(Message msg){
             switch (msg.what){
                 case 1:ld.close();changeView();
                     break;
                 case 2:ld.close();
-                    Toast.makeText(StudentsActivity.this,msg.obj.toString(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VSetsDataActivity.this,msg.obj.toString(),Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
-                    Toast.makeText(StudentsActivity.this,"系统异常",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VSetsDataActivity.this,"系统异常",Toast.LENGTH_SHORT).show();
                     break;
                 default:break;
             }
@@ -56,7 +61,7 @@ public class StudentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_students);
+        setContentView(R.layout.activity_vsets);
         common.setHeadBackground(getWindow());
 
         teacher = (TeacherVO) getIntent().getSerializableExtra("teacher");
@@ -70,37 +75,26 @@ public class StudentsActivity extends AppCompatActivity {
                 finish();
             }
         });
-        addBT = findViewById(R.id.bt_add);
-        addBT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mainIntent = new Intent(StudentsActivity.this,AddStudentActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("teacher",teacher);
-                mainIntent.putExtras(mBundle);
-                startActivity(mainIntent);
-            }
-        });
         swipeRefresh = findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeColors(R.color.colorPrimary);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                students.clear();
+                vSets.clear();
                 initView();
                 swipeRefresh.setRefreshing(false);
             }
         });
         if(teacher.getAClass()!=null){
             initView();
-            ld = new LoadingDialog(StudentsActivity.this);
+            ld = new LoadingDialog(VSetsDataActivity.this);
             ld.setLoadingText("加载中...").show();
         }
 
     }
     //请求查看签到记录
     private void initView(){
-        HttpUtil.getOkHttpRequest(Constants.QUERYSTUDENTS_URL+"?claID="+teacher.getAClass().getClaID(), new Callback() {
+        HttpUtil.getOkHttpRequest(Constants.GETVSETS_URL+"?teaNumber="+teacher.getTeaNumber(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Message message = new Message();
@@ -117,18 +111,28 @@ public class StudentsActivity extends AppCompatActivity {
 
     public void changeView(){
         mRvMain =findViewById(R.id.dd_main);
-        mRvMain.setLayoutManager(new LinearLayoutManager(StudentsActivity.this));
-        mRvMain.setAdapter(new StudentsAdapter(StudentsActivity.this, students, new StudentsAdapter.OnItemClickListener() {
+        mRvMain.setLayoutManager(new LinearLayoutManager(VSetsDataActivity.this));
+        mRvMain.setAdapter(new VSetsAdapter(VSetsDataActivity.this, vSets, new VSetsAdapter.OnItemClickListener() {
             @Override
-            public void onClick(int position) {
-                System.out.println("onClick执行啦");
-/*                dingdan oneDingdan =new dingdan();
-                oneDingdan.setid(signLists.get(position).getid());
-                oneDingdan.setgname(signLists.get(position).getgname());
-                oneDingdan.settime(signLists.get(position).gettime());
-                oneDingdan.setprice(signLists.get(position).getprice());
-                String mUrl ="http://1.873717549.applinzi.com/Android_guihuan.php";
-                RequestHTTP(mUrl,oneDingdan);*/
+            public void onClick(int position,String setId) {
+                if(!StringUtils.isEmpty(setId)){
+                    Intent intent = new Intent(VSetsDataActivity.this,VSetInfoActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("teacher",teacher);
+                    for (int i=0;i<vSets.size();i++){
+                        if(vSets.get(i).getSetId() == setId){
+                            VSet vSet = vSets.get(i);
+                            mBundle.putSerializable("vSet",vSet);
+                            break;
+                        }
+                    }
+                    mBundle.putSerializable("setId",setId);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }else {
+                    common.myToast(VSetsDataActivity.this,"传递数据不能为空");
+                }
+
             }
         }));
     }//changeView()
@@ -140,21 +144,17 @@ public class StudentsActivity extends AppCompatActivity {
             if(status == 200){
                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                 for(int i=0;i<jsonArray.length();i++){
-                    Student student = new Student();
+                    VSet vSet = new VSet();
                     JSONObject jo = jsonArray.getJSONObject(i);
                     if(jo!=null){
-                        student.setStuId(jo.getString("stuId"));
-                        student.setStuName(jo.getString("stuName"));
-                        student.setStuSex(jo.getInt("stuSex"));
-                        student.setStuNumber(jo.getString("stuNumber"));
-                        student.setStuPassword(jo.getString("stuPassword"));
-                        student.setStuPhone(jo.getString("stuPhone"));
-                        student.setStuMail(jo.getString("stuMail"));
-                        student.setClaID(jo.getString("claID"));
-                        student.setRegisterTime(jo.getString("registerTime"));
-                        student.setPermissions(jo.getString("permissions"));
-                        student.setClassName(jo.getString("claName"));
-                        students.add(student);
+                        vSet.setSetId(jo.getString("setID"));
+                        vSet.setSetName(jo.getString("setName"));
+                        vSet.setLongitude(jo.getString("longitude"));
+                        vSet.setLatitude(jo.getString("latitude"));
+                        vSet.setScope(jo.getString("scope"));
+                        vSet.setStartSigTime(jo.getString("startSigTime"));
+                        vSet.setEndSigTime(jo.getString("endSigTime"));
+                        vSets.add(vSet);
                     }
                 }
             }

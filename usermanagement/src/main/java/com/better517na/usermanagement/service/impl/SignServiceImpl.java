@@ -1,19 +1,16 @@
 package com.better517na.usermanagement.service.impl;
 
 import com.better517na.usermanagement.model.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.better517na.usermanagement.business.ISignBusiness;
-import com.better517na.usermanagement.business.IStudentBusiness;
 import com.better517na.usermanagement.service.ISignService;
-import com.better517na.usermanagement.service.IStudentService;
 import static com.better517na.usermanagement.utils.Constant.RESPONSE_FALSE;
 import com.better517na.usermanagement.utils.IDUtil;
 import com.better517na.usermanagement.utils.TimeUtil;
 import com.google.gson.Gson;
 
-import java.text.ParseException;
 import java.util.Date;
 
 @Service
@@ -121,5 +118,16 @@ public class SignServiceImpl implements ISignService {
             return response;
         }
         return signBusiness.queryVSetBySetId(setID);
+    }
+
+    @Override
+    public Response getRecordsBySetId(String setId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(setId)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("入参错误");
+            return response;
+        }
+        return signBusiness.getRecordsBySetId(setId);
     }
 }

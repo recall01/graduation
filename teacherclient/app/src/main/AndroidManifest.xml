@@ -42,7 +42,7 @@
             android:process=":remote" />
 
         <activity
-            android:name=".Jingweidu"
+            android:name=".SignActivity"
             android:theme="@style/FruitActivityTheme" />
         <activity
             android:name=".MainActivity"
@@ -50,6 +50,7 @@
         <activity android:name=".zujie.Tuzujie" />
         <activity android:name=".Zhujie_xinxiActivity" />
         <activity android:name=".StudentsActivity" />
+        <activity android:name=".VSetsDataActivity" />
         <activity android:name=".Zhaohui" />
         <activity
             android:name=".StartActivity"
@@ -61,10 +62,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddStudentActivity" />
+        <activity android:name=".VSetInfoActivity" />
         <activity android:name=".AddClassActivity" />
-        <activity android:name=".ChangeHead" />
         <activity
-            android:name=".AddStudent"
+            android:name=".ClassInfoActivity"
             android:windowSoftInputMode="adjustPan" />
 
         <service

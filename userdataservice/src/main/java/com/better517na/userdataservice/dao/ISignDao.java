@@ -21,4 +21,6 @@ public interface ISignDao {
     List<VSet> selectVSet(Map m);
 
     VSet queryVSetBySetId(String setID);
+
+    List<SignRecord> getRecordsBySetId(String setId);
 }

@@ -213,10 +213,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         JSONObject aclass = js.getJSONObject("aClass");
                         if(aclass != null){
                             Classes classes = new Classes();
-                            classes.setClaId(aclass.getString("claID"));
+                            classes.setClaID(aclass.getString("claID"));
                             classes.setClaName(aclass.getString("claName"));
                             classes.setCreateTime(aclass.getString("createTime"));
-                            classes.setCreaterId(aclass.getString("createrID"));
+                            classes.setCreaterID(aclass.getString("createrID"));
                             teacher.setAClass(classes);
                         }
                     }

@@ -25,4 +25,18 @@
         (ClaID,ClaName,CreateTime,CreaterID,IsDelete)
         values (#{claID},#{claName},#{createTime},#{createrID},0)
     </insert>
+    <update id="updateClass">
+        update classes
+        set
+        ClaName=#{claName}
+        where
+        ClaID = #{claID}
+    </update>
+
+    <select id="selectClass" resultMap="classResult">
+        select * from classes
+        where CreaterID = #{teaNumber}
+        AND IsDelete = 0
+    </select>
+
 </mapper>

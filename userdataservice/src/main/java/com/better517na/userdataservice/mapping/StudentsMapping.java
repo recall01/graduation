@@ -17,4 +17,6 @@ public interface StudentsMapping {
     boolean removeStudent(String stuNumber);
 
     boolean changeClaID(Map m);
+
+    int selectCount(String claId);
 }

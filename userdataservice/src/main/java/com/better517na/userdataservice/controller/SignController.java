@@ -47,4 +47,8 @@ public class SignController {
         Response response = signService.queryVSetBySetId(setID);
         return response;
     }
+    @PostMapping(value = "/getRecords")
+    public Response getRecordsBySetId(@RequestParam String setId) throws Exception{
+        return signService.getRecordsBySetId(setId);
+    }
 }

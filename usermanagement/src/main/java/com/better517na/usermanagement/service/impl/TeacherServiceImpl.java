@@ -1,14 +1,13 @@
 package com.better517na.usermanagement.service.impl;
 
 import com.better517na.usermanagement.business.ITeacherBusiness;
+import com.better517na.usermanagement.model.*;
 import com.better517na.usermanagement.model.Class;
-import com.better517na.usermanagement.model.LogProducer;
-import com.better517na.usermanagement.model.Response;
-import com.better517na.usermanagement.model.Teacher;
 import com.better517na.usermanagement.service.ISMSService;
 import com.better517na.usermanagement.service.ITeacherService;
 import com.better517na.usermanagement.utils.IDUtil;
 import com.better517na.usermanagement.utils.TimeUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,4 +71,53 @@ public class TeacherServiceImpl implements ITeacherService {
         response = teacherBusiness.creatClass(aClass);
         return response;
     }
+
+    @Override
+    public Response changeClass(Class cla) {
+        Response response = new Response();
+        if(cla == null){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("入参错误");
+            return response;
+        }
+        response = teacherBusiness.changeClass(cla);
+        return response;
+    }
+
+    @Override
+    public Response getClassNByTeaNumber(String teaNumber) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(teaNumber)){
+            response.setStatus(RESPONSE_FALSE);
+            return response;
+        }
+        response = teacherBusiness.getClassNByTeaNumber(teaNumber);
+        return response;
+    }
+
+    @Override
+    public Response creatSet(VSet set) {
+        Response response = new Response();
+        if(set == null){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("入参错误");
+            return response;
+        }
+        //封装数据
+        set.setSetID(IDUtil.getSetID());
+        response = teacherBusiness.creatSet(set);
+        return response;
+    }
+
+    @Override
+    public Response getVSetsByTeaNumber(String teaNumber) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(teaNumber)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("入参错误");
+            return response;
+        }
+        return teacherBusiness.getVSetsByTeaNumber(teaNumber);
+    }
+
 }

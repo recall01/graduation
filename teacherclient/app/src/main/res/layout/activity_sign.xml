@@ -15,33 +15,34 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/xinxi_back"
+            android:id="@+id/bt_back"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
             android:background="@drawable/back" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_gravity="center"
-            android:text="完善信息"
+            android:text="设置签到"
             android:textAlignment="center"
             android:textColor="#fff"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/et_save"
+            android:id="@+id/tv_determine"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"
             android:gravity="center"
-            android:text="保存"
-            android:textColor="#fff" />
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:textColor="#fff"
+            android:text="确定"
+            android:textSize="14sp"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -49,62 +50,7 @@
         android:background="#E3E4E4"
         android:layout_marginTop="10dp"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:background="#ffffff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="头像"
-            android:textColor="#000"
-            android:layout_alignParentLeft="true"
-            />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:layout_weight="1" >
-            <TextView
-                android:id="@+id/changeHead"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:padding="10dp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/icon_right_jiantou" />
-
-        </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E3E4E4"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E3E4E4"
-        android:layout_marginBottom="10dp"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E3E4E4"
-        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,18 +63,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:padding="10dp"
-            android:text="姓名"
+            android:text="签到名称"
             android:textColor="#000"
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/et_name"
+            android:id="@+id/et_sigName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="#ffffff"
-            android:gravity="end"
             android:maxLength="8"
             android:padding="10dp"
             android:textAlignment="textEnd"
@@ -140,109 +85,6 @@
         android:layout_height="1dp"
         android:background="#E3E4E4"
         />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:padding="10dp"
-            android:text="学号"
-            android:textColor="#000"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/et_stuNum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:gravity="end"
-            android:padding="10dp"
-            android:textAlignment="textEnd"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view9"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E3E4E4" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:padding="10dp"
-            android:text="邮箱"
-            android:textColor="#000"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/et_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:padding="10dp"
-            android:textAlignment="textEnd"
-            android:textSize="16sp"
-            android:gravity="end" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view7"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E3E4E4" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:padding="10dp"
-            android:text="手机号"
-            android:textColor="#000"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/et_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:padding="10dp"
-            android:textAlignment="textEnd"
-            android:textSize="16sp"
-            android:gravity="end" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view8"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E3E4E4" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -251,26 +93,25 @@
         >
 
         <TextView
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="性别"
             android:layout_alignParentLeft="true"
-            />
+            android:padding="10dp"
+            android:text="经度"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/et_sex"
+        <EditText
+            android:id="@+id/et_longitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="#ffffff"
+            android:maxLength="8"
             android:padding="10dp"
-            android:layout_marginRight="5dp"
             android:textAlignment="textEnd"
-            android:textSize="16sp"
-            android:gravity="end" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <View
@@ -286,53 +127,144 @@
         >
 
         <TextView
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="生日"
             android:layout_alignParentLeft="true"
-            />
-        <RelativeLayout
+            android:padding="10dp"
+            android:text="纬度"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_latitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:background="#ffffff"
-            android:layout_weight="1" >
+            android:maxLength="8"
+            android:padding="10dp"
+            android:textAlignment="textEnd"
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/et_birthday"
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E3E4E4"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="10dp"
+            android:text="范围"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_scope"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:inputType="number"
+            android:maxLength="8"
+            android:padding="10dp"
+            android:textAlignment="textEnd"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E3E4E4"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_locate"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:background="#5bb8f3"
+            android:text="点击进行定位"
+            android:textColor="#fff"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E3E4E4"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="10dp"
+            android:text="开始时间"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ffffff">
+
+            <EditText
+                android:id="@+id/et_startTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:padding="10dp"
                 android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:padding="10dp"
                 android:textAlignment="textEnd"
-                android:textSize="16sp"
-                android:gravity="end" />
+                android:textSize="16sp" />
 
             <ImageView
+                android:id="@+id/iv_startTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/icon_right_jiantou" />
         </RelativeLayout>
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#E3E4E4"
-        android:layout_marginBottom="10dp"
         />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E3E4E4"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -341,35 +273,46 @@
         >
 
         <TextView
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="班级"
             android:layout_alignParentLeft="true"
-            />
-
-        <EditText
-            android:id="@+id/et_myClass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:maxLength="15"
             android:padding="10dp"
-            android:layout_marginRight="5dp"
-            android:textAlignment="textEnd"
-            android:textSize="16sp"
-            android:gravity="end"
-            tools:ignore="DuplicateIds" />
+            android:text="结束时间"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ffffff">
+
+            <EditText
+                android:id="@+id/et_endTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:padding="10dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/icon_right_jiantou" />
+        </RelativeLayout>
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#E3E4E4"
-        android:layout_marginBottom="10dp"
         />
 
 

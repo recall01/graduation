@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -154,5 +155,20 @@ public class SignServiceImpl implements ISignService {
         }finally {
             return response;
         }
+    }
+
+    @Override
+    public Response getRecordsBySetId(String setId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(setId)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("入参错误");
+            return response;
+        }
+        List<SignRecord> records = signDao.getRecordsBySetId(setId);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(records);
+        response.setMsg("获取签到记录数据成功");
+        return response;
     }
 }

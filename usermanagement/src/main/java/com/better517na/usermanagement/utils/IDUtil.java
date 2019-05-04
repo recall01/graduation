@@ -28,5 +28,10 @@ public class IDUtil {
         String format = simpleDateFormat.format(date);
         return "Cla"+teaNumber+format;
     }
-
+    public static String getSetID(){
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String format = simpleDateFormat.format(date);
+        return "Set"+format;
+    }
 }

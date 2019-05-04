@@ -3,14 +3,15 @@ package com.better517na.usermanagement.model;
 public class VSet {
     private String claID;
     private String claName;
-    private String setID;
     private String setName;
+    private String setID;
     private String longitude;
     private String latitude;
     private String scope;
     private String startSigTime;
     private String endSigTime;
     private String createrName;
+    private String createrID;
 
     public String getSetID() {
         return setID;
@@ -19,6 +20,7 @@ public class VSet {
     public void setSetID(String setID) {
         this.setID = setID;
     }
+
     public String getLatitude() {
         return latitude;
     }
@@ -89,5 +91,13 @@ public class VSet {
 
     public void setCreaterName(String createrName) {
         this.createrName = createrName;
+    }
+
+    public String getCreaterID() {
+        return createrID;
+    }
+
+    public void setCreaterID(String createrID) {
+        this.createrID = createrID;
     }
 }

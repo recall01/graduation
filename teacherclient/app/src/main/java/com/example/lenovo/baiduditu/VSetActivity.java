@@ -102,7 +102,7 @@ public class VSetActivity extends AppCompatActivity {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(VSetActivity.this, AddStudent.class);
+                Intent intent = new Intent(VSetActivity.this, ClassInfoActivity.class);
                 startActivity(intent);
             }
         });

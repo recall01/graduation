@@ -13,5 +13,8 @@
         select * from v_signrecord
         where StuNumber = #{id} and SigTime like "%"#{time}"%"
     </select>
-
+    <select id="selectRecordsBySetId" resultMap="signRecordResult">
+        select * from v_signrecord
+        where SetID = #{setId}
+    </select>
 </mapper>

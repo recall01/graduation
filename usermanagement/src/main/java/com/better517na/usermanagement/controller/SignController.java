@@ -37,7 +37,7 @@ public class SignController {
 
     @SysLogger("signRecord")
     @HystrixCommand(fallbackMethod = "signFallback")
-    @ApiOperation(value = "查询签到记录接口",notes = "根据时间查询签到记录")
+    @ApiOperation(value = "根据时间查询签到记录接口",notes = "根据时间查询签到记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "用户账号",required = true,dataType = "String"),
             @ApiImplicitParam(name = "time",value = "查看签到记录时间",required = true,dataType = "String")
@@ -45,6 +45,13 @@ public class SignController {
     @RequestMapping(value = "record",method = RequestMethod.GET)
     public Response signRecord(@RequestParam String id, @RequestParam String time){
         return signService.signRecord(id,time);
+    }
+
+    @SysLogger("getRecordsBySetId")
+    @ApiOperation(value = "根据签到信息编号查询班级上学生的签到情况",notes = "填写必要的签到信息编号")
+    @RequestMapping(value = "/getRecords",method = RequestMethod.GET)
+    public Response getRecordsBySetId(@RequestParam @ApiParam(name = "setId",value = "签到信息编号",required = true) String setId){
+        return signService.getRecordsBySetId(setId);
     }
 //超过签到时间，已经签到的不给予展示
     @SysLogger("queryVSet")

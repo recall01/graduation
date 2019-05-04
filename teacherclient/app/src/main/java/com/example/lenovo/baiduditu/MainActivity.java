@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements  ViewPager.OnPageChangeListener,View.OnClickListener {
-    Button studentsBT,signBT,signdataBT,exitBT,setClassBT;
+    Button studentsBT,classInfoBT,signBT,signdataBT,exitBT,setClassBT;
     TeacherVO teacher = new TeacherVO();
     private List<ChangeIcon> lTabIndicators = new ArrayList<>();
     @Override
@@ -49,6 +49,8 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
     private void initView(){
         studentsBT = findViewById(R.id.bt_students);
         studentsBT.setOnClickListener(this);
+        classInfoBT = findViewById(R.id.bt_classInfo);
+        classInfoBT.setOnClickListener(this);
         signBT = findViewById(R.id.bt_sign);
         signBT.setOnClickListener(this);
         signdataBT = findViewById(R.id.bt_signdata);
@@ -128,13 +130,39 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
                     common.myDailog("你已经创建过班级了",MainActivity.this);
                 }
                 break;
-
+            case R.id.bt_classInfo:
+                if(teacher.getAClass() != null){
+                    Intent intent = new Intent(MainActivity.this,ClassInfoActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("teacher",teacher);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }else {
+                    common.myDailog("你还没有班级,请先创建班级",MainActivity.this);
+                }
+                break;
             case R.id.bt_sign:
-                System.out.println("按钮bt_sign");
-                common.myToast(MainActivity.this,"bt_sign");break;
+                if(teacher.getAClass() != null){
+                    Intent intent = new Intent(MainActivity.this,SignActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("teacher",teacher);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }else {
+                    common.myDailog("你还没有班级,请先创建班级",MainActivity.this);
+                }
+                break;
             case R.id.bt_signdata:
-                System.out.println("按钮bt_signdata");
-                common.myToast(MainActivity.this,"bt_signdata");break;
+                if(teacher.getAClass() != null){
+                    Intent intent = new Intent(MainActivity.this,VSetsDataActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("teacher",teacher);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }else {
+                    common.myDailog("你还没有班级,请先创建班级",MainActivity.this);
+                }
+                break;
             case R.id.bt_exit:
                 System.out.println("按钮bt_exit");
                 common.myToast(MainActivity.this,"bt_exit");break;

@@ -51,4 +51,8 @@
         where StuNumber = #{stuNumber}
         AND IsDelete = 0
     </update>
+    <select id="selectCount" resultType="int">
+        select count(*) from students
+        where ClaID = #{claId}
+    </select>
 </mapper>

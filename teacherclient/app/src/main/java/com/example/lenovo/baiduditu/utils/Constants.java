@@ -16,4 +16,8 @@ public class Constants {
     public final static String QUERYSTUDENTS_URL = "http://"+URl+"/student/queryStudents";
     public final static String ADDSTUDENT_URL = "http://"+URl+"/student/addStudent";
     public final static String CREATCLASS_URL = "http://"+URl+"/teacher/creatClass";
+    public final static String CHANGECLASS_URL = "http://"+URl+"/teacher/changeClass";
+    public final static String GETCLASSINFO_URL = "http://"+URl+"/teacher/getClassN";
+    public final static String CREATSET_URL = "http://"+URl+"/teacher/creatSet";
+    public final static String GETVSETS_URL = "http://"+URl+"/teacher/getVSets";
 }
