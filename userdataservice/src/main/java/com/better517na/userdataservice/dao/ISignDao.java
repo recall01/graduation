@@ -23,4 +23,6 @@ public interface ISignDao {
     VSet queryVSetBySetId(String setID);
 
     List<SignRecord> getRecordsBySetId(String setId);
+
+    List<SignRecord> getRecordsByStuNumber(String stuNumber);
 }

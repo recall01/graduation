@@ -14,4 +14,5 @@ public class Constants {
     public final static String SIGN_URL = "http://"+URl+"/sign/sign";
     public final static String QUERYVSET_URL = "http://"+URl+"/sign/queryVSet";
     public final static String RECORD_URL = "http://"+URl+"/sign/record";
+    public final static String STUGETRECORD_URL = "http://"+URl+"/sign/stuGetRecords";
 }

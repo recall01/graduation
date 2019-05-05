@@ -51,4 +51,8 @@ public class SignController {
     public Response getRecordsBySetId(@RequestParam String setId) throws Exception{
         return signService.getRecordsBySetId(setId);
     }
+    @PostMapping(value = "/stuGetRecords")
+    public Response getRecordsByStuNumber(@RequestParam String stuNumber) throws Exception{
+        return signService.getRecordsByStuNumber(stuNumber);
+    }
 }

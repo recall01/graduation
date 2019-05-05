@@ -1,5 +1,7 @@
 package com.example.lenovo.baiduditu.model;
 
+import com.example.lenovo.baiduditu.utils.TimeUtils;
+
 import java.io.Serializable;
 
 public class VRecord implements Serializable {
@@ -51,7 +53,7 @@ public class VRecord implements Serializable {
     }
 
     public String getSigTime() {
-        return sigTime;
+        return TimeUtils.handTimeForm(sigTime);
     }
 
     public void setSigTime(String sigTime) {

@@ -64,6 +64,8 @@ public interface UserDataFeignClient {
     Response getVSetsByTeaNumber(@RequestParam(value = "teaNumber")String teaNumber);
     @PostMapping("/sign/getRecords")
     Response getRecordsBySetId(@RequestParam(value = "setId")String setId);
+    @PostMapping("/sign/stuGetRecords")
+    Response getRecordsByStuNumber(@RequestParam(value = "stuNumber")String stuNumber);
 }
 @Component
 class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeignClient>{
@@ -180,6 +182,11 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
 
             @Override
             public Response getRecordsBySetId(String setId) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response getRecordsByStuNumber(String stuNumber) {
                 return getFallback(throwable);
             }
 

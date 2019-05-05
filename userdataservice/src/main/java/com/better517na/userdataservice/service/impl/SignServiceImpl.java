@@ -171,4 +171,19 @@ public class SignServiceImpl implements ISignService {
         response.setMsg("获取签到记录数据成功");
         return response;
     }
+
+    @Override
+    public Response getRecordsByStuNumber(String stuNumber) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(stuNumber)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("入参错误");
+            return response;
+        }
+        List<SignRecord> records = signDao.getRecordsByStuNumber(stuNumber);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(records);
+        response.setMsg("获取签到记录数据成功");
+        return response;
+    }
 }

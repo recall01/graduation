@@ -130,4 +130,15 @@ public class SignServiceImpl implements ISignService {
         }
         return signBusiness.getRecordsBySetId(setId);
     }
+
+    @Override
+    public Response getRecordsByStuNumber(String stuNumber) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(stuNumber)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("入参错误");
+            return response;
+        }
+        return signBusiness.getRecordsByStuNumber(stuNumber);
+    }
 }

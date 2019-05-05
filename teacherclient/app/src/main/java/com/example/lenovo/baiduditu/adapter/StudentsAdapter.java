@@ -39,9 +39,14 @@ public class StudentsAdapter extends RecyclerView.Adapter<StudentsAdapter.Linear
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mlistener.onClick(position);
                 notifyItemRemoved(position);
                 students.remove(position);
+            }
+        });
+        holder.order_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mlistener.onClick(position,students.get(position).getStuNumber());
             }
         });
     }
@@ -64,6 +69,6 @@ public class StudentsAdapter extends RecyclerView.Adapter<StudentsAdapter.Linear
         }
     }  //LinearViewHolder
     public interface OnItemClickListener{
-        void onClick(int pos);
+        void onClick(int pos,String stuId);
     }
 }

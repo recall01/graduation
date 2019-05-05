@@ -10,4 +10,6 @@ public interface SignRecordMapping {
     List<SignRecord> selectSignRecord(Map m);
 
     List<SignRecord> selectRecordsBySetId(String setId);
+
+    List<SignRecord> getRecordsByStuNumber(String stuNumber);
 }

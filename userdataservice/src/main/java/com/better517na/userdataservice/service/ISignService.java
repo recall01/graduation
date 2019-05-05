@@ -20,4 +20,6 @@ public interface ISignService {
     Response queryVSetBySetId(String setID);
 
     Response getRecordsBySetId(String setID);
+
+    Response getRecordsByStuNumber(String stuNumber);
 }

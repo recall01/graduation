@@ -55,4 +55,9 @@ public class SignDaoImpl implements ISignDao {
     public List<SignRecord> getRecordsBySetId(String setId) {
         return signRecordMapping.selectRecordsBySetId(setId);
     }
+
+    @Override
+    public List<SignRecord> getRecordsByStuNumber(String stuNumber) {
+        return signRecordMapping.getRecordsByStuNumber(stuNumber);
+    }
 }

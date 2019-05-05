@@ -19,4 +19,6 @@ public interface ISignBusiness {
     Response queryVSetBySetId(String setID);
 
     Response getRecordsBySetId(String setId);
+
+    Response getRecordsByStuNumber(String stuNumber);
 }

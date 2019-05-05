@@ -48,10 +48,16 @@ public class SignController {
     }
 
     @SysLogger("getRecordsBySetId")
-    @ApiOperation(value = "根据签到信息编号查询班级上学生的签到情况",notes = "填写必要的签到信息编号")
+    @ApiOperation(value = "根据签到信息编号查询班级上学生的签到记录情况",notes = "填写必要的签到信息编号")
     @RequestMapping(value = "/getRecords",method = RequestMethod.GET)
     public Response getRecordsBySetId(@RequestParam @ApiParam(name = "setId",value = "签到信息编号",required = true) String setId){
         return signService.getRecordsBySetId(setId);
+    }
+    @SysLogger("getRecordsByStuNumber")
+    @ApiOperation(value = "根据学生学号查询签到记录情况",notes = "填写必要的学生学号")
+    @RequestMapping(value = "/stuGetRecords",method = RequestMethod.GET)
+    public Response getRecordsByStuNumber(@RequestParam @ApiParam(name = "stuNumber",value = "学生学号",required = true) String stuNumber){
+        return signService.getRecordsByStuNumber(stuNumber);
     }
 //超过签到时间，已经签到的不给予展示
     @SysLogger("queryVSet")

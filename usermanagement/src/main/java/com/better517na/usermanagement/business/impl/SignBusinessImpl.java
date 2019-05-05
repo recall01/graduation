@@ -117,4 +117,19 @@ public class SignBusinessImpl implements ISignBusiness {
             return response;
         }
     }
+
+    @Override
+    public Response getRecordsByStuNumber(String stuNumber) {
+        try {
+            return userDataFeignClient.getRecordsByStuNumber(stuNumber);
+        }catch (Exception e){
+            e.printStackTrace();
+            //记录日志
+            Response response = new Response();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("获取签到记录失败! " + e.getMessage());
+//            logProducer.sendLog("my-topic",new Gson().toJson(student));
+            return response;
+        }
+    }
 }

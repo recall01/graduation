@@ -19,6 +19,8 @@ import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
+
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -120,15 +122,23 @@ public class StudentsActivity extends AppCompatActivity {
         mRvMain.setLayoutManager(new LinearLayoutManager(StudentsActivity.this));
         mRvMain.setAdapter(new StudentsAdapter(StudentsActivity.this, students, new StudentsAdapter.OnItemClickListener() {
             @Override
-            public void onClick(int position) {
-                System.out.println("onClick执行啦");
-/*                dingdan oneDingdan =new dingdan();
-                oneDingdan.setid(signLists.get(position).getid());
-                oneDingdan.setgname(signLists.get(position).getgname());
-                oneDingdan.settime(signLists.get(position).gettime());
-                oneDingdan.setprice(signLists.get(position).getprice());
-                String mUrl ="http://1.873717549.applinzi.com/Android_guihuan.php";
-                RequestHTTP(mUrl,oneDingdan);*/
+            public void onClick(int position,String stuNumber) {
+                if(!StringUtils.isEmpty(stuNumber)){
+                    Intent intent = new Intent(StudentsActivity.this,StuRecordsActivity.class);
+                    Bundle mBundle = new Bundle();
+                    for (int i=0;i<students.size();i++){
+                        if(students.get(i).getStuNumber() == stuNumber){
+                            Student student = students.get(i);
+                            mBundle.putSerializable("student",student);
+                            break;
+                        }
+                    }
+                    mBundle.putSerializable("stuNumber",stuNumber);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }else {
+                    common.myToast(StudentsActivity.this,"传递数据不能为空");
+                }
             }
         }));
     }//changeView()

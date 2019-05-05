@@ -17,4 +17,8 @@
         select * from v_signrecord
         where SetID = #{setId}
     </select>
+    <select id="getRecordsByStuNumber" resultMap="signRecordResult">
+        select * from v_signrecord
+        where StuNumber = #{stuNumber}
+    </select>
 </mapper>

@@ -20,4 +20,6 @@ public class Constants {
     public final static String GETCLASSINFO_URL = "http://"+URl+"/teacher/getClassN";
     public final static String CREATSET_URL = "http://"+URl+"/teacher/creatSet";
     public final static String GETVSETS_URL = "http://"+URl+"/teacher/getVSets";
+    public final static String GETRECORD_URL = "http://"+URl+"/sign/getRecords";
+    public final static String STUGETRECORD_URL = "http://"+URl+"/sign/stuGetRecords";
 }
