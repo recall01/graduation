@@ -13,6 +13,7 @@ public class Classes implements Serializable{
     protected String claName;
     protected String createTime;
     protected String createrID;
+    protected String dynamic;
 
     public String getClaID() {
         return claID;
@@ -44,5 +45,13 @@ public class Classes implements Serializable{
 
     public void setCreaterID(String createrID) {
         this.createrID = createrID;
+    }
+
+    public String getDynamic() {
+        return dynamic;
+    }
+
+    public void setDynamic(String dynamic) {
+        this.dynamic = dynamic;
     }
 }

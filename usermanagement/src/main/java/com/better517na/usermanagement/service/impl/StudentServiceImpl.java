@@ -22,8 +22,9 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public Response registStudent(Student student) {
         Response response = new Response();
-        //1.先根据claId判断该班级是否存在
-        Response r = this.queryClassByClaID(student.getClaID());
+        //1.claID后来设置为班级动态码，不使用班级编号
+        String dynamic = student.getClaID();
+        Response r = studentBusiness.queryClassByDynamic(dynamic);
         if(r.getStatus()!=200){
             return r;
         }
@@ -83,7 +84,7 @@ public class StudentServiceImpl implements IStudentService {
         Response response = new Response();
         if(claID == null||"".equals(claID)){
             response.setStatus(RESPONSE_FALSE);
-            response.setMsg("查询班级信息失败!班级编号为空");
+            response.setMsg("查询班级信息失败!动态码为空");
         }else {
             response = studentBusiness.queryClassByClaID(claID);
         }

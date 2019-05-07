@@ -6,6 +6,7 @@
         <result property="claName" column="ClaName"/>
         <result property="createTime" column="CreateTime"/>
         <result property="createrID" column="CreaterID"/>
+        <result property="dynamic" column="Dynamic"/>
     </resultMap>
     <select id="queryClassByClaID" resultMap="classResult">
         select * from classes
@@ -22,13 +23,14 @@
     </select>
     <insert id="insertClass">
         insert into classes
-        (ClaID,ClaName,CreateTime,CreaterID,IsDelete)
-        values (#{claID},#{claName},#{createTime},#{createrID},0)
+        (ClaID,ClaName,CreateTime,CreaterID,Dynamic,IsDelete)
+        values (#{claID},#{claName},#{createTime},#{createrID},#{dynamic},0)
     </insert>
     <update id="updateClass">
         update classes
         set
-        ClaName=#{claName}
+        ClaName=#{claName},
+        Dynamic=#{dynamic}
         where
         ClaID = #{claID}
     </update>
@@ -39,4 +41,9 @@
         AND IsDelete = 0
     </select>
 
+    <select id="queryClassByDynamic" resultMap="classResult">
+        select * from classes
+        where Dynamic = #{dynamic}
+        AND IsDelete = 0
+    </select>
 </mapper>

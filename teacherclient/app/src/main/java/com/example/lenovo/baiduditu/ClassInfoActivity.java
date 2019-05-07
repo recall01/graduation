@@ -23,7 +23,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ClassInfoActivity extends AppCompatActivity {
-    EditText claIdET,createTimeET,claNameET,claNumberET;
+    EditText claIdET,createTimeET,claNameET,claNumberET,dynamicET;
     private TextView saveTV;
     private Button backBT;
     private TeacherVO teacher = new TeacherVO();
@@ -85,6 +85,9 @@ public class ClassInfoActivity extends AppCompatActivity {
                 changeClaInfo(cla);
             }
         });
+        dynamicET = findViewById(R.id.et_dynamic);
+        dynamicET.setText(teacher.getAClass().getDynamic());
+        dynamicET.setEnabled(false);
     }
 
     private void loadData(String number){
@@ -111,7 +114,9 @@ public class ClassInfoActivity extends AppCompatActivity {
             if (status == 200){
                 data = data.getJSONObject("data");
                 String name = data.getString("claName");
+                String dynamic = data.getString("dynamic");
                 claNameET.setText(name);
+                dynamicET.setText(dynamic);
                 //重新加载teacher数据
                 int count = data.getInt("number");
                 claNumberET.setText(String.valueOf(count));

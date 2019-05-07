@@ -50,7 +50,6 @@ public class TeacherController {
     @ApiOperation(value = "修改班级信息",notes = "传递修改后的班级对象")
     @RequestMapping(value = "/changeClass",method = RequestMethod.POST)
     public Response changeClass(@RequestBody @ApiParam(name = "cla",value = "修改后的班级对象",required = true) Class cla){
-        System.out.println(new Gson().toJson(cla));
         return teacherService.changeClass(cla);
     }
 

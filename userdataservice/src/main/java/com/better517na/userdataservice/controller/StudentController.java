@@ -70,4 +70,9 @@ public class StudentController {
     public void test() throws Exception{
         System.out.println("---test执行啦---");
     }
+
+    @PostMapping(value = "/queryClassByDynamic")
+    public Response queryClassByDynamic(@RequestParam String dynamic) throws Exception{
+        return studentService.queryClassByDynamic(dynamic);
+    }
 }

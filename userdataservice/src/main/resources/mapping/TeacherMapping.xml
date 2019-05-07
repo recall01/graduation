@@ -12,6 +12,7 @@
             <result property="claID" column="ClaID"/>
             <result property="claName" column="ClaName"/>
             <result property="createTime" column="CreateTime"/>
+            <result property="dynamic" column="Dynamic"/>
             <result property="createrID" column="CreaterID"/>
         </association>
     </resultMap>

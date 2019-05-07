@@ -217,6 +217,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             classes.setClaName(aclass.getString("claName"));
                             classes.setCreateTime(aclass.getString("createTime"));
                             classes.setCreaterID(aclass.getString("createrID"));
+                            classes.setDynamic(aclass.getString("dynamic"));
                             teacher.setAClass(classes);
                         }
                     }

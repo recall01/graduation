@@ -99,40 +99,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:padding="12dp"
-                        android:text="班级"
-                        android:textColor="#000"
-                        android:textSize="16sp" />
-
-                    <EditText
-                        android:id="@+id/claId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="#ffffff"
-                        android:hint="请输入班级编号"
-                        android:inputType="number"
-                        android:padding="12dp"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/view3"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#E3E4E4" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#ffffff"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:padding="12dp"
                         android:text="姓名"
                         android:textColor="#000"
                         android:textSize="16sp" />
@@ -150,6 +116,39 @@
                 </LinearLayout>
 
                 <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#E3E4E4" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:padding="12dp"
+                        android:text="班级动态码"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/claId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#ffffff"
+                        android:hint="6位的班级动态码"
+                        android:inputType="number"
+                        android:padding="12dp"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view3"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="10dp"

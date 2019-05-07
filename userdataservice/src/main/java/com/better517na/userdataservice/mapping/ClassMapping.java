@@ -16,4 +16,6 @@ public interface ClassMapping {
     boolean updateClass(Class cla);
 
     Class selectClass(String teaNumber);
+
+    Class queryClassByDynamic(String dynamic);
 }

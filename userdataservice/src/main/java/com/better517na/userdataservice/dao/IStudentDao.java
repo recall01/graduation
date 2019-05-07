@@ -26,4 +26,6 @@ public interface IStudentDao {
     boolean removeStudent(String stuNumber) throws Exception;
 
     boolean addStudent(String stuNumber, String claID) throws Exception;
+
+    Class queryClassByDynamic(String dynamic);
 }

@@ -93,4 +93,9 @@ public class StudentDaoImpl implements IStudentDao {
             return false;
         }
     }
+
+    @Override
+    public Class queryClassByDynamic(String dynamic) {
+        return classMapping.queryClassByDynamic(dynamic);
+    }
 }

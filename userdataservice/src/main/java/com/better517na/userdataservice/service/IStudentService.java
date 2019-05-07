@@ -23,4 +23,6 @@ public interface IStudentService {
     Response removeStudent(String stuNumber);
 
     Response addStudent(String stuNumber, String claID);
+
+    Response queryClassByDynamic(String dynamic);
 }

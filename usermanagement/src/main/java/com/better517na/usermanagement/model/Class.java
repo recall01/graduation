@@ -5,6 +5,7 @@ public class Class {
     private String claName;
     private String createTime;
     private String createrID;
+    private String dynamic;
 
     public String getClaID() {
         return claID;
@@ -36,5 +37,13 @@ public class Class {
 
     public void setCreaterID(String createrID) {
         this.createrID = createrID;
+    }
+
+    public String getDynamic() {
+        return dynamic;
+    }
+
+    public void setDynamic(String dynamic) {
+        this.dynamic = dynamic;
     }
 }

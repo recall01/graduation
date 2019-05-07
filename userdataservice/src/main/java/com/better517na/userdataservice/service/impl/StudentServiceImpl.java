@@ -221,4 +221,27 @@ public class StudentServiceImpl implements IStudentService {
             return response;
         }
     }
+
+    @Override
+    public Response queryClassByDynamic(String dynamic) {
+        Response response = new Response();
+        try {
+            Class c = studentDao.queryClassByDynamic(dynamic);
+            if(c!=null){
+                response.setStatus(RESPONSE_SUCCESS);
+                response.setData(c);
+                response.setMsg("查询班级信息成功");
+            }else {
+                response.setStatus(RESPONSE_FALSE);
+                response.setMsg("暂无该班级信息");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(RESPONSE_FALSE);
+            response.setData(e.getMessage());
+            response.setMsg("查询班级信息异常");
+        }finally {
+            return response;
+        }
+    }
 }

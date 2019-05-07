@@ -116,4 +116,19 @@ public class StudentBusinessImpl implements IStudentBusiness {
     public Response addStudent(String stuNumber, String claID) {
         return userDataFeignClient.addStudent(stuNumber,claID);
     }
+
+    @Override
+    public Response queryClassByDynamic(String dynamic) {
+        try {
+            return userDataFeignClient.queryClassByDynamic(dynamic);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //记录日志
+            Response response = new Response();
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("查询班级信息失败! " + e.getMessage());
+//            logProducer.sendLog("my-topic",new Gson().toJson(student));
+            return response;
+        }
+    }
 }

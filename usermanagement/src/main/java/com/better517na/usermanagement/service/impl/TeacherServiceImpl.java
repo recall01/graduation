@@ -11,6 +11,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 import static com.better517na.usermanagement.utils.Constant.RESPONSE_FALSE;
 
 @Service
@@ -68,6 +70,7 @@ public class TeacherServiceImpl implements ITeacherService {
         aClass.setClaName(teacher.getaClass().getClaName());
         aClass.setCreaterID(teacher.getTeaNumber());
         aClass.setCreateTime(TimeUtil.getTime());
+        aClass.setDynamic(this.getDynamicCode());
         response = teacherBusiness.creatClass(aClass);
         return response;
     }
@@ -80,6 +83,8 @@ public class TeacherServiceImpl implements ITeacherService {
             response.setMsg("入参错误");
             return response;
         }
+        //重新生成动态码
+        cla.setDynamic(this.getDynamicCode());
         response = teacherBusiness.changeClass(cla);
         return response;
     }
@@ -120,4 +125,10 @@ public class TeacherServiceImpl implements ITeacherService {
         return teacherBusiness.getVSetsByTeaNumber(teaNumber);
     }
 
+    private String getDynamicCode(){
+        Random random = new Random();
+        int i = random.nextInt(999999);
+        i = i + 100000;
+        return ""+i;
+    }
 }

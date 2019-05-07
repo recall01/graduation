@@ -66,6 +66,8 @@ public interface UserDataFeignClient {
     Response getRecordsBySetId(@RequestParam(value = "setId")String setId);
     @PostMapping("/sign/stuGetRecords")
     Response getRecordsByStuNumber(@RequestParam(value = "stuNumber")String stuNumber);
+    @PostMapping("/student/queryClassByDynamic")
+    Response queryClassByDynamic(@RequestParam(value = "dynamic")String dynamic);
 }
 @Component
 class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeignClient>{
@@ -187,6 +189,11 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
 
             @Override
             public Response getRecordsByStuNumber(String stuNumber) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response queryClassByDynamic(String dynamic) {
                 return getFallback(throwable);
             }
 
