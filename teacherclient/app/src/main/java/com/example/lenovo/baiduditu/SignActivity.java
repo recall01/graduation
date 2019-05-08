@@ -1,5 +1,6 @@
 package com.example.lenovo.baiduditu;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.KeyguardManager;
@@ -140,13 +141,21 @@ public class SignActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_back:finish();break;
-            case R.id.bt_locate:requestLocation();break;
+            case R.id.bt_locate:
+                locateBT.setClickable(false);
+                locateBT.setBackgroundResource(R.drawable.bg_but_yanzheng_no);
+                requestLocation();
+                locateBT.setClickable(true);
+                locateBT.setBackgroundResource(R.color.colorZhuce);
+                break;
             case R.id.iv_startTime:getDate(startTimeET);break;
             case R.id.iv_endTime:getDate(endTimeET);break;
             case R.id.tv_determine:saveSign();break;
             default:break;
         }
     }
+
+
 
 
     private void saveSign(){
@@ -223,7 +232,6 @@ protected void onDestroy(){
     }
 
     public class MyLocationListener extends BDAbstractLocationListener implements BDLocationListener {
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void onReceiveLocation(BDLocation location) {
             latitudeET.setText(String.valueOf(location.getLatitude()));

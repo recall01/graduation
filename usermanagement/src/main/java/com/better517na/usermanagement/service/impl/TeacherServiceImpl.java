@@ -125,6 +125,17 @@ public class TeacherServiceImpl implements ITeacherService {
         return teacherBusiness.getVSetsByTeaNumber(teaNumber);
     }
 
+    @Override
+    public Response getTeacherByTeaId(String teaId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(teaId)){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("入参错误");
+            return response;
+        }
+       return teacherBusiness.getTeacherByTeaId(teaId);
+    }
+
     private String getDynamicCode(){
         Random random = new Random();
         int i = random.nextInt(999999);

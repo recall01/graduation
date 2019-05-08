@@ -53,6 +53,13 @@ public class TeacherController {
         return teacherService.changeClass(cla);
     }
 
+    @SysLogger("getTeacherByTeaId")
+    @ApiOperation(value = "通过教师职工号获取教师信息",notes = "教师职工编号")
+    @RequestMapping(value = "/getTeacherByTeaId",method = RequestMethod.POST)
+    public Response getTeacherByTeaId(@RequestParam String teaId){
+        return teacherService.getTeacherByTeaId(teaId);
+    }
+
     @SysLogger("getVSetsByTeaNumber")
     @ApiOperation(value = "根据教职员工编号获取对应的签到设置信息数据",notes = "传递教职员工编号")
     @RequestMapping(value = "/getVSets",method = RequestMethod.GET)

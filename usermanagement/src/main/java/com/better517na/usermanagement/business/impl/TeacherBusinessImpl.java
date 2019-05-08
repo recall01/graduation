@@ -50,4 +50,9 @@ public class TeacherBusinessImpl implements ITeacherBusiness {
         return userDataFeignClient.getVSetsByTeaNumber(teaNumber);
     }
 
+    @Override
+    public Response getTeacherByTeaId(String teaId) {
+        return userDataFeignClient.getTeacherByTeaId(teaId);
+    }
+
 }

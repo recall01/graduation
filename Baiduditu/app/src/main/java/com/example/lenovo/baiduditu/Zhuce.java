@@ -45,6 +45,9 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
     private Button bt_getCode,bt_back;
     private TextView tv_vertify;
     private EditText phoneNum;
+    private boolean isVertify = false;
+
+
     //手机号码
     private String phone="",code="",stuId="",stuName="",password="",repassword="",claId="",stuMail="";
     //控制按钮样式是否改变
@@ -295,11 +298,30 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
     }
 
     private void sendRequestWithOkHttp() {
+        final OkHttpClient client = new OkHttpClient();
+        if(isVertify){
+            //若短信已经验证，直接注册账号
+            new Thread(new Runnable(){
+
+                @Override
+                public void run() {
+                    try {
+                        RequestBody body = RequestBody.create(Constants.JSONTYPE,new Gson().toJson(student));
+                        Request request = new Request.Builder().url(Constants.REGIST_URL).post(body).build();
+                        Response response2 = client.newCall(request).execute();
+                        String response2Data = response2.body().string();
+                        parseJSONWithJSONObject(response2Data);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            return;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final OkHttpClient client = new OkHttpClient();
                     //1.先验证验证码是否正确Get
                     Request request = new Request.Builder().url(Constants.VERIFY_URL+"?code="+code+"&phone="+phone).build();
                     client.newCall(request).enqueue(new Callback() {
@@ -321,6 +343,7 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
                                 int status = jsonObject.getInt("status");
                                 System.out.println("验证结果:"+jsonObject.getInt("status"));
                                 if(status == 200){
+                                    isVertify = true;
                                     //2.验证成功，进行注册
                                     RequestBody body = RequestBody.create(Constants.JSONTYPE,new Gson().toJson(student));
                                     Request request = new Request.Builder().url(Constants.REGIST_URL).post(body).build();
@@ -355,7 +378,10 @@ public class Zhuce extends AppCompatActivity implements View.OnClickListener,Rad
         Message msg = new Message();
         try{
             JSONObject jsonObject = new JSONObject(jsonData);
-            //int status = jsonObject.getInt("status");
+            int status = jsonObject.getInt("status");
+            if(status == 200){
+                isVertify = false;
+            }
             msg.arg1 = 3;
             msg.obj = jsonObject.getString("msg");
         }catch (Exception e){

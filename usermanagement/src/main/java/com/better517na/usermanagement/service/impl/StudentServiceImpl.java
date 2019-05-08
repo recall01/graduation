@@ -1,6 +1,8 @@
 package com.better517na.usermanagement.service.impl;
 
 import com.better517na.usermanagement.model.*;
+import com.better517na.usermanagement.model.Class;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.better517na.usermanagement.business.IStudentBusiness;
@@ -28,6 +30,13 @@ public class StudentServiceImpl implements IStudentService {
         if(r.getStatus()!=200){
             return r;
         }
+        Object data = r.getData();
+        if(data == null){
+            return null;
+        }
+        String s = new Gson().toJson(data);
+        Class c = new Gson().fromJson(s, Class.class);
+        student.setClaID(c.getClaID());
         //2.判断手机号是否被注册
         student.setStuId(IDUtil.getStudentID());
         if(student.getStuMail()==null){

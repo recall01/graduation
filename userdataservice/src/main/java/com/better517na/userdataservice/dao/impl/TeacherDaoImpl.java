@@ -72,4 +72,9 @@ public class TeacherDaoImpl implements ITeacherDao {
         return setMapping.selectVsets(teaNumber);
     }
 
+    @Override
+    public Teacher getTeacherByTeaId(String teaId) {
+        return teacherMapping.selectTeacherByTeaId(teaId);
+    }
+
 }

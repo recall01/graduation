@@ -8,4 +8,5 @@ public interface TeacherMapping {
 
     Teacher selectTeacher(String phone);
 
+    Teacher selectTeacherByTeaId(String teaId);
 }

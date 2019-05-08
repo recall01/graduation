@@ -26,4 +26,6 @@ public interface ITeacherDao {
     boolean creatSet(VSet set);
 
     List<VSet> getVSetsByTeaNumber(String teaNumber);
+
+    Teacher getTeacherByTeaId(String teaId);
 }

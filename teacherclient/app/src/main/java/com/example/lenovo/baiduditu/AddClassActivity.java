@@ -1,8 +1,10 @@
 package com.example.lenovo.baiduditu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -66,6 +68,15 @@ public class AddClassActivity extends AppCompatActivity implements View.OnClickL
             JSONObject jsonObject = new JSONObject(jsonData);
             message.what = 1;
             message.obj = jsonObject.getString("msg");
+            int status = jsonObject.getInt("status");
+            if(status == 200){
+                Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("teacher",teacher);
+                intent.putExtras(mBundle);
+                LocalBroadcastManager.getInstance(AddClassActivity.this).sendBroadcast(intent);
+                sendBroadcast(intent);
+            }
         }catch (Exception e){
             e.printStackTrace();
             message.obj = e.getMessage();
@@ -93,7 +104,6 @@ public class AddClassActivity extends AppCompatActivity implements View.OnClickL
                         Classes aClass = new Classes();
                         aClass.setClaName(claName);
                         teacher.setAClass(aClass);
-                        System.out.println("老师数据"+new Gson().toJson(teacher));
                         RequestBody body = RequestBody.create(Constants.JSONTYPE,new Gson().toJson(teacher));
                         Callback callback = new Callback() {
                             @Override

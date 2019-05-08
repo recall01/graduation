@@ -140,7 +140,6 @@ public class VSetActivity extends AppCompatActivity {
                 Intent mIntent= new Intent();
                 mIntent.putExtra("good_id",good_id);
                 mIntent.putExtra("user_id",user_id);
-                mIntent.setClass(VSetActivity.this, Zhujie_xinxiActivity.class);
             startActivityForResult(mIntent,0);
             }
         }));

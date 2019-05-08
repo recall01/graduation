@@ -68,6 +68,8 @@ public interface UserDataFeignClient {
     Response getRecordsByStuNumber(@RequestParam(value = "stuNumber")String stuNumber);
     @PostMapping("/student/queryClassByDynamic")
     Response queryClassByDynamic(@RequestParam(value = "dynamic")String dynamic);
+    @PostMapping("/teacher/getTeacherByTeaId")
+    Response getTeacherByTeaId(@RequestParam(value = "teaId")String teaId);
 }
 @Component
 class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeignClient>{
@@ -194,6 +196,11 @@ class UserDataFeignClientFallbackFactory implements FallbackFactory<UserDataFeig
 
             @Override
             public Response queryClassByDynamic(String dynamic) {
+                return getFallback(throwable);
+            }
+
+            @Override
+            public Response getTeacherByTeaId(String teaId) {
                 return getFallback(throwable);
             }
 

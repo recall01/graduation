@@ -32,7 +32,6 @@ public class StudentController {
     IStudentService studentService;
 
     @SysLogger("registStudent")
-    @HystrixCommand(fallbackMethod = "registFallback")
     @ApiOperation(value = "注册学生账号接口",notes = "填写必要的注册参数才能成功注册")
     @RequestMapping(value = "/regist",method = RequestMethod.POST)
     public Response registStudent(@RequestBody @ApiParam(name = "student",value = "用户注册数据",required = true) Student student){

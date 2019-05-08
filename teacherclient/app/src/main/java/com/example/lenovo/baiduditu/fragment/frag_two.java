@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.lenovo.baiduditu.R;
 import com.example.lenovo.baiduditu.ClassInfoActivity;
-import com.example.lenovo.baiduditu.Zhujie_xinxiActivity;
 import com.example.lenovo.baiduditu.adapter.LinearAdapter;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.good;
@@ -147,7 +146,6 @@ public class frag_two extends Fragment {
                 Intent mIntent= new Intent();
                 mIntent.putExtra("good_id",good_id);
                 mIntent.putExtra("user_id",user_id);
-                mIntent.setClass(getActivity(), Zhujie_xinxiActivity.class);
                 startActivityForResult(mIntent,0);
             }
         }));

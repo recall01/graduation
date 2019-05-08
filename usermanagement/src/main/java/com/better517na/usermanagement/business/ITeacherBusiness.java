@@ -21,4 +21,6 @@ public interface ITeacherBusiness {
     Response creatSet(VSet set);
 
     Response getVSetsByTeaNumber(String teaNumber);
+
+    Response getTeacherByTeaId(String teaId);
 }

@@ -45,6 +45,9 @@ public class TeacherController {
     public Response getVSetsByTeaNumber(@RequestParam String teaNumber) throws Exception{
         return teacherService.getVSetsByTeaNumber(teaNumber);
     }
-
+    @PostMapping(value = "/getTeacherByTeaId")
+    public Response getTeacherByTeaId(@RequestParam String teaId) throws Exception{
+        return teacherService.getTeacherByTeaId(teaId);
+    }
 
 }

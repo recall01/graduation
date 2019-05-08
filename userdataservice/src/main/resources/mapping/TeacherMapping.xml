@@ -28,4 +28,11 @@
         WHERE TeaPhone = #{phone}
         AND teachers.IsDelete = 0
     </select>
+    <select id="selectTeacherByTeaId" resultMap="teacherResult">
+        SELECT * FROM teachers
+        LEFT JOIN classes
+        ON teachers.TeaNumber = classes.CreaterID
+        WHERE TeaID = #{teaId}
+        AND teachers.IsDelete = 0
+    </select>
 </mapper>

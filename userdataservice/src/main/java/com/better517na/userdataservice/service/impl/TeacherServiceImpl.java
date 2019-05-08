@@ -142,4 +142,19 @@ public class TeacherServiceImpl implements ITeacherService {
         return response;
     }
 
+    @Override
+    public Response getTeacherByTeaId(String teaId) {
+        Teacher teacher = teacherDao.getTeacherByTeaId(teaId);
+        Response response = new Response();
+        if(teacher!=null){
+            response.setStatus(RESPONSE_SUCCESS);
+            response.setData(teacher);
+            response.setMsg("获取教师信息成功");
+        }else {
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("获取教师信息失败");
+        }
+        return response;
+    }
+
 }

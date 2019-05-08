@@ -48,11 +48,9 @@
             android:name=".MainActivity"
             android:theme="@style/FruitActivityTheme" />
         <activity android:name=".zujie.Tuzujie" />
-        <activity android:name=".Zhujie_xinxiActivity" />
         <activity android:name=".StudentsActivity" />
         <activity android:name=".StuRecordsActivity" />
         <activity android:name=".VSetsDataActivity" />
-        <activity android:name=".Zhaohui" />
         <activity
             android:name=".StartActivity"
             android:theme="@style/FruitActivityTheme">
