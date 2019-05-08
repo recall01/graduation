@@ -12,7 +12,7 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import com.example.lenovo.baiduditu.myClass.common;
+import com.example.lenovo.baiduditu.utils.common;
 import java.util.ArrayList;
 import java.util.List;
 

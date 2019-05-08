@@ -1,11 +1,9 @@
 package com.example.lenovo.baiduditu;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,18 +11,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lenovo.baiduditu.model.Classes;
-import com.example.lenovo.baiduditu.model.Student;
-import com.example.lenovo.baiduditu.model.Teacher;
 import com.example.lenovo.baiduditu.model.VO.TeacherVO;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.activityCollector;
-import com.example.lenovo.baiduditu.myClass.common;
-import com.example.lenovo.baiduditu.services.ILoginService;
-import com.example.lenovo.baiduditu.services.impl.LoginServiceImpl;
+import com.example.lenovo.baiduditu.utils.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.mob.MobSDK;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;

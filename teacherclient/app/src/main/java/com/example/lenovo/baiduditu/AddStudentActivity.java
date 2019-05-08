@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.example.lenovo.baiduditu.model.VO.TeacherVO;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
-import com.example.lenovo.baiduditu.myClass.common;
+import com.example.lenovo.baiduditu.utils.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 import org.json.JSONObject;

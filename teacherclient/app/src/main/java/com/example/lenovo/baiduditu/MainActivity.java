@@ -11,37 +11,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
-
-import com.example.lenovo.baiduditu.fragment.frag_a;
 import com.example.lenovo.baiduditu.model.Classes;
-import com.example.lenovo.baiduditu.model.MyMessage;
-import com.example.lenovo.baiduditu.model.Student;
-import com.example.lenovo.baiduditu.model.Teacher;
 import com.example.lenovo.baiduditu.model.VO.TeacherVO;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
-import com.example.lenovo.baiduditu.myClass.activityCollector;
-import com.example.lenovo.baiduditu.myClass.common;
+import com.example.lenovo.baiduditu.utils.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.example.lenovo.baiduditu.view.ChangeIcon;
-import com.google.gson.Gson;
-
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -74,11 +57,6 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
 
         initView();
         teacher = (TeacherVO) getIntent().getSerializableExtra("teacher");
-/*        if(teacher!=null){
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(R.id.fragment_title,frag_a.newInstance(teacher)).commitAllowingStateLoss();
-        }*/
 
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(MainActivity.this);
         IntentFilter intentFilter = new IntentFilter();
@@ -167,23 +145,6 @@ public class MainActivity extends FragmentActivity implements  ViewPager.OnPageC
             handler.sendMessage(message);
         }
     }
-
-/*    //0为跳转签到界面
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(resultCode == 0){
-            MyMessage message = (MyMessage) data.getSerializableExtra("message");
-            if (message.what == 200){
-                common.myToast(MainActivity.this,"签到成功!");
-            }else {
-                common.myDailog(""+message.obj,MainActivity.this);
-            }
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_title,frag_a.newInstance(student)).commitAllowingStateLoss();
-        }else {
-            System.out.println("resultCode的值:"+resultCode);
-        }
-
-    }//onActivityResult*/
-
 
     protected void onRestart(){
         super.onRestart();

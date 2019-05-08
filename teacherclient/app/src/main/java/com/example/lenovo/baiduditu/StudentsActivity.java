@@ -16,7 +16,7 @@ import com.example.lenovo.baiduditu.adapter.StudentsAdapter;
 import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.model.VO.TeacherVO;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
-import com.example.lenovo.baiduditu.myClass.common;
+import com.example.lenovo.baiduditu.utils.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 

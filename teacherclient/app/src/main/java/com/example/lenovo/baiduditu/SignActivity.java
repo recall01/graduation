@@ -1,23 +1,11 @@
 package com.example.lenovo.baiduditu;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.KeyguardManager;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,24 +17,14 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.TextureMapView;
-import com.baidu.mapapi.model.LatLng;
-import com.example.lenovo.baiduditu.model.MyMessage;
 import com.example.lenovo.baiduditu.model.Set;
-import com.example.lenovo.baiduditu.model.Sign;
 import com.example.lenovo.baiduditu.model.VO.TeacherVO;
-import com.example.lenovo.baiduditu.model.VSet;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
-import com.example.lenovo.baiduditu.myClass.common;
-import com.example.lenovo.baiduditu.myClass.CryptoObjectHelper;
+import com.example.lenovo.baiduditu.utils.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.example.lenovo.baiduditu.utils.TimeUtils;
 import com.google.gson.Gson;
-import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -54,8 +32,6 @@ import java.util.Calendar;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 

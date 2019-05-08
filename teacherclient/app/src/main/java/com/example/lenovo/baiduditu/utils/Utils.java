@@ -1,4 +1,4 @@
-package com.example.lenovo.baiduditu.myClass;
+package com.example.lenovo.baiduditu.utils;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

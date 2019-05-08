@@ -1,6 +1,5 @@
 package com.example.lenovo.baiduditu;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,12 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.lenovo.baiduditu.adapter.VRecordsAdapter;
-import com.example.lenovo.baiduditu.adapter.VSetsAdapter;
 import com.example.lenovo.baiduditu.model.VO.TeacherVO;
 import com.example.lenovo.baiduditu.model.VRecord;
 import com.example.lenovo.baiduditu.model.VSet;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
-import com.example.lenovo.baiduditu.myClass.common;
+import com.example.lenovo.baiduditu.utils.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
@@ -32,8 +30,6 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class VSetInfoActivity extends AppCompatActivity implements View.OnClickListener {

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.example.lenovo.baiduditu.model.Classes;
 import com.example.lenovo.baiduditu.model.VO.TeacherVO;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
-import com.example.lenovo.baiduditu.myClass.common;
+import com.example.lenovo.baiduditu.utils.common;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;

@@ -9,11 +9,8 @@ import android.widget.TextView;
 
 import com.example.lenovo.baiduditu.R;
 import com.example.lenovo.baiduditu.model.VRecord;
-import com.example.lenovo.baiduditu.model.VSet;
-import com.example.lenovo.baiduditu.myClass.Utils;
-import com.example.lenovo.baiduditu.utils.TimeUtils;
+import com.example.lenovo.baiduditu.utils.Utils;
 
-import java.util.Date;
 import java.util.List;
 
 /**
