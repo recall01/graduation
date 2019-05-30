@@ -19,6 +19,7 @@ import com.example.lenovo.baiduditu.myClass.activityCollector;
 import com.example.lenovo.baiduditu.myClass.common;
 import com.example.lenovo.baiduditu.services.ILoginService;
 import com.example.lenovo.baiduditu.services.impl.LoginServiceImpl;
+import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import org.json.JSONObject;
@@ -32,7 +33,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    private final static String LOGIN_URL = "http://10.18.42.63:8801/student/login";
     TextView register,forget;
     Button login;
     private SharedPreferences pref;
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                         parseJSONWithJSONObject(responseData);
                     }
                 };
-                HttpUtil.postEnqueueRequest(requestBody, LOGIN_URL, callback);
+                HttpUtil.postEnqueueRequest(requestBody, Constants.LOGIN_URL, callback);
                 ld = new LoadingDialog(LoginActivity.this);
                 ld.setLoadingText("登陆中...").show();
             }

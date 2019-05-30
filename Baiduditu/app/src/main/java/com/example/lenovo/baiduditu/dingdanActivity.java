@@ -13,24 +13,18 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.lenovo.baiduditu.adapter.DingdanAdapter;
 import com.example.lenovo.baiduditu.model.Student;
-import com.example.lenovo.baiduditu.model.VSet;
 import com.example.lenovo.baiduditu.model.VSign;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.common;
-import com.example.lenovo.baiduditu.myClass.dingdan;
 import com.example.lenovo.baiduditu.utils.Constants;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class dingdanActivity extends AppCompatActivity {
@@ -112,13 +106,6 @@ public class dingdanActivity extends AppCompatActivity {
             @Override
             public void onClick(int position) {
                 System.out.println("onClick执行啦 "+signLists.get(position).getSetName());
-/*                dingdan oneDingdan =new dingdan();
-                oneDingdan.setid(signLists.get(position).getid());
-                oneDingdan.setgname(signLists.get(position).getgname());
-                oneDingdan.settime(signLists.get(position).gettime());
-                oneDingdan.setprice(signLists.get(position).getprice());
-                String mUrl ="http://1.873717549.applinzi.com/Android_guihuan.php";
-                RequestHTTP(mUrl,oneDingdan);*/
             }
         }));
     }//changeView()

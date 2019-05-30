@@ -35,7 +35,12 @@ public class TeacherServiceImpl implements ITeacherService {
             response.setMsg("手机号错误");
             return response;
         }
-/*        response = smsService.verifySMSCode(account, code);
+/*        if(code.length() != 4){
+            response.setStatus(RESPONSE_FALSE);
+            response.setMsg("验证码错误");
+            return response;
+        }
+        response = smsService.verifySMSCode(account, code);
         if(response.getStatus() != 200){
             return response;
         }*/
@@ -138,7 +143,7 @@ public class TeacherServiceImpl implements ITeacherService {
 
     private String getDynamicCode(){
         Random random = new Random();
-        int i = random.nextInt(999999);
+        int i = random.nextInt(899999);
         i = i + 100000;
         return ""+i;
     }

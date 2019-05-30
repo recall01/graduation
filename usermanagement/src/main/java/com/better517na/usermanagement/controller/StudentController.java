@@ -95,7 +95,7 @@ public class StudentController {
     }
 
     @SysLogger("queryClassByStuNumber")
-    @ApiOperation(value = "查询学生所在班级信息",notes = "根据stuNumber查询学生所在班级信息")
+    @ApiOperation(value = "查询学生所在的班级信息",notes = "根据stuNumber查询学生所在班级信息")
     @RequestMapping(value = "/queryClass",method = RequestMethod.POST)
     public Response queryClassByStuNumber(@RequestParam  @ApiParam(name = "stuNumber",value = "学号",required = true) String stuNumber){
         return studentService.queryClassByStuNumber(stuNumber);

@@ -10,23 +10,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-
 import com.example.lenovo.baiduditu.model.Student;
 import com.example.lenovo.baiduditu.myClass.HttpUtil;
 import com.example.lenovo.baiduditu.myClass.common;
-import com.example.lenovo.baiduditu.myactivity.Teacher;
+import com.example.lenovo.baiduditu.utils.Constants;
 
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -34,7 +30,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class StartActivity extends AppCompatActivity {
-    private final static String LOGIN_URL = "http://10.18.42.63:8801/student/login";
     /*
     * 1.验证网络信息
     * 2.验证权限
@@ -61,7 +56,7 @@ public class StartActivity extends AppCompatActivity {
                 networkChangeReceiver = new NetworkChangeReceiver();
                 registerReceiver(networkChangeReceiver,intentFilter);
             }
-        }, 3000);//给postDelayed()方法传递延迟参数
+        }, 2000);//给postDelayed()方法传递延迟参数
     }  //onCreate
 
     //判断网络状况
@@ -92,6 +87,7 @@ public class StartActivity extends AppCompatActivity {
         if(!permissionList.isEmpty()){
             String[] permissions =permissionList.toArray(new String[permissionList.size()]);
             ActivityCompat.requestPermissions(StartActivity.this,permissions,1);
+            readInfo();
         }else {
             readInfo();
         }
@@ -127,7 +123,7 @@ public class StartActivity extends AppCompatActivity {
     //验证信息
     private void verifyInfo(){
         RequestBody requestBody =new FormBody.Builder().add("account",account).add("password",password).build();
-        HttpUtil.postEnqueueRequest(requestBody, LOGIN_URL, new Callback() {
+        HttpUtil.postEnqueueRequest(requestBody, Constants.LOGIN_URL, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 System.out.println("连接服务器失败");

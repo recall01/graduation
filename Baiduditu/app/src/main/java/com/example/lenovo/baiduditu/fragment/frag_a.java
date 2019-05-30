@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.lenovo.baiduditu.ChangeHead;
+
 import com.example.lenovo.baiduditu.Jingweidu;
 import com.example.lenovo.baiduditu.LoginActivity;
 import com.example.lenovo.baiduditu.MyInformation;

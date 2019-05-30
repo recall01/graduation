@@ -48,13 +48,8 @@
             android:name=".MainActivity"
             android:theme="@style/FruitActivityTheme" />
         <activity android:name=".Zhuce" />
-        <activity android:name=".zujie.Tuzujie" />
-        <activity android:name=".Zhujie_xinxiActivity" />
         <activity android:name=".dingdanActivity" />
         <activity android:name=".Zhaohui" />
-        <activity
-            android:name=".Chuzu"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".StartActivity"
             android:theme="@style/FruitActivityTheme">
@@ -65,18 +60,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MyInformation" />
-        <activity android:name=".ChangeHead" />
-        <activity
-            android:name=".School"
-            android:windowSoftInputMode="adjustPan" />
 
         <service
             android:name=".services.CheckExitService"
             android:enabled="true"
             android:exported="true" />
-
-        <activity android:name=".myactivity.Teacher" />
-        <activity android:name=".myactivity.T_pubInfor"></activity>
     </application>
 
 </manifest>

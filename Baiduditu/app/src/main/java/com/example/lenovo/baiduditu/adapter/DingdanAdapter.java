@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.lenovo.baiduditu.R;
 import com.example.lenovo.baiduditu.model.VSign;
 import com.example.lenovo.baiduditu.myClass.Utils;
-import com.example.lenovo.baiduditu.myClass.dingdan;
 
 import java.util.List;
 

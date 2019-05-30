@@ -3,7 +3,8 @@ package com.example.lenovo.baiduditu.utils;
 import okhttp3.MediaType;
 
 public class Constants {
-    private static final String URl = "10.18.42.63:8801";
+//    private static final String URl = "10.18.42.63:8801";
+    private static final String URl = "zhuojiu.free.idcfengye.com";
     public static final String VERIFY_URL = "http://"+URl+"/sms/verifySMSCode";
     public static final String mobAppKey="22d8290d63094";
     public static final String mobAppSecret="5d190cd04e968ca288e776fe376d84d6";

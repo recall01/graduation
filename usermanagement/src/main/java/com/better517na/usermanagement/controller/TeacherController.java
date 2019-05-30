@@ -72,13 +72,12 @@ public class TeacherController {
     @ApiOperation(value = "获取班级基本数据",notes = "传递教师职工号")
     @RequestMapping(value = "/getClassN",method = RequestMethod.GET)
     public Response getClassNByTeaNumber(@RequestParam String teaNumber){
-        System.out.println(teaNumber);
         return teacherService.getClassNByTeaNumber(teaNumber);
     }
 
     @SysLogger("loginTeacher")
     @HystrixCommand(fallbackMethod = "loginFallback")
-    @ApiOperation(value = "教师登录接口",notes = "填写正确的手机号和验证码")
+    @ApiOperation(value = "教师登录接口",notes = "填写正确手机号和验证码")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "phone",value = "用户手机号",required = true,dataType = "String"),
             @ApiImplicitParam(name = "code",value = "验证码",required = true,dataType = "String")
